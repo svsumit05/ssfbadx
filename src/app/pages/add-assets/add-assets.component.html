@@ -1,0 +1,66 @@
+<popup #addBranchAssetsPopup>
+    <div class="box box-info">
+        <form class="form-horizontal" #addAssetForm="ngForm" (ngSubmit)="saveAssetSepc(addAssetForm.value); addAssetForm.reset()">
+              <div class="box-body">
+
+                <div class="form-group" *ngFor="let assets of assetsList">
+                    <label class="col-sm-2 control-label">{{assets.branchAssetsName}}</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="asset_{{assets.branchAssetsid}}" placeholder="Enter {{assets.branchAssetsName}} quantity.." ngModel required />
+                    </div>
+                </div>
+
+            </div>
+            <div class="box-footer">
+                <button type="reset" class="btn btn-default" (click)="closeAssetForm()">Cancel</button>
+                <button type="submit" class="btn btn-info pull-right" [disabled]="!addAssetForm.form.valid">Submit</button>
+            </div>
+        </form>
+    </div>
+</popup>
+
+<popup #editBranchAssetsPopup>
+    <div class="box box-info">
+        <form class="form-horizontal" #assetForm="ngForm" (ngSubmit)="saveAssetSepc(assetForm.value); assetForm.reset()">
+              <div class="box-body">
+
+                <div class="form-group" *ngFor="let up_assets of this.updateAssetsList">
+                    <label class="col-sm-2 control-label">{{up_assets.branchAsset.branchAssetsName}}</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="asset_{{up_assets.branchAsset.branchAssetsid}}" placeholder="Enter {{up_assets.branchAsset.branchAssetsName}} quantity.." [(ngModel)]="up_assets.projectedQuantity"  required />
+                    </div>
+                </div>
+
+            </div>
+            <div class="box-footer">
+                <button type="reset" class="btn btn-default" (click)="closeAssetForm()">Cancel</button>
+                <button type="submit" class="btn btn-info pull-right" [disabled]="!assetForm.form.valid">Submit</button>
+            </div>
+        </form>
+    </div>
+</popup>
+
+<popup #viewAssetsPopup>
+    <div class="box-body">
+        <table class="table table-bordered">
+            <tbody><tr>
+                    <th>Assets Name</th>
+                    <th>Quantity</th>
+                </tr>
+                <tr *ngFor="let assetslist of assetsData">
+                    <td>{{assetslist.branchAsset.branchAssetsName}}</td>
+                    <td>{{assetslist.projectedQuantity}}</td>
+                </tr>                
+            </tbody>
+        </table>
+    </div>
+</popup>
+
+<div id="preview" class="col s12 m9 l12">
+    <p>
+        <button type="button" class="btn waves-effect waves-light blue" (click)="rerender()">
+            <i class="fa fa-refresh" aria-hidden="true"></i> Refresh
+        </button>
+    </p>
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover"></table>
+</div>

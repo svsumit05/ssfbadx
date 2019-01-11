@@ -1,0 +1,28 @@
+<div class="row">    
+    <div class="col-lg-2">
+        <select class="form-control" [(ngModel)]="recordTypeId">
+            <option value="" selected disabled>Select Report</option>
+            <!-- <option *ngFor="let RTD of recordTypeDropDown" [ngValue]="RTD.recordTypeId">{{RTD.recordType}}</option> -->
+            <option value="1">Reports</option>
+            <option value="2">Voucher</option>
+        </select>
+    </div>
+    <div class="col-lg-3">
+        <div class="input-group">
+            <button type="button" class="btn waves-effect waves-light blue" (click)="rerender()">
+                Submit
+            </button>
+        </div>
+    </div>
+</div>
+<br>
+<div id="preview" class="col s12 m9 l12">
+    <p>
+
+        <button type="button" class="btn waves-effect waves-light blue" (click)="rerender()">
+            <i class="fa fa-refresh" aria-hidden="true"></i> Refresh
+        </button>
+
+    </p>
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover"></table>
+</div>

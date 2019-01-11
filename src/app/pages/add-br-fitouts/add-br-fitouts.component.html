@@ -1,0 +1,544 @@
+<popup #addLayoutSpecPopup>
+    <div class="box box-info" *ngIf="this._userServ.canCurrentUser('ADMIN_INFRA_TEAM') && disableLayout">
+        <form class="form-horizontal" #layoutForm="ngForm" (ngSubmit)="saveLayoutSepc(layoutForm.value);layoutForm.reset()">
+            <div class="box-body">
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Layout ID</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="premisesLayoutSrNo" name="premisesLayoutSrNo" [(ngModel)]="addlayoutParams.premisesLayoutSrNo"
+                            required (ngModelChange)="validateLayoutId($event)" />
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Layout details</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" name="layoutDetails" [(ngModel)]="addlayoutParams.layoutDetails" required></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Upload layout document</label>
+                    <div class="col-sm-10">
+                        <dropzone [config]="config" [message]="'Click or drag images here to upload'" (error)="onUploadError($event)" (success)="onUploadSuccessinputFiles($event,'layoutDOC')"></dropzone>
+                    </div>
+                </div>
+
+                <div class="form-group" *ngIf="addlayoutParams.layoutDOCString !='' ">
+                    <label class="col-sm-2 control-label">Layput document's</label>
+                    <div class="col-sm-10">
+                        <ul>
+                            <li *ngFor="let layoutData of addlayoutParams.layoutDOCString.split(',')">
+                                <a target="_blank" href="{{imgfirstURL}}{{layoutData}}{{imgsecoundURL}}">View Document</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required"> Upload cost estimation document </label>
+                    <div class="col-sm-10">
+                        <dropzone [config]="config" [message]="'Click or drag images here to upload'" (error)="onUploadError($event)" (success)="onUploadSuccessinputFiles($event,'costEstimation')"></dropzone>
+                    </div>
+                </div>
+
+                <div class="form-group" *ngIf="addlayoutParams.costEstimationDocString !='' ">
+                    <label class="col-sm-2 control-label">Cost estimation document's</label>
+                    <div class="col-sm-10">
+                        <ul>
+                            <li *ngFor="let costEstDoc of addlayoutParams.costEstimationDocString.split(',')">
+                                <a target="_blank" href="{{imgfirstURL}}{{costEstDoc}}{{imgsecoundURL}}">View Document</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required"> Cost estimation (&#8377;) </label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="costEstimationAmt" ngModel required>
+                    </div>
+                </div>
+
+            </div>
+            <div class="box-footer">
+                <button type="reset" class="btn btn-default" (click)="closeLayoutSpec()">Cancel</button>
+                <button type="submit" class="btn btn-info pull-right" [disabled]="!layoutForm.form.valid">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="section_divider">
+
+        <tabset *ngIf="!loading">
+            <tab *ngFor="let tabz of tabs; let increment = index" [heading]="tabz.premisesLayoutSrNo">
+
+                <h4 class="details-heading">Layout Details:</h4>
+
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>Layout Details</td>
+                            <td>{{tabz.layoutDetails}}</td>
+                        </tr>
+                        <tr>
+                            <td>Layout Cost</td>
+                            <td>{{tabz.amount}}</td>
+                        </tr>
+                        <tr *ngIf="tabz.layoutDOC != null">
+                            <td>Layout Documents</td>
+                            <td>
+                                <div class="form-group">
+                                    <div class="col-sm-10">
+                                        <ul>
+                                            <li *ngFor="let dimension of tabz.layoutDOC.split(',')">
+                                                <a target="_blank" href="{{imgfirstURL}}{{dimension}}{{imgsecoundURL}}">View Document</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr *ngIf="tabz.costEstimationDoc != null">
+                            <td>Cost Estimation Documents</td>
+                            <td>
+                                <div class="form-group">
+                                    <div class="col-sm-10">
+                                        <ul>
+                                            <li *ngFor="let costDoc of tabz.costEstimationDoc.split(',')">
+                                                <a target="_blank" href="{{imgfirstURL}}{{costDoc}}{{imgsecoundURL}}">View Document</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+                <div class="box-header with-border" *ngIf="tabz.cfoUser != null || tabz.businessHeadUser != null">
+                    <h3 class="box-title">Recommendations</h3>
+                </div>
+                <div class="post clearfix" *ngIf="tabz.cfoUser != null">
+                    <div class="user-block">
+                        <img class="img-circle img-bordered-sm" src="public/assets/img/avatar.png" alt="User Image">
+                        <span class="username">
+                            <!-- <a href="#">Sarah Ross</a> -->
+                        </span>
+                        <span class="description">{{tabz.cfoUser}}</span>
+                    </div>
+                    <p>
+                        {{tabz.cfoUserComment}}
+                    </p>
+                </div>
+                <div class="post clearfix" *ngIf="tabz.businessHeadUser != null">
+                    <div class="user-block">
+                        <img class="img-circle img-bordered-sm" src="public/assets/img/avatar.png" alt="User Image">
+                        <span class="username">
+                            <!-- <a href="#">Sarah Ross</a> -->
+                        </span>
+                        <span class="description">{{tabz.businessHeadUser}}</span>
+                    </div>
+                    <p>
+                        {{tabz.businessHeadComment}}
+                    </p>
+                </div>
+
+
+                <form #cfoForm="ngForm">
+                    <div class="section_divider" *ngIf="this._userServ.canCurrentUser('CHIEF_FINANCIAL_OFFICER') && tabz.cfoUser == null ">
+                        <h4 class="details-heading">Write a recommendation</h4>
+                        <div class="form-group">
+                            <textarea class="form-control" rows="3" name="cfoComment_{{tabz.premisesLayoutId}}" placeholder="Write your recommendation here..."
+                                ngModel [disabled]="tabz.cfoUser != null"></textarea>
+                        </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-primary" (click)="saveUserAction('cfo_action','',cfoForm.value,tabz.branchId,tabz.premisesLayoutId,increment);"
+                                [disabled]="tabz.cfoUser != null">Submit</button>
+                        </div>
+                    </div>
+                </form>
+
+                <form #businessHeadForm="ngForm">
+                    <div class="section_divider" *ngIf="this._userServ.canCurrentUser('BUSINESS_HEAD') && tabz.businessHeadUser == null">
+                        <h4 class="details-heading">Write a recommendation</h4>
+                        <div class="form-group">
+                            <textarea class="form-control" rows="3" name="businessHeadComment_{{tabz.premisesLayoutId}}" placeholder="Write your recommendation here..."
+                                ngModel [disabled]="tabz.businessHeadUser != null"></textarea>
+                        </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-primary" (click)="saveUserAction('b_head_action','',businessHeadForm.value,tabz.branchId,tabz.premisesLayoutId,increment);"
+                                [disabled]="tabz.businessHeadUser != null">Submit</button>
+                        </div>
+                    </div>
+                </form>
+
+                <h4 class="details-heading" *ngIf="cso_action.prevAction != '' && this._userServ.canCurrentUser('ADMIN_INFRA_TEAM') ">Approved Layout Details:</h4>
+
+                <table class="table table-bordered" *ngIf="cso_action.prevAction != '' && this._userServ.canCurrentUser('ADMIN_INFRA_TEAM') ">
+                    <tr>
+                        <td>Layout Sr No.</td>
+                        <td>{{premisesLayoutSrNo}}</td>
+                    </tr>
+                    <tr>
+                        <td>CSO Action</td>
+                        <td>{{cso_action.prevAction}}</td>
+                    </tr>
+                    <tr>
+                        <td>CSO Comments</td>
+                        <td>{{cso_action.comment}}</td>
+                    </tr>
+                    <tr>
+                        <td>CEO Action</td>
+                        <td>{{ceo_action.prevAction}}</td>
+                    </tr>
+                    <tr>
+                        <td>CEO Comments</td>
+                        <td>{{ceo_action.comment}}</td>
+                    </tr>
+                </table>
+
+            </tab>
+        </tabset>
+    </div>
+
+    <div class="section_divider" *ngIf="this._userServ.canCurrentUser('CHIEF_SERVICE_OFFICER') ">
+        <h4 class="details-heading">CSO Action</h4>
+        <div *ngIf="cso_action.prevAction != 'Approve';else other_cso">
+            <div class="box-body">
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Select Layout</label>
+                    <div class="col-sm-10">
+                        <select name="premises_layout_id" [(ngModel)]="cso_action.premises_layout_id" class="form-control">
+                            <option value="">Select Layout</option>
+                            <option *ngFor="let tabzlist of tabs" [ngValue]="tabzlist.premisesLayoutId" [disabled]="tabzlist.cfoUser == null || tabzlist.businessHeadUser == null">{{tabzlist.premisesLayoutSrNo}}</option>
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <br>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Comments</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" [(ngModel)]="cso_action.comment"></textarea>
+                    </div>
+                </div>
+
+            </div>
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary pull-right approve-button" (click)="saveUserAction('cso_action','Approve')">Approve</button>
+                <button type="submit" class="btn btn-primary pull-right reject-button" (click)="saveUserAction('cso_action','Reject')">Reject</button>
+                <button type="reset" class="btn btn-default pull-left" (click)="closeLayoutSpec()">Close</button>
+            </div>
+        </div>
+        <ng-template #other_cso>
+            <table class="table table-bordered">
+
+                <tr>
+                    <td>Layout Sr No.</td>
+                    <td>{{premisesLayoutSrNo}}</td>
+                </tr>
+                <tr>
+                    <td>CSO Action</td>
+                    <td>{{cso_action.prevAction}}</td>
+                </tr>
+                <tr>
+                    <td>CSO Comments</td>
+                    <td>{{cso_action.comment}}</td>
+                </tr>
+            </table>
+        </ng-template>
+    </div>
+
+    <div class="section_divider" *ngIf="this._userServ.canCurrentUser('MD_AND_CEO')">
+        <h4 class="details-heading">MD & CEO Action</h4>
+        <div *ngIf="cso_action.prevAction == 'Approve' && ceo_action.prevAction == '' ;else other_ceo">
+            <div class="box-body">
+
+                <div class="form-group">
+                    <table class="table table-bordered">
+                        <tr>
+                            <td>Layout Sr No.</td>
+                            <td>{{premisesLayoutSrNo}}</td>
+                        </tr>
+                        <tr>
+                            <td>CSO Action</td>
+                            <td>{{cso_action.prevAction}}</td>
+                        </tr>
+                        <tr>
+                            <td>CSO Comments</td>
+                            <td>{{cso_action.comment}}</td>
+                        </tr>
+
+                    </table>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Comments</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" name="comment" [(ngModel)]="ceo_action.comment"></textarea>
+                    </div>
+                </div>
+
+            </div>
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary pull-right approve-button" (click)="saveUserAction('ceo_action','Approve')">Approve</button>
+                <button type="submit" class="btn btn-primary pull-right reject-button" (click)="saveUserAction('ceo_action','Reject')">Reject</button>
+                <button type="reset" class="btn btn-default pull-left" (click)="closeLayoutSpec()">Close</button>
+            </div>
+        </div>
+        <ng-template #other_ceo>
+            <table class="table table-bordered">
+                <tr>
+                    <td>Layout Sr No.</td>
+                    <td>{{premisesLayoutSrNo}}</td>
+                </tr>
+                <tr>
+                    <td>CSO Action</td>
+                    <td>{{cso_action.prevAction}}</td>
+                </tr>
+                <tr>
+                    <td>CSO Comments</td>
+                    <td>{{cso_action.comment}}</td>
+                </tr>
+                <tr>
+                    <td>CEO Action</td>
+                    <td>{{ceo_action.prevAction}}</td>
+                </tr>
+                <tr>
+                    <td>CEO Comments</td>
+                    <td>{{ceo_action.comment}}</td>
+                </tr>
+            </table>
+        </ng-template>
+    </div>
+
+</popup>
+
+<popup #addWorkOrderPopup>
+    <div class="box box-info" *ngIf="this._userServ.canCurrentUser('ADMIN_INFRA_TEAM')">
+        <form class="form-horizontal" id="workForm" #workForm="ngForm" (ngSubmit)="saveWorkForm(workForm.value);">
+            <div class="box-body">
+                
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"> Work Order Sr. No </label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="workOrderName" ngModel required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Upload Work Order</label>
+                    <div class="col-sm-10">
+                        <dropzone [config]="config" [message]="'Click or drag images here to upload'" (error)="onUploadError($event)" (success)="onUploadSuccessinputFiles($event,'workOrderDoc')"></dropzone>
+                    </div>
+                </div>
+
+                <div class="form-group" *ngIf="addWorkOrder.workOrderDocString !='' ">
+                    <label class="col-sm-2 control-label">Work Order Document</label>
+                    <div class="col-sm-10">
+                        <ul>
+                            <li *ngFor="let workorderdoc of addWorkOrder.workOrderDocString.split(',')">
+                                <a target="_blank" href="{{imgfirstURL}}{{workorderdoc}}{{imgsecoundURL}}">View Document</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+
+                <div class="form-group" *ngIf="showDatePicker">
+                    <label class="col-sm-2 control-label">Date of Completion of Fit Out Work</label>
+                    <div class="col-sm-10">
+                        <datetime [timepicker]="false" nam="dateOfCompletionFitOut" [datepicker]="datepickerOpts" [(ngModel)]="dateOfCompletionFitOut"
+                            [ngModelOptions]="{standalone: true}"></datetime>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"> Work Order Amount </label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" name="workOrderAmount" ngModel required>
+                    </div>
+                </div>
+
+            </div>
+            <div class="box-footer">
+                <button type="reset" class="btn btn-default" (click)="closeWorkForm()">Cancel</button>
+                <button type="submit" class="btn btn-info pull-right" [disabled]="!workForm.form.valid">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="section_divider">
+
+        <tabset *ngIf="!loading">
+            <tab *ngFor="let tabzorder of tabsWorkorder; let increment = index" [heading]="tabzorder.workOrderName" (select)="resetTabData()">
+                <h4 class="details-heading">Work Order Details:</h4>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>Work Order Sr. No</td>
+                            <td>{{tabzorder.layoutWorkOrderId}}</td>
+                        </tr>
+                        <tr>
+                            <td>Date of completion fit outs</td>
+                            <td>{{tabzorder.dateOfCompletionFitOut | date:'d-M-y'}}</td>
+                        </tr>
+                        <tr *ngIf="tabzorder.workOrderDoc != ''">
+                            <td>Work Order Documents</td>
+                            <td>
+                                <div class="form-group">
+                                    <div class="col-sm-10">
+                                        <ul>
+                                            <li *ngFor="let workorder of tabzorder.workOrderDoc.split(',')">
+                                                <a target="_blank" href="{{imgfirstURL}}{{workorder}}{{imgsecoundURL}}">View Document</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Work Order Amount</td>
+                            <td>{{tabzorder.workOrderAmount}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div *ngIf="tabzorder.cso_prevAction != null && this._userServ.canCurrentUser('ADMIN_INFRA_TEAM')">
+
+                    <h4 class="details-heading">Actions:</h4>
+                    <table class="table table-bordered">
+                        <tr>
+                            <td>CSO Action</td>
+                            <td>{{tabzorder.cso_action}}</td>
+                        </tr>
+                        <tr>
+                            <td>CSO Comments</td>
+                            <td>{{tabzorder.cso_comment}}</td>
+                        </tr>
+                        <tr>
+                            <td>CEO Action</td>
+                            <td>{{tabzorder.ceo_action}}</td>
+                        </tr>
+                        <tr>
+                            <td>CEO Comments</td>
+                            <td>{{tabzorder.ceo_comment}}</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div *ngIf="this._userServ.canCurrentUser('CHIEF_SERVICE_OFFICER')">
+                    <h4 class="details-heading">CSO Action</h4>
+                    <div *ngIf="tabzorder.cso_prevAction != 'Approve';else other_cso">
+                        <div class="box-body">
+
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Comments</label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" name="action_comments_{{tabzorder.layoutWorkOrderId}}" [(ngModel)]="cso_action.comment"></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-primary pull-right approve-button" (click)="workOrderActionPerform(tabzorder.layoutWorkOrderId, 'cso_action','Approve',increment)">Approve</button>
+                            <button type="submit" class="btn btn-primary pull-right reject-button" (click)="workOrderActionPerform(tabzorder.layoutWorkOrderId, 'cso_action','Reject',increment)">Reject</button>
+                            <button type="reset" class="btn btn-default pull-left" (click)="closeWorkForm()">Close</button>
+                        </div>
+                    </div>
+                    <ng-template #other_cso>
+                        <table class="table table-bordered">
+                            <tr>
+                                <td>CSO Action</td>
+                                <td>{{tabzorder.cso_prevAction}}</td>
+                            </tr>
+                            <tr>
+                                <td>CSO Comments</td>
+                                <td>{{tabzorder.cso_comment}}</td>
+                            </tr>
+                        </table>
+                    </ng-template>
+                </div>
+
+                <div *ngIf="this._userServ.canCurrentUser('MD_AND_CEO')">
+                    <h4 class="details-heading">MD & CEO Action</h4>
+                    <div *ngIf="tabzorder.cso_prevAction == 'Approve' && tabzorder.ceo_prevAction == '' ;else other_ceo">
+                        <div class="box-body">
+
+                            <div class="form-group">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <td>CSO Action</td>
+                                        <td>{{tabzorder.cso_prevAction}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>CSO Comments</td>
+                                        <td>{{tabzorder.cso_comment}}</td>
+                                    </tr>
+
+                                </table>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Comments</label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" name="comment_{{tabzorder.layoutWorkOrderId}}" [(ngModel)]="ceo_action.comment"></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-primary pull-right approve-button" (click)="workOrderActionPerform(tabzorder.layoutWorkOrderId, 'ceo_action','Approve',increment)">Approve</button>
+                            <button type="submit" class="btn btn-primary pull-right reject-button" (click)="workOrderActionPerform(tabzorder.layoutWorkOrderId, 'ceo_action','Reject',increment)">Reject</button>
+                            <button type="reset" class="btn btn-default pull-left" (click)="closeWorkForm()">Close</button>
+                        </div>
+                    </div>
+                    <ng-template #other_ceo>
+                        <table class="table table-bordered">
+
+                            <tr>
+                                <td>CSO Action</td>
+                                <td>{{tabzorder.cso_prevAction}}</td>
+                            </tr>
+                            <tr>
+                                <td>CSO Comments</td>
+                                <td>{{tabzorder.cso_comment}}</td>
+                            </tr>
+                            <tr>
+                                <td>CEO Action</td>
+                                <td>{{tabzorder.ceo_prevAction}}</td>
+                            </tr>
+                            <tr>
+                                <td>CEO Comments</td>
+                                <td>{{tabzorder.ceo_comment}}</td>
+                            </tr>
+                        </table>
+                    </ng-template>
+                </div>
+
+            </tab>
+        </tabset>
+
+    </div>
+
+</popup>
+
+<div id="preview" class="col s12 m9 l12">
+    <p>
+        <button type="button" class="btn waves-effect waves-light blue" (click)="rerender()">
+            <i class="fa fa-refresh" aria-hidden="true"></i> Refresh
+        </button>
+    </p>
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover"></table>
+</div>

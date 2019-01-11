@@ -1,0 +1,111 @@
+<popup #dismbtPhotoDetailViewPopup (confirmClick)="saveWorkflowDetails()">
+    <form class="form-horizontal" name="disbmtPhoto" #disbmtPhoto="ngForm">
+        <div class="form-group">
+            <label for="inputEmai3" class="col-sm-3 control-label">Sr. No.</label> 
+            <div class="col-sm-7">
+                <input type="text" class="form-control" name="sr_no" [value]="srNo" id="srNo" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputEmai3" class="col-sm-3 control-label">Date of Disbursement</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" name="date" [value]="date" id="date" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputEmai3" class="col-sm-3 control-label">Branch id</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" name="branchId" [value]="branchId" id="branchId" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputEmai3" class="col-sm-3 control-label">Branch Name</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" name="branchName" [value]="branchName" id="branchName" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputEmai3" class="col-sm-3 control-label">Centre id</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" name="centerId" [value]="centerId" id="centerId" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputEmai3" class="col-sm-3 control-label">Centre Name</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" name="centerName" [value]="centerName" id="centerName" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputEmai3" class="col-sm-3 control-label">No. of Loans</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" name="email" [value]="noOfLoans" id="noOfLoans" disabled>
+            </div>
+        </div>
+        <div class="form-group" *ngIf="disbmtPhotoUrl != '' && disbmtReceiptUrl !=''">
+             <label class="col-sm-3 control-label">Disbursement Photo/Receipt</label>
+            <div class="col-sm-7">
+                <a target="_blank" href="{{disbmtPhotoUrl}}">- View Photo</a>
+                <a target="_blank" href="{{disbmtReceiptUrl}}">- View Receipt</a>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="Status" class="col-sm-3 control-label">Disbursement Record Status</label>    
+            <div class="col-sm-7">
+                <strong>{{disbmtPhotoStatusList}}</strong>
+            </div>
+        </div>     
+
+
+    </form>
+</popup>
+<div style="clear: both"></div>
+<div class="row">
+    <div class="col-lg-3">
+        <div class="input-group">
+            <span class="input-group-addon">
+                From Date
+            </span>
+            <datetime [timepicker]="false" [datepicker]="datepickerOpts" [(ngModel)]="disb_from_date"></datetime>
+        </div><!-- /input-group -->
+    </div><!-- /.col-lg-6 -->
+    <div class="col-lg-3">
+        <div class="input-group">
+            <span class="input-group-addon">
+                To Date
+            </span>
+            <datetime [timepicker]="false" [datepicker]="datepickerOpts"  [(ngModel)]="disb_to_date"></datetime>
+        </div><!-- /input-group -->
+    </div><!-- /.col-lg-6 -->
+    <div class="col-lg-2">
+        <select class="form-control" [(ngModel)]="disb_branch">
+            <option value="">Select Branch</option>
+            <option value="All">All</option>
+            <option *ngFor="let BDF of branchDropDown" [ngValue]="BDF">{{BDF.branchName}}</option>
+        </select>
+    </div><!-- /.col-lg-6 -->
+    <div class="col-lg-2">
+        <select class="form-control"  [(ngModel)]="disb_status">
+            <option value="">Select Status</option>
+            <option value="PendingForPhoto/Receipt">Pending (Photo-Receipt)</option>
+            <option value="PendingForApproval">Pending (Approval)</option>
+            <option value="Approved">Approved</option>
+        </select>
+    </div><!-- /.col-lg-6 -->
+    <div class="col-lg-2">
+        <button type="button" class="btn waves-effect waves-light blue" (click)="rerender()">
+            View
+        </button>
+        <button type="button" class="btn waves-effect waves-light blue" (click)="downloadReport()">
+            Download
+        </button>
+    </div>
+</div><!-- /.row -->
+
+
+<div id="preview" class="col s12 m9 l12"> 
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover"></table>
+</div>
+

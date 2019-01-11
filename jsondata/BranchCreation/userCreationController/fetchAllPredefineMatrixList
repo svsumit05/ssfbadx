@@ -1,0 +1,88 @@
+[
+  {
+    "preDeAppRoleMatId": "5",
+    "workLineBusinessUnit": {
+      "businessUnitId": "1",
+      "businessUnitName": "Business Unit"
+    },
+    "worklineProduct": {
+      "productId": "3",
+      "productName": "HL & LAP"
+    },
+    "workLineFunction": {
+      "worklineFunctionId": "20",
+      "worklineFunctionName": "Product"
+    },
+    "worklineSubFunction": {
+      "worklineSubFunctionId": "32",
+      "worklineSubFunctionName": "Product"
+    },
+    "workLineRole": {
+      "worklineRoleId": "47",
+      "worklineRoleName": "Credit Manager"
+    },
+    "predefineApplRoleMatrixChildList": [
+      {
+        "roleMatrixChildId": "4",
+        "application": {
+          "applicationId": "1"
+        },
+        "applicationRole": {
+          "applicationRoleId": "2"
+        }
+      }
+    ]
+  },
+  {
+    "preDeAppRoleMatId": "6",
+    "workLineBusinessUnit": {
+      "businessUnitId": "3",
+      "businessUnitName": "Inclusive Finance"
+    },
+    "worklineProduct": {
+      "productId": "12",
+      "productName": "SME & FIG"
+    },
+    "workLineFunction": {
+      "worklineFunctionId": "16",
+      "worklineFunctionName": "Legal & Compliance"
+    },
+    "worklineSubFunction": {
+      "worklineSubFunctionId": "24",
+      "worklineSubFunctionName": "Legal"
+    },
+    "workLineRole": {
+      "worklineRoleId": "3",
+      "worklineRoleName": "Acquisition Manager"
+    },
+    "predefineApplRoleMatrixChildList": [
+      {
+        "roleMatrixChildId": "5",
+        "application": {
+          "applicationId": "1"
+        },
+        "applicationRole": {
+          "applicationRoleId": "2"
+        }
+      },
+      {
+        "roleMatrixChildId": "6",
+        "application": {
+          "applicationId": "1"
+        },
+        "applicationRole": {
+          "applicationRoleId": "1"
+        }
+      },
+      {
+        "roleMatrixChildId": "7",
+        "application": {
+          "applicationId": "1"
+        },
+        "applicationRole": {
+          "applicationRoleId": "2"
+        }
+      }
+    ]
+  }
+]

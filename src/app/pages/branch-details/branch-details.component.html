@@ -1,0 +1,111 @@
+<popup #updateAssetsStatus>
+    <div class="box box-info">
+        <form class="form-horizontal" name="addBranchForm" #addBranchForm="ngForm" (ngSubmit)="saveAppStatus(addBranchForm.value); addBranchForm.reset()">
+              
+              <div class="box-body">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Branch Type</label>
+
+                    <div class="col-sm-10">
+                        <p class="form-text-label"> {{branchParams.branchType}} </p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Branch Code</label>
+
+                    <div class="col-sm-10">
+                        <p class="form-text-label">  {{branchParams.branchCode}} </p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">IFSC Code</label>
+
+                    <div class="col-sm-10">
+                        <p class="form-text-label">  {{branchParams.ifscCode}} </p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">MICR Code</label>
+
+                    <div class="col-sm-10">
+                        <p class="form-text-label">  {{branchParams.micrCode}} </p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">BSR Code</label>
+
+                    <div class="col-sm-10">
+                        <p class="form-text-label">   {{branchParams.bsrCode}} </p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">License No</label>
+
+                    <div class="col-sm-10">
+                        <p class="form-text-label">   {{branchParams.licenseNo}} </p>
+                    </div>
+                </div>                
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Branch Location</label>
+
+                    <div class="col-sm-10">
+                        <p class="form-text-label">  {{branchParams.branchLocation}} </p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Branch State</label>
+
+                    <div class="col-sm-10">
+                        <p class="form-text-label">   {{branchParams.branchState}} </p>
+                    </div>
+                </div>  
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Expected Branch Open Date</label>
+                    <div class="col-sm-10">
+                        {{branchParams.expBranchOpenDate}}
+                    </div>
+
+                </div>
+
+                <div class="form-group"  *ngIf="branchParams.applicationInstalltionId == ''">
+                    <label class="col-sm-2 control-label">Are required applications are installed?</label>
+                    <div class="col-sm-10">
+                        <input type="radio" name="applicationInstalled" value="YES" [(ngModel)]="branchParams.applicationInstalled"> YES<br>
+                        <input type="radio" name="applicationInstalled" value="NO" [(ngModel)]="branchParams.applicationInstalled"> NO<br>
+                    </div>
+                </div>
+                  
+                <div class="form-group" *ngIf="branchParams.applicationInstalltionId != ''">
+                    <label class="col-sm-2 control-label">Are required applications are installed?</label>
+                    <div class="col-sm-10">
+                        {{branchParams.applicationInstalled}}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="box-footer" *ngIf="branchParams.applicationInstalltionId == ''">
+                <button type="reset" class="btn btn-default" (click)="closeAppStatus()">Cancel</button>
+                <button type="submit" class="btn btn-info pull-right" [disabled]="!addBranchForm.form.valid">Submit</button>
+            </div>
+        </form>
+    </div>
+</popup>
+
+<div id="preview" class="col s12 m9 l12">
+    <p>
+        <button type="button" class="btn waves-effect waves-light blue" (click)="rerender()">
+            <i class="fa fa-refresh" aria-hidden="true"></i> Refresh
+        </button>
+    </p>
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover"></table>
+</div>

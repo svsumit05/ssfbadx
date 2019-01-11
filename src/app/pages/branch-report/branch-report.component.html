@@ -1,0 +1,8 @@
+<div id="preview" class="col s12 m9 l12">
+    <p>
+        <button type="button" class="btn waves-effect waves-light blue" (click)="rerender()">
+            <i class="fa fa-refresh" aria-hidden="true"></i> Refresh
+        </button>
+    </p>
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover"></table>
+</div>

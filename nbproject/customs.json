@@ -1,0 +1,10 @@
+{
+    "elements": {
+        "app-root": {}
+    },
+    "attributes": {
+        "(click)": {
+            "context": "button"
+        }
+    }
+}

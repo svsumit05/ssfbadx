@@ -1,0 +1,34 @@
+[
+  {
+    "applicationId": "2",
+    "applicationName": "CRM",
+    "isActive": "1"
+  },
+  {
+    "applicationId": "3",
+    "applicationName": "NewGen (A c Opening)",
+    "isActive": "1"
+  },
+  {
+    "applicationId": "4",
+    "applicationName": "BR.Net",
+    "isActive": "1"
+  },
+  {
+    "applicationId": "1",
+    "applicationName": "Profile (CBS)",
+    "isActive": "1",
+    "applicationRoleList": [
+      {
+        "applicationRoleId": "1",
+        "applicationRoleName": "Teller",
+        "isActive": "1"
+      },
+      {
+        "applicationRoleId": "2",
+        "applicationRoleName": "CSO",
+        "isActive": "1"
+      }
+    ]
+  }
+]

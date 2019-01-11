@@ -1,0 +1,347 @@
+<button class="btn btn-primary pull-right" (click)="addBranchPopup()" *ngIf="this._userServ.canCurrentUser('COMPLIANCE_TEAM')">
+    <i class="fa fa-plus" aria-hidden="true"></i> Add Branch</button>
+
+<button class="btn btn-primary pull-right upload-file" (click)="uploadBranchPopup()" *ngIf="this._userServ.canCurrentUser('COMPLIANCE_TEAM')">
+    <i class="fa fa-file-excel-o" aria-hidden="true"></i> Upload Branch Details</button>
+
+<popup #addBranch>
+    <div class="box box-info">
+        <form class="form-horizontal" id="addBranchForm" #addBranchForm="ngForm" (ngSubmit)="createBranch(addBranchForm.value);">
+            <div class="box-body">
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Branch State</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" name="branch_State" ngModel required>
+                            <option value="" disabled selected>Select State</option>
+                            <option *ngFor="let sta of stateList" [ngValue]="sta.stateName">{{sta.stateName}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Branch District</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="branchDistrict" placeholder="Branch District" ngModel required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Branch City</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="branch_City" placeholder="Branch City" ngModel required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Branch Location</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="branch_Location" placeholder="Branch Location" ngModel required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Branch Type</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" name="branch_Type" ngModel required>
+                            <option value="">Select Branch</option>
+                            <option value="General">General</option>
+                            <option value="Bank Branch">Bank Branch</option>
+                            <option value="Mega Bank Branch">Mega Bank Branch</option>
+                            <option value="Unbanked Rural Branch">Unbanked Rural Branch</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Branch Classification</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" name="branchClassification" ngModel required>
+                            <option value="">Select Branch Classification</option>
+                            <option value="Metropolitan">Metropolitan</option>
+                            <option value="Rural">Rural</option>
+                            <option value="Urban">Urban</option>
+                            <option value="Semi-Urban">Semi-Urban</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">RBI Ref. No.</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="rbiReferenceNo" placeholder="RBI Reference Number" ngModel required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Upload Documents</label>
+                    <div class="col-sm-10">
+                        <dropzone [config]="config" [message]="'Click or drag images here to upload'" (error)="onUploadError($event)" (success)="onUploadSuccessinputFiles($event,'document1')"></dropzone>
+                    </div>
+                </div>
+
+                <div class="form-group" *ngIf="branchParams.previnputFiles != '' ">
+                    <label class="col-sm-2 control-label">Documents</label>
+                    <div class="col-sm-10">
+                        <ul>
+                            <li *ngFor="let branchDocs of branchParams.previnputFiles.split(',')">
+                                <a target="_blank" href="{{imgfirstURL}}{{branchDocs}}{{imgsecoundURL}}">View Document</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Necessary Documents Uploaded?</label>
+                    <div class="col-sm-10">
+                        <input type="radio" name="isDocumentUploaded" value="YES" ngModel> YES
+                        <br>
+                        <input type="radio" name="isDocumentUploaded" value="NO" ngModel> NO
+                        <br>
+                    </div>
+                </div>
+
+            </div>
+            <div class="box-footer">
+                <button type="reset" class="btn btn-default" (click)="cancelCreateBranch()">Cancel</button>
+                <button type="submit" class="btn btn-info pull-right" [disabled]="!addBranchForm.form.valid">Submit</button>
+            </div>
+        </form>
+    </div>
+</popup>
+
+
+<popup #editBranch>
+    <div class="box box-info">
+        <form class="form-horizontal" #editBranchForm="ngForm" (ngSubmit)="updateBranch(editBranchForm.value); addBranchForm.reset()">
+            <div class="box-body">
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Branch State :</label>
+                    <div class="col-sm-10" *ngIf="branchParams.branchPremisesCount == 0">
+                        <input type="text" class="form-control" name="branch_State" placeholder="Branch State" [(ngModel)]="branchParams.branch_State"
+                            required>
+                    </div>
+                    <div class="col-sm-10" *ngIf="branchParams.branchPremisesCount > 0">
+                        {{branchParams.branch_State}}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Branch District :</label>
+                    <div class="col-sm-10" *ngIf="branchParams.branchPremisesCount == 0">
+                        <input type="text" class="form-control" name="branchDistrict" placeholder="Branch District" [(ngModel)]="branchParams.branchDistrict"
+                            required>
+                    </div>
+                    <div class="col-sm-10" *ngIf="branchParams.branchPremisesCount > 0">
+                        {{branchParams.branchDistrict}}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Branch City :</label>
+                    <div class="col-sm-10" *ngIf="branchParams.branchPremisesCount == 0">
+                        <input type="text" class="form-control" name="branch_City" placeholder="Branch City" [(ngModel)]="branchParams.branch_City"
+                            required>
+                    </div>
+                    <div class="col-sm-10" *ngIf="branchParams.branchPremisesCount > 0">
+                        {{branchParams.branch_City}}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Branch Location :</label>
+                    <div class="col-sm-10" *ngIf="branchParams.branchPremisesCount == 0">
+                        <input type="text" class="form-control" name="branch_Location" placeholder="Branch Location" [(ngModel)]="branchParams.branch_Location"
+                            required>
+                    </div>
+                    <div class="col-sm-10" *ngIf="branchParams.branchPremisesCount > 0">
+                        {{branchParams.branch_Location}}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Branch Type :</label>
+                    <div class="col-sm-10" *ngIf="branchParams.branchPremisesCount == 0">
+                        <select class="form-control" name="branch_Type" [(ngModel)]="branchParams.branch_Type" required>
+                            <option value="">Select Branch</option>
+                            <option value="General">General</option>
+                            <option value="Bank Branch">Bank Branch</option>
+                            <option value="Mega Bank Branch">Mega Bank Branch</option>
+                            <option value="Unbanked Rural Branch">Unbanked Rural Branch</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-10" *ngIf="branchParams.branchPremisesCount > 0">
+                        {{branchParams.branch_Type}}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Branch Classification :</label>
+                    <div class="col-sm-10" *ngIf="branchParams.branchPremisesCount == 0">
+                        <select class="form-control" name="branchClassification" [(ngModel)]="branchParams.branchClassification" required>
+                            <option value="">Select Branch Classification</option>
+                            <option value="Metropolitan">Metropolitan</option>
+                            <option value="Rural">Rural</option>
+                            <option value="Urban">Urban</option>
+                            <option value="Semi-Urban">Semi-Urban</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-10" *ngIf="branchParams.branchPremisesCount > 0">
+                        {{branchParams.branchClassification}}
+                    </div>
+                </div>
+
+                <div class="form-group" *ngIf="branchParams.branchPremisesCount == 0">
+                    <label class="col-sm-2 control-label">Upload Documents :</label>
+                    <div class="col-sm-10">
+                        <dropzone [config]="config" [message]="'Click or drag images here to upload'" (error)="onUploadError($event)" (success)="onUploadSuccessinputFiles($event,'document1')"></dropzone>
+                    </div>
+                </div>
+
+
+                <div class="form-group" *ngIf="branchParams.previnputFiles != '' ">
+                    <label class="col-sm-2 control-label">Documents</label>
+                    <div class="col-sm-10">
+                        <ul>
+                            <li *ngFor="let branchDoc of branchParams.previnputFiles.split(',')">
+                                <a target="_blank" href="{{imgfirstURL}}{{branchDoc}}{{imgsecoundURL}}">View Document</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Necessary Documents Uploaded? :</label>
+                    <div class="col-sm-10" *ngIf="branchParams.branchPremisesCount == 0">
+                        <input type="radio" name="isDocumentUploaded" value="YES" [(ngModel)]="branchParams.isDocumentUploaded"> YES
+                        <br>
+                        <input type="radio" name="isDocumentUploaded" value="NO" [(ngModel)]="branchParams.isDocumentUploaded"> NO
+                        <br>
+                    </div>
+                    <div class="col-sm-10" *ngIf="branchParams.branchPremisesCount > 0">
+                        {{branchParams.isDocumentUploaded}}
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label " *ngIf="displayMode == 'EDIT_UPDATE' || displayMode == 'VIEW'">Branch Code :</label>
+                    <div class="col-sm-10" *ngIf="displayMode == 'EDIT_UPDATE'">
+                        <input type="text" class="form-control" name="branchCode" placeholder="Branch Code" [(ngModel)]="branchParams.branchCode">
+                    </div>
+                    <div class="col-sm-10" *ngIf="displayMode == 'VIEW'">
+                        {{branchParams.branchCode}}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label " *ngIf="displayMode == 'EDIT_UPDATE' || displayMode == 'VIEW'">IFSC Code :</label>
+                    <div class="col-sm-10" *ngIf="displayMode == 'EDIT_UPDATE'">
+                        <input type="text" class="form-control" name="ifscCode" placeholder="IFSC Code" [(ngModel)]="branchParams.ifscCode">
+                    </div>
+                    <div class="col-sm-10" *ngIf="displayMode == 'VIEW'">
+                        {{branchParams.ifscCode}}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label " *ngIf="displayMode == 'EDIT_UPDATE' || displayMode == 'VIEW'">MICR Code :</label>
+
+                    <div class="col-sm-10" *ngIf="displayMode == 'EDIT_UPDATE'">
+                        <input type="text" class="form-control" name="micrCode" placeholder="MICR Code" [(ngModel)]="branchParams.micrCode">
+                    </div>
+                    <div class="col-sm-10" *ngIf="displayMode == 'VIEW'">
+                        {{branchParams.micrCode}}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label " *ngIf="displayMode == 'EDIT_UPDATE' || displayMode == 'VIEW'">BSR Code :</label>
+
+                    <div class="col-sm-10" *ngIf="displayMode == 'EDIT_UPDATE'">
+                        <input type="text" class="form-control" name="bsrCode" placeholder="BSR Code" [(ngModel)]="branchParams.bsrCode">
+                    </div>
+                    <div class="col-sm-10" *ngIf="displayMode == 'VIEW'">
+                        {{branchParams.bsrCode}}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label " *ngIf="displayMode == 'EDIT_UPDATE' || displayMode == 'VIEW'">License No :</label>
+
+                    <div class="col-sm-10" *ngIf="displayMode == 'EDIT_UPDATE'">
+                        <input type="text" class="form-control" name="license_no" placeholder="License No" [(ngModel)]="branchParams.license_no">
+                    </div>
+                    <div class="col-sm-10" *ngIf="displayMode == 'VIEW'">
+                        {{branchParams.license_no}}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label " *ngIf="displayMode == 'EDIT_UPDATE' || displayMode == 'VIEW'">RBI Expected Branch opening Date :</label>
+
+                    <div class="col-sm-10" *ngIf="displayMode == 'EDIT_UPDATE' && showDatePicker">
+                        <datetime [timepicker]="false" name="rentStartDate" [datepicker]="datepickerOpts" [(ngModel)]="penaltyDate" [ngModelOptions]="{standalone: true}"></datetime>
+                    </div>
+                    <div class="col-sm-10" *ngIf="displayMode == 'VIEW'">
+                        {{branchParams.penaltyDate}}
+                    </div>
+                </div>
+
+            </div>
+            <div class="box-footer" *ngIf="displayMode != 'VIEW'">
+                <button type="reset" class="btn btn-default" (click)="cancelEditBranch()">Cancel</button>
+                <button type="submit" class="btn btn-info pull-right" [disabled]="!editBranchForm.form.valid">Submit</button>
+            </div>
+        </form>
+    </div>
+
+
+</popup>
+
+<popup #uploadBranch >
+
+    <div class="box box-info">
+        <div class="col-sm-12">
+            <a href="javascript:void(0);" (click)="downloadFile()" class="downloadFileButton pull-right">Download sample file.</a>
+        </div>
+
+        <form class="form-horizontal" #uploadForm="ngForm" id="uploadForm" >
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label required">Upload Branch ( Excel File)</label>
+
+                    <div class="col-sm-10">
+                        <input type="file" name="uploadingFiles" id="uploadExcelFile" ngModel (change)="ordfileEvent($event)" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-2 control-label">Upload Branch Documents</label>
+
+                    <div class="col-sm-10">
+                        <dropzone [config]="config" [message]="'Click or drag Branch Documents here to upload'" (error)="onUploadError($event)" (success)="onUploadSuccessinputFiles($event,'document2')"></dropzone>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="box-footer">
+                <button type="submit" class="btn btn-default" (click)="closeUploadBranch()">Cancel</button>
+                <button type="submit" class="btn btn-info pull-right" (click)="uploadBranchData()" [disabled]="this.uploadfileParams.uploadingFiles == ''">Submit</button>
+            </div>
+
+        </form>
+    </div>
+
+</popup>
+
+<div id="preview" class="col s12 m9 l12">
+    <p>
+        <button type="button" class="btn waves-effect waves-light blue" (click)="rerender()">
+            <i class="fa fa-refresh" aria-hidden="true"></i> Refresh
+        </button>
+    </p>
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover"></table>
+</div>

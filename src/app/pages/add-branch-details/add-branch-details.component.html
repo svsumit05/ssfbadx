@@ -1,0 +1,181 @@
+<popup #addBranchDetails>
+    <div class="box box-info">
+        <form class="form-horizontal" #updateBranchForm="ngForm" (ngSubmit)="updateBranchDetails(updateBranchForm.value);">
+            <div class="box-body">
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Branch State :</label>
+                    <div class="col-sm-10">
+                        <p class="form-text-label"> {{branchParams.branchState}} </p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Branch District :</label>
+                    <div class="col-sm-10">
+                        <p class="form-text-label"> {{branchParams.branchDistrict}} </p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Branch City :</label>
+                    <div class="col-sm-10">
+                        <p class="form-text-label"> {{branchParams.branchCity}} </p>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Branch Location :</label>
+                    <div class="col-sm-10">
+                        <p class="form-text-label"> {{branchParams.branchLocation}} </p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Branch Type :</label>
+                    <div class="col-sm-10">
+                        <p class="form-text-label"> {{branchParams.branchType}} </p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Branch Classification :</label>
+                    <div class="col-sm-10">
+                        <p class="form-text-label"> {{branchParams.branchClassification}} </p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Branch Name :</label>
+                    <div class="col-sm-10" *ngIf="branchParams.branchPremisesCount == 0">
+                        <input type="text" class="form-control" name="proposedBranchName" placeholder="Enter Branch Name" required 
+                            [(ngModel)]="branchParams.proposedBranchName">
+                    </div>
+                    <div class="col-sm-10" *ngIf="branchParams.branchPremisesCount > 0">
+                        {{branchParams.proposedBranchName}}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Nearest Location :</label>
+                    <div class="col-sm-10" *ngIf="branchParams.branchPremisesCount == 0">
+                        <input type="text" class="form-control" name="nearestLocation" placeholder="Enter Nearest Location" required 
+                            [(ngModel)]="branchParams.nearestLocation">
+                    </div>
+                    <div class="col-sm-10" *ngIf="branchParams.branchPremisesCount > 0">
+                        {{branchParams.nearestLocation}}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Approx. Area (Carpet area) :</label>
+                    <div class="col-sm-10" *ngIf="branchParams.branchPremisesCount == 0">
+                        <input type="text" class="form-control" name="approxArea" placeholder="Enter Approx. Area (in Sq. ft.)" required 
+                            [(ngModel)]="branchParams.approxArea">
+                    </div>
+                    <div class="col-sm-10" *ngIf="branchParams.branchPremisesCount > 0">
+                        {{branchParams.approxArea}}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Type of Business :</label>
+                    <div class="col-sm-10" *ngIf="branchParams.branchPremisesCount == 0">
+                        <select class="form-control" name="typeOfBusiness" [(ngModel)]="branchParams.typeOfBusiness" required>
+                            <option value="">Select Business Type</option>
+                            <option value="Assets">Assets</option>
+                            <option value="Liabilities">Liabilities</option>
+                            <option value="Assets + Liabilities">Assets + Liabilities</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-10" *ngIf="branchParams.branchPremisesCount > 0">
+                        {{branchParams.typeOfBusiness}}
+                    </div>
+                </div>
+
+               
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Staff Strength :</label>
+                    <div class="col-sm-10" *ngIf="branchParams.branchPremisesCount == 0">
+                        <input type="text" class="form-control" name="strength" placeholder="Staff Strength" required  [(ngModel)]="branchParams.strength">
+                    </div>
+                    <div class="col-sm-10" *ngIf="branchParams.branchPremisesCount > 0">
+                        {{branchParams.strength}}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">No. of Head :</label>
+                    <div class="col-sm-10" *ngIf="branchParams.branchPremisesCount == 0">
+                        <input type="text" class="form-control" name="headPersonCount" placeholder="No. of Head" required  [(ngModel)]="branchParams.headPersonCount">
+                    </div>
+                    <div class="col-sm-10" *ngIf="branchParams.branchPremisesCount > 0">
+                        {{branchParams.headPersonCount}}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">No. of Employee :</label>
+
+                    <div class="col-sm-10" *ngIf="branchParams.branchPremisesCount == 0">
+                        <input type="text" class="form-control" name="employeeCount" placeholder="No. of Employee" required  [(ngModel)]="branchParams.employeeCount">
+                    </div>
+                    <div class="col-sm-10" *ngIf="branchParams.branchPremisesCount > 0">
+                        {{branchParams.employeeCount}}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Approx. Budgetary Cost/ Rent (p.m.) :</label>
+
+                    <div class="col-sm-10" *ngIf="branchParams.branchPremisesCount == 0">
+                        <input type="text" class="form-control" name="budget" placeholder="Approx. Budgetary Cost/ Rent (p.m.)"  
+                            [(ngModel)]="branchParams.budget">
+                    </div>
+                    <div class="col-sm-10" *ngIf="branchParams.branchPremisesCount > 0">
+                        {{branchParams.budget}}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Period/ Duration of lease (in months) :</label>
+
+                    <div class="col-sm-10" *ngIf="branchParams.branchPremisesCount == 0">
+                        <input type="text" class="form-control" name="period" placeholder="Period/ Duration of lease" required  [(ngModel)]="branchParams.period">
+                    </div>
+                    <div class="col-sm-10" *ngIf="branchParams.branchPremisesCount > 0">
+                        {{branchParams.period}}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Expected Branch Opening Date :</label>
+
+                    <div class="col-sm-10" *ngIf="showDatePicker && branchParams.branchPremisesCount == 0 ">
+                        <datetime [timepicker]="false" name="expBranchOpenDate" [datepicker]="datepickerOpts" [(ngModel)]="expBranchOpenDate" [ngModelOptions]="{standalone: true}"></datetime>
+                    </div>
+                    <div class="col-sm-10" *ngIf="branchParams.branchPremisesCount > 0">
+                        {{branchParams.expBranchOpenDate}}
+                    </div>
+                </div>
+
+                <div class="box-footer" *ngIf="branchParams.branchPremisesCount == 0">
+                    <button type="reset" class="btn btn-default" (click)="cancelUpdateBranch()">Cancel</button>
+                    <button type="submit" class="btn btn-info pull-right" [disabled]="!updateBranchForm.form.valid">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+</popup>
+
+<div id="preview" class="col s12 m9 l12">
+    <p>
+        <button type="button" class="btn waves-effect waves-light blue" (click)="rerender()">
+            <i class="fa fa-refresh" aria-hidden="true"></i> Refresh
+        </button>
+    </p>
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover"></table>
+</div>

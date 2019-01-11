@@ -1,0 +1,300 @@
+<div class="col-md-12">
+  <div class="box box-primary">
+    <form role="form" #smsForm="ngForm" (ngSubmit)="onSubmit(smsForm.value);">
+      <div class="box-body">
+
+        <div class="form-group row">
+          <label class="col-sm-2 control-label">Template Name :</label>
+          <div class="col-sm-10">
+            <input type="text" name="templateName" class="form-control" placeholder="Enter Template Name" [(ngModel)]="editUserData.templateName"
+              required>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-2 control-label">Response Email Id :</label>
+          <div class="col-sm-4">
+            <input type="email" name="responseEmailId" class="form-control" [(ngModel)]="editUserData.responseEmailId" required>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-2 control-label">Department :</label>
+          <div class="col-sm-10">
+            <select class="form-control" name="departmentId" [(ngModel)]="editUserData.departmentId" required>
+              <option value="" selected>Select Department</option>
+              <option *ngFor="let DPTL of departmentList" [value]="DPTL.departmentId">{{DPTL.departmentName}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-2 control-label">Type :</label>
+          <div class="col-sm-10">
+            <label class="radio-inline">
+              <input type="radio" name="notificationType" value="SMS" [(ngModel)]="editUserData.notificationType" required>SMS</label>
+            <label class="radio-inline">
+              <input type="radio" name="notificationType" value="EMAIL" [(ngModel)]="editUserData.notificationType" required>EMAIL</label>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-2 control-label">Frequency :</label>
+          <div class="col-sm-10">
+            <label class="radio-inline">
+              <input type="radio" name="frequency" value="Daily" [(ngModel)]="editUserData.frequency" required (click)="changeFrq($event)">Daily</label>
+            <label class="radio-inline">
+              <input type="radio" name="frequency" value="Weekly" [(ngModel)]="editUserData.frequency" required (click)="changeFrq($event)">Weekly</label>
+            <label class="radio-inline">
+              <input type="radio" name="frequency" value="Monthly" [(ngModel)]="editUserData.frequency" required (click)="changeFrq($event)">Monthly</label>
+            <label class="radio-inline">
+              <input type="radio" name="frequency" value="Yearly" [(ngModel)]="editUserData.frequency" required (click)="changeFrq($event)">Yearly</label>
+            <label class="radio-inline">
+              <input type="radio" name="frequency" value="Adhoc" [(ngModel)]="editUserData.frequency" required (click)="changeFrq($event)">Adhoc</label>
+          </div>
+        </div>
+
+        <div>
+          <div class="form-group row" *ngIf="frequency == 'Weekly'">
+            <label class="col-sm-2 control-label">Select day of the week</label>
+            <div class="col-sm-3">
+              <select name="scheduledDate" class="form-control" [(ngModel)]="editUserData.scheduledDate">
+                <option value="" disabled selected>Select Option</option>
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+                <option value="Saturday">Saturday</option>
+                <option value="Sunday">Sunday</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row" *ngIf="frequency == 'Monthly'">
+            <label class="col-sm-2 control-label">Select date of the month</label>
+            <div class="col-sm-3">
+              <select name="scheduledDate" class="form-control" [(ngModel)]="scheduledDate">
+                <option *ngFor="let item of ' '.repeat(31).split('');let day = index">{{day + 1}}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group row" *ngIf="frequency == 'Yearly'">
+            <label class="col-sm-2 control-label">Enter date and month</label>
+            <div class="col-sm-3">
+              <input type="date" name="scheduledDate" class="form-control" min="{{currentYear}}-01-01" max="{{currentYear}}-12-31" [(ngModel)]="scheduledDate" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
+            </div>
+          </div>  
+
+          <div class="form-group row" *ngIf="frequency == 'Adhoc'">
+            <label class="col-sm-2 control-label">Enter user id</label>
+            <div class="col-sm-3">
+              <input [(ngModel)]="scheduledDate" [typeahead]="users" typeaheadWaitMs="100" (typeaheadOnSelect)="typeaheadOnSelect($event)"
+                class="form-control" [ngModelOptions]="{standalone: true}">
+              <br>
+              <table class="table table-bordered">
+                <tbody>
+                  <tr *ngFor="let EIS of employeeIDS; let em = index">
+                    <td>{{EIS.employeeId}}</td>
+                    <td>
+                      <a (click)="removeEmployeeID(em)">
+                        <i class="fa fa-minus-circle"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row" *ngIf="frequency == 'Adhoc'">
+          <label class="col-sm-2 control-label">Adhoc Template Type :</label>
+          <div class="col-sm-10">
+            <label class="radio-inline">
+              <input type="radio" name="adhocType" value="FileUpload" [(ngModel)]="adhocType" required>File Upload</label>
+            <label class="radio-inline">
+              <input type="radio" name="adhocType" value="Conditional" [(ngModel)]="adhocType" required>Conditional</label>
+          </div>
+        </div>
+
+        <div class="form-group row" *ngIf="frequency != 'Adhoc'">
+          <label class="col-sm-2 control-label">Processing Type :</label>
+          <div class="col-sm-10">
+            <label class="radio-inline">
+              <input type="radio" name="processingType" value="STP" [(ngModel)]="editUserData.processingType" required>STP</label>
+            <label class="radio-inline">
+              <input type="radio" name="processingType" value="Manual" [(ngModel)]="editUserData.processingType" required>Manual</label>
+          </div>
+        </div>
+
+        <div class="form-group row" *ngIf="adhocType != 'FileUpload' || adhocType ==''  || adhocType == 'null'">
+          <label class="col-sm-2 control-label">Source :</label>
+          <div class="col-sm-10">
+            <label class="radio-inline">
+              <input type="radio" name="sourceSystemId" value="1" [(ngModel)]="editUserData.sourceSystem.sourceSystemid" (click)="getSource()"
+                required>Profile Liabilities</label>
+            <label class="radio-inline">
+              <input type="radio" name="sourceSystemId" value="2" [(ngModel)]="editUserData.sourceSystem.sourceSystemid" (click)="getSource()"
+                required>Profile Assets</label>
+            <label class="radio-inline">
+              <input type="radio" name="sourceSystemId" value="3" [(ngModel)]="editUserData.sourceSystem.sourceSystemid" (click)="getSource()"
+                required>Br.Net</label>
+          </div>
+        </div>
+
+        <div class="form-group row" *ngIf="adhocType != 'FileUpload' || adhocType =='' || adhocType == 'null'">
+            <label class="col-sm-2 control-label">Data Level :</label>
+            <div class="col-sm-10">
+              <label class="radio-inline">
+                <input type="radio" name="queryCriteria" value="customer_level" [(ngModel)]="editUserData.queryCriteria" required>Customer Level</label>
+              <label class="radio-inline">
+                <input type="radio" name="queryCriteria" value="account_level" [(ngModel)]="editUserData.queryCriteria" required>Account Level</label>
+            </div>
+        </div>
+
+        <div class="form-group row" *ngIf="adhocType != 'FileUpload' || adhocType =='' || adhocType == 'null'">
+          <label class="col-sm-2 control-label">SMS Type :</label>
+          <div class="col-sm-10">
+            <label class="radio-inline">
+              <input type="radio" name="textType" value="Static" [(ngModel)]="editUserData.textType" required>Static text</label>
+            <label class="radio-inline">
+              <input type="radio" name="textType" value="Dynamic" [(ngModel)]="editUserData.textType" required>Variable text</label>
+          </div>
+        </div>
+
+        <div class="form-group row" *ngIf="adhocType != 'FileUpload' || adhocType =='' || adhocType == 'null'">
+          <label class="col-sm-2 control-label">SMS Template :</label>
+          <div class="col-sm-10">
+            <textarea class="form-control" name="messageText" rows="3" placeholder="Enter SMS text" [(ngModel)]="editUserData.messageText"
+              (keyup)="getVariableBox($event)" required></textarea>
+            <span class="has-error"></span>
+            <br>
+
+            <div class="form-group row" *ngFor="let VTB of variableTextbox; let vincre = index;">
+              {{VTB}}
+              <label class="col-sm-2 control-label">Field {{vincre + 1}} :</label>
+              <div class="col-sm-10">
+                <select class="form-control" name="dynamicList_{{vincre}}" [(ngModel)]="dynamicList[vincre]" [ngModelOptions]="{standalone: true}"
+                  (change)="adddynamicList($event)">
+                  <option value="" selected>Select Variable</option>
+                  <option *ngFor="let VTBV of variableTextBoxValue" [disabled]="VTBV.isDisable" [value]="VTBV.value">{{VTBV.name}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="form-group row" *ngIf="adhocType != 'FileUpload' || adhocType =='' || adhocType == 'null'">
+          <label class="col-sm-2 control-label is-conditional">Is Conditional :</label>
+          <div class="col-sm-10">
+            <label class="switch">
+              <input type="checkbox" name="isConditional" [(ngModel)]="isConditional" (change)="fatchConditionalTemp(0)">
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group row" *ngIf="isConditional">
+          <label class="col-sm-2 control-label">Conditions :</label>
+          <div class="col-sm-10">
+
+            <div class="for-conditions" id="addLinkContainer">
+              <div class="form-group row" *ngFor="let row of ' '.repeat(addLinkCount).split(''); let feildCount = index; " id="form_group_{{feildCount + 1}}">
+
+                <div id="dy_{{feildCount + 1}}">
+                  <div class="col-sm-2">
+
+                    <select class="form-control" id="conSelect_{{feildCount + 1}}" name="conSelect_{{feildCount + 1}}" (change)="adddynamicConditions($event,0)"
+                      ngModel>
+                      <option *ngFor="let CSL of conditionalSelectList" [value]="CSL.value">{{CSL.name}}</option>
+                    </select>
+                  </div>
+
+                  <div class="col-sm-2">
+                    <select class="form-control" id="conOperator_{{feildCount + 1}}" name="conOperator_{{feildCount + 1}}" (change)="addSubDynamicConditions($event,(feildCount + 1) , 0)"
+                      ngModel>
+                      <option *ngFor="let DCL of dynamicConditionsList[feildCount + 1]" [value]="DCL">{{DCL}}</option>
+                    </select>
+                  </div>
+
+                  <div class="col-sm-3" *ngIf="dynamicConditionsTextCondition[feildCount + 1] == 'NO_CHANGE'">
+                    <input name="conText_{{feildCount + 1}}" id="conText_{{feildCount + 1}}" type="{{dynamicConditionsText[feildCount + 1]}}"
+                      class="form-control" ngModel>
+                  </div>
+
+
+                  <div class="col-sm-3" *ngIf="dynamicConditionsTextCondition[feildCount + 1] == 'SELECT_IN'">
+                    <select class="form-control" id="conText_{{feildCount + 1}}" name="conText_{{feildCount + 1}}" ngModel multiple>
+                      <option *ngFor="let DCTS of dynamicConditionsTextSelect[feildCount + 1]" [value]="DCTS.key">{{DCTS.value}}</option>
+                    </select>
+                  </div>
+
+                  <div class="col-sm-3" *ngIf="dynamicConditionsTextCondition[feildCount + 1] == 'DATE_CONDTIONS'">
+                    <select class="form-control" id="conText_{{feildCount + 1}}" name="conText_{{feildCount + 1}}" ngModel>
+                      <option *ngFor="let item of ' '.repeat(12).split('');let m = index" [value]="m+1">{{m+1}} Month</option>
+                    </select>
+                  </div>
+
+                  <div class="col-sm-3" *ngIf="dynamicConditionsTextCondition[feildCount + 1] == 'CURRENT_DATE'">
+                      <select class="form-control" id="conText_{{feildCount + 1}}" name="conText_{{feildCount + 1}}" ngModel>
+                        <option value="" selected disabled>Select</option>
+                        <option value="today">today</option>
+                      </select>
+                    </div>
+                
+
+                  <div class="col-sm-6" *ngIf="dynamicConditionsTextCondition[feildCount + 1] == 'DOUBLE'">
+                    <div class="col-sm-6">
+                      <input id="conText_{{feildCount + 1}}_1" name="conText_{{feildCount + 1}}_1" type="{{dynamicConditionsText[feildCount + 1]}}"
+                        class="form-control  double-text" ngModel>
+                    </div>
+                    <div class="col-sm-6">
+                      <input id="conText_{{feildCount + 1}}_2" name="conText_{{feildCount + 1}}_2" type="{{dynamicConditionsText[feildCount + 1]}}"
+                        class="form-control double-text" ngModel>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-1">
+                    <a (click)="removeLink(feildCount + 1)">
+                      <i class="fa fa-minus-circle icon-large"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-3 add-link-button">
+              <button type="button" class="btn btn-block btn-default" (click)="addLink()">
+                <i class="fa fa-plus"></i> &nbsp; Add Field</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-2 control-label">Start Date :</label>
+          <div class="col-sm-4">
+            <input type="date" name="startDate" class="form-control" [(ngModel)]="editUserData.startDate" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-2 control-label">End Date :</label>
+          <div class="col-sm-4">
+            <input type="date" name="endDate" class="form-control" [(ngModel)]="editUserData.endDate" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
+          </div>
+        </div>
+
+      </div>
+      <div class="box-footer">
+        <button type="reset" (click)="closeEditTemp();" class="btn btn-default">Cancel</button>
+        <button type="submit" class="btn btn-info pull-right" [disabled]="!smsForm.form.valid">Update</button>
+      </div>
+    </form>
+  </div>
+
+</div>
+<div class="overlay" id="overlay">
+  <i class="fa fa-refresh fa-spin"></i>
+</div>

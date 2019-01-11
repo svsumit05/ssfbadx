@@ -1,0 +1,24 @@
+.row {
+    margin-left: -2px !important;
+}
+
+:host >>> div#ng2-opd-popup-main {
+    top: -3% !important;
+}
+
+.invoice-heading{
+    text-align: center;
+}
+
+.large-checkbox {
+    width: 30px;
+    height: 30px;
+}
+input.form-control.approver1{
+    width: 50%;
+    float: left;
+}
+input.form-control.approver2{
+    width: 50%;
+    float: right;
+}

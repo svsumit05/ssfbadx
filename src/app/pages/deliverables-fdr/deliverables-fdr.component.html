@@ -1,0 +1,374 @@
+<div class="box">    
+    <div class="box-body">
+        <form #deliverablesForm="ngForm" (ngSubmit)="fatchDeliverablesData()">
+            <div class="row">
+
+                <div class="col-xs-2">   
+                    <label>Select Deliverables Type</label>
+                    <select class="form-control" name="deliverables_type" (change)="resetACID()" [(ngModel)]="deliverables_data.deliverables_type" required>
+                        <option value="" [disabled]="true">Select item</option>
+                        <option value="FDR">FDR</option>
+                        <option value="WelcomeKit">Welcome Kit</option>
+                        <option value="ChequeBook">Reissue Cheque Book</option>
+                        <option value="DebitCard">Reissue Debit Card</option>
+                    </select>    
+                </div>
+
+
+                <div class="col-xs-2">    
+                    <label>Search By</label>
+                    <select class="form-control" name="search_by" (change)="resetACID()"  [(ngModel)]="deliverables_data.search_by" required>
+                        <option value="" [disabled]="true">Select item</option>
+                        <option value="account_no">Account No</option>
+                        <option value="cust_id">Customer Id</option>
+                        <option value="awb_no">AWB No</option>
+                    </select>      
+                </div>
+
+                <div class="col-xs-3">
+                    <label>Enter Account No OR Customer ID</label>
+                    <input type="text" class="form-control" placeholder="" name="search_id"  [(ngModel)]="deliverables_data.search_id" required  (input)="resetInfo()">
+                </div>
+
+                <div class="track-record">                       
+                    <button type="submit" class="btn btn-primary" [disabled]="!deliverablesForm.form.valid">Search</button>
+                </div>
+
+            </div>
+        </form> 
+
+        <div class="deliverables-expanded">
+            <tabset #staticTabs>
+
+                <tab (select)="tab_deliverables()" heading="Deliverables Details" class="tab-content">
+
+                    <div class="box-body table-responsive no-padding">
+                        <table class="table table-hover">
+                            <tbody>
+                                <tr>
+                                    <th>Branch</th>                                    
+                                    <th>Date of AC open/issuance</th>
+                                    <th>Customer Name</th>
+                                    <th>Customer Id</th>
+                                    <th>A/C No</th>
+                                    <th>Customer Address</th>
+                                    <th *ngIf="deliverables_data.deliverables_type != 'WelcomeKit'">Deliverable Type</th>
+                                    <th *ngIf="deliverables_data.deliverables_type == 'WelcomeKit'">Deliverable issued</th>
+                                </tr>
+
+                                <tr *ngFor="let dData of api_responce_server">
+                                    <td>{{dData.branch_name}}</td>
+                                    <td *ngIf="deliverables_data.deliverables_type == 'FDR'">
+                                            {{ dData.date_of_deposite}}                                        
+                                    </td>                                    
+                                    <td *ngIf="deliverables_data.deliverables_type != 'FDR' && deliverables_data.deliverables_type != 'WelcomeKit'">
+                                        {{ dData.account_open_date}}                                        
+                                    </td>
+                                    <td *ngIf="deliverables_data.deliverables_type == 'WelcomeKit'">
+                                            {{ dData.activation_date}}
+                                    </td>
+                                    <td>{{dData.cust_name}}</td>
+                                    <td>{{dData.cust_id}}</td>
+                                    <td>{{dData.ac_no}}</td>
+                                    <td>{{dData.cust_address}} <span *ngIf="dData.cust_mobile_no"> MOB : {{dData.cust_mobile_no}} </span></td>                           
+                                    <td *ngIf="deliverables_data.deliverables_type != 'WelcomeKit'">
+                                        <p> {{deliverables_data.deliverables_type}} </p>
+                                    </td>
+                                    <td *ngIf="deliverables_data.deliverables_type == 'WelcomeKit'">
+                                        <p> WL {{( dData.chequebook_required == '' ||  dData.chequebook_required == 'N' ) ? '' : ', CHQ'}}  {{( dData.debitcard_required == '' ||  dData.debitcard_required == 'N' ) ? '' : ', DC'}} </p>
+                                    </td>
+                                </tr>
+
+                            </tbody></table>
+                    </div>
+
+
+                </tab>
+
+                <tab (select)="tab_collision()" heading="Collation Details" class="tab-content">
+
+                    <div class="box-body table-responsive no-padding">
+                        <table class="table table-hover">
+                            <tbody>
+                                <tr>
+                                    <th>Collation Date</th>
+                                    <th>Dispatched Date</th>
+                                    <th>Vendor Name</th>
+                                    <th>Deliverables Type</th>
+                                    <th *ngIf="deliverables_data.deliverables_type == 'WelcomeKit'">Deliverables collated</th>
+                                </tr>
+                                <tr *ngFor="let dData of api_responce_server">
+                                    <td>
+                                        <div *ngIf="dData.collation_date != 'NA'">
+                                            {{ dData.collation_date }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div *ngIf="dData.dispatch_date != 'NA'">
+                                            {{ dData.dispatch_date }}
+                                        </div>
+                                    </td>
+                                    <td>{{dData.vendor_name}}</td>                                    
+                                    <td>{{dData.deliverable_type}}</td>
+                                    <td *ngIf="deliverables_data.deliverables_type == 'WelcomeKit'">
+                                        <p> 
+                                            {{dData.welcomekit == 'Y' ? 'WL': ''}}{{dData.chequebook == 'Y'  ? ', CHQ': ''}} {{dData.debitcard == 'Y'  ? ', DC': ''}} </p>
+                                    </td>
+                                </tr>
+
+                            </tbody></table>
+                    </div>
+
+
+                </tab>
+
+                <tab (select)="tab_dispatch()" heading="Dispatch Details" class="tab-content">
+
+                    <div class="box-body table-responsive no-padding">
+                        <table class="table table-hover">
+                            <tbody><tr>
+                                    <th>Courier Name</th>
+                                    <th>AWB No</th>
+                                    <th>Booking Date</th>
+                                    <th>Status</th>
+                                    <th>Delivery Date</th>
+                                </tr>
+                                <tr *ngFor="let dData of api_responce_server">
+                                    <td>{{dData.courier_name}}</td>
+                                    <td>{{dData.awb_no}}</td>
+                                    <td>
+                                        <div *ngIf="dData.booking_date != 'NA'">
+                                            {{ dData.booking_date }}
+                                        </div>
+                                    </td>
+                                    <td>{{dData.status}}</td>
+                                    <td>
+                                        <div *ngIf="dData.delivery_date != 'NA'">
+                                            {{ dData.delivery_date }}
+                                        </div>
+                                    </td>                                    
+                                </tr>
+
+                            </tbody></table>
+                    </div>
+
+
+                </tab>      
+
+                <tab (select)="tab_rto()" heading="RTO Details" class="tab-content">
+                    <div class="box-body table-responsive no-padding">
+                        <table class="table table-hover">
+                            <tbody>
+                                <tr>
+                                    <th>RTO Date</th>
+                                    <th>RTO Reason</th>
+                                    <th>RTO Frwd Date</th>
+                                    <th>RTO Delivery Date</th>
+                                    <th>RTO - Branch Receipt</th>
+                                    <th>RTO - BR Recpt. Date</th>
+                                </tr>
+                                <tr *ngFor="let dData of api_responce_server">
+                                    <td>
+                                        <div *ngIf="dData.rto_date != 'NA'">
+                                            {{ dData.rto_date }}
+                                        </div>
+                                    </td>
+                                    <td>{{dData.rto_reason}}</td>
+                                    <td>
+                                        <div *ngIf="dData.rto_forwarded_date != 'NA'">
+                                            {{ dData.rto_forwarded_date}}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div *ngIf="dData.rto_delivery_date != 'NA'">
+                                            {{ dData.rto_delivery_date }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div *ngIf="dData.status != 'DELIVERED' && dData.status != ''">
+                                            <select class="form-control" name="temp_rtoReceipt" (input)="u_RTOStatus($event)"  [value]="dData.rto_receipt" [disabled]="dData.status == 'DELIVERED' || dData.rto_receipt_time != 'NA'" *ngIf="dData.status != ''">
+                                                <option [disabled]="true" selected>Select Item</option>
+                                                <option value="Yes">Yes</option>
+                                            </select>
+                                        </div>    
+                                    </td>
+                                    <td>
+                                        <div *ngIf="dData.status != 'DELIVERED' && dData.status != '' && dData.rto_receipt_time == 'NA'">
+                                            <datetime [timepicker]="false" [datepicker]="datepickerOpts" [ngModel]="temp_rtoReceiptTime" (ngModelChange)="setRTOStatus($event,dData.ac_no,dData.id)"></datetime>
+                                        </div>
+                                        <div *ngIf="dData.rto_receipt_time != 'NA'">
+                                            {{ dData.rto_receipt_time }}
+                                        </div>
+                                    </td>
+
+                                </tr>
+
+                            </tbody></table>
+                    </div>
+
+
+                </tab>                
+
+                <tab (select)="tab_branch_dispatch()" heading="Branch Action" class="tab-content">
+
+                    <div class="box-body table-responsive no-padding">
+                        <table class="table table-hover">
+                            <tbody>
+                                <tr>
+                                    <th>RTO - Branch Receipt</th>
+                                    <th>Action</th>
+                                    <th>Action By</th>
+                                    <th>AWB No</th>
+                                    <th>Courier Name</th>
+                                    <th>Status</th>
+                                    <th>Date/Reason</th>
+                                    <th>Remark</th>
+                                </tr>
+                                <tr *ngFor="let dData of api_responce_server">
+                                    <td>
+                                        {{ dData.rto_receipt }}
+                                    </td>
+                                    <td>
+                                        <div *ngIf="dData.isActive">
+                                            <div *ngIf="dData.rto_receipt != '' && dData.action == '' ">
+                                                <select class="form-control" [value]="dData.action" [disabled]="dData.status == 'DELIVERED' || dData.rto_receipt == 'No'" (change)="updateRtoBranchStatus($event)">
+                                                    <option [disabled]="true">Select Item</option>
+                                                    <option value="Handover to customer at branch">Handover to customer at branch</option>
+                                                    <option value="Dispatched to customer" [disabled]="!dData.canDistroy">Dispatched to customer</option>
+                                                    <option value="Send To CPU">Send to CPU for destruction</option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="dData.action !=''">
+                                            <p>{{dData.action}}</p>
+                                            <p>{{ dData.action_time }}</p>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div *ngIf="dData.rto_receipt != 'Send To CPU' && dData.rto_receipt != '' && dData.action == '' && rtoData.branchActionTime2 == ' ' ">
+                                            <datetime [timepicker]="false" [datepicker]="datepickerOpts" [ngModel]="rtoData.branchActionTime2" (ngModelChange)="updateRtoStatus($event,dData.ac_no,dData.id)"></datetime>                                        
+                                        </div>                                         
+                                        {{rtoData.branchActionTime2}}
+                                        {{dData.action_by}}
+                                    </td>
+                                    <td>
+                                        <input type="text" id="action_aws_no_{{dData.ac_no}}" class="form-control" placeholder="AWB No" disabled  *ngIf="dData.action == ''">
+                                               {{dData.action_aws_no}}      
+                                    </td>
+                                    <td>
+                                        <input type="text" id="action_courier_name_{{dData.ac_no}}" class="form-control" placeholder="Courier Name" disabled (blur)="updateCourierStatus($event,dData.ac_no,dData.id)" *ngIf="dData.action == ''">
+                                               {{dData.action_courier_name}}
+                                    </td>
+                                    <td>
+                                        <div *ngIf="dData.branch_action == ''">
+                                            <div *ngIf="dData.action == 'Dispatched to customer'">
+                                                <select class="form-control" (change)="selectBranchAction($event,dData.ac_no)">
+                                                    <option [disabled]="true">Select Item</option>
+                                                    <option value="Delivered">Delivered</option>
+                                                    <option value="RTO">RTO</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        {{dData.branch_action}}
+                                    </td>
+                                    <td>
+
+                                        <div *ngIf="dData.branch_action == '' && dData.action == 'Dispatched to customer' ">
+
+                                            <div *ngIf="showBranchActionDate">
+                                                <datetime [timepicker]="false" [datepicker]="datepickerOpts" [ngModel]="rtoData.branch_action_date" (ngModelChange)="updateBranchAction($event,dData.ac_no,'byDate',dData.id)"></datetime>
+                                            </div>
+
+                                            <div *ngIf="showBranchActionReason" (change)="updateBranchAction($event,dData.ac_no,'byReason',dData.id)">
+                                                <select class="form-control">
+                                                    <option [disabled]="true">Select Reason</option>
+                                                    <option value="No service area"> No service area </option>
+                                                    <option value="Short/incomplete address"> Short/incomplete address </option>
+                                                    <option value="Consignee shifted"> Consignee shifted </option>
+                                                    <option value="Could not locate"> Could not locate </option>
+                                                    <option value="Refuse to accept"> Refuse to accept </option>
+                                                    <option value="Door locked"> Door locked </option>
+                                                    <option value="No such consignee"> No such consignee </option>
+                                                    <option value="Other"> Other </option>
+                                                </select>                                        
+                                            </div>
+
+                                        </div>    
+
+                                        <div *ngIf="dData.branch_action_reason !='NA'">
+                                            {{(dData.branch_action_time != 'NA') ? dData.branch_action_time : ''}} 
+                                        </div>
+                                        <div *ngIf="dData.branch_action_reason">
+                                            {{dData.branch_action_reason}}
+                                            <br>
+                                            <span><b>Action Date</b> : {{dData.branch_action_time}}</span>
+                                            <br>
+                                            <span><b>Action By</b> : {{dData.branch_action_by}}</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div *ngIf="dData.remark == '' && dData.action != '' && dData.action != 'Send To CPU' ">
+                                            <textarea (change)="updateRemark($event,dData.ac_no,dData.id)"  ></textarea>
+                                        </div>
+                                        {{dData.remark}}
+                                    </td> 
+                                </tr>
+
+                            </tbody></table>
+                    </div>
+                </tab>         
+
+                <tab (select)="tab_deliverables_destruction()" heading="Deliverables Destruction" class="tab-content">
+                    <div class="box-body table-responsive no-padding">
+                        <table class="table table-hover">
+                            <tbody>
+                                <tr>
+                                    <th>Action</th>                                    
+                                    <th>Date</th>
+                                    <th>AWB No</th>
+                                    <th>Courier Name</th>                               <th>CPU Action</th>         
+                                </tr>
+
+                                <tr *ngFor="let dData of api_responce_server">                                 
+                                    <td *ngIf="dData.rto_action == ''">      
+                                        <select class="form-control" name="rtoDataPart2_rtoAction" [(ngModel)]="rtoDataPart2.rtoAction">
+                                            <option [disabled]="true" selected>Select Item</option>
+                                            <option value="Send To CPU">Send To CPU</option>
+                                        </select>
+                                    </td>
+                                    <td *ngIf="dData.rto_action == ''">
+                            <datetime [timepicker]="false" [datepicker]="datepickerOpts" [(ngModel)]="rtoDataPart2.rtoActionDate"></datetime>       
+                            </td>
+                            <td *ngIf="dData.rto_action == ''">
+                                <input type="text"  class="form-control" placeholder="AWB No" name="rtoDataPart2_rtoAWBNO" [(ngModel)]="rtoDataPart2.rtoAWBNO">
+                            </td>
+                            <td *ngIf="dData.rto_action == ''">
+                                <input type="text"  class="form-control" placeholder="Courier Name" name="rtoDataPart2_rtoCourierName" [(ngModel)]="rtoDataPart2.rtoCourierName" (blur)="updateDestructionStatus(dData.id,dData.ac_no)">                                   
+                            </td>  
+
+                            <td *ngIf="dData.rto_action != ''">
+                                {{dData.rto_action}}
+                            </td>
+                            <td *ngIf="dData.rto_action != ''">
+                                {{dData.rto_action_date}}
+                            </td>
+                            <td *ngIf="dData.rto_action != ''">
+                                {{dData.rto_awb_no}}
+                            </td>
+                            <td *ngIf="dData.rto_action != ''">
+                                {{dData.rto_courier_name}}
+                            </td>
+                            <td>
+                               {{dData.cpu_action}}
+                            </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </tab>
+            </tabset>
+        </div>
+
+
+    </div>

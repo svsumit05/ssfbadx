@@ -1,0 +1,23 @@
+.add-new-order-button {
+    margin-bottom: 2%;
+}
+
+.dataTables_length {
+    padding-right: 1%;
+    padding-left: 1%;
+}
+
+:host >>> div#ng2-opd-popup-main {
+    top: -3% !important;
+}
+
+.linefix {
+    line-height: 34px;
+}
+p.head-table {
+    text-align: center;
+    padding: 0.50%;
+    font-weight: bold;
+    background-color: #f4f4f4;
+    margin: 0 0 0px;
+}

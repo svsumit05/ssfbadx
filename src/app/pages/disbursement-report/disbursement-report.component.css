@@ -1,0 +1,39 @@
+:host >>> div.dataTables_filter {
+    /* margin-top: -34px;*/
+}
+
+:host >>> div#ng2-opd-popup-main {
+    top: -3% !important;
+}
+
+:host >>> input[type="search"] {
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+}
+:host >>> div.dataTables_length {
+    margin-top: 1%;
+}
+:host >>> div.dt-buttons{
+    padding-top: 10px;
+    padding-left: 8px;
+}
+#controls { margin-bottom: 40px; text-align: center;}
+#controls button {
+  margin: 0 5px;
+  min-width: 40px;
+  color: #555;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 30px;
+}
+#controls button:hover { color: #333; }
+
+:host >>> .row {
+    margin-bottom: 10px;
+}

@@ -1,0 +1,270 @@
+<div>
+    <form class="form-inline" >        
+        <div class="form-group">
+            <label>Select Vendor</label>
+            <select class="form-control">
+                <option >Seshaasai</option>
+            </select>
+        </div>
+
+        <br><br>
+        <div class="row">
+            <div class="col-xs-2">   
+                <select class="form-control"  [(ngModel)]="invoice_data.deliverables_type" [ngModelOptions]="{standalone: true}" (ngModelChange)="onDelChange()">
+                        <option value="" [disabled]="true" >Select item</option>
+                    <option value="FDR">FDR</option>
+                    <option value="WelcomeKit">Welcome Kit</option>
+                    <option value="ChequeBook">Cheque Book</option>
+                    <option value="DebitCard">Debit Card</option>
+                </select>    
+            </div>
+
+            <div class="col-lg-3">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        From Date
+                    </span>
+                    <datetime [timepicker]="false" [datepicker]="datepickerOpts" [(ngModel)]="invoice_data.prod_from_date" [ngModelOptions]="{standalone: true}"></datetime>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        To Date
+                    </span>
+                    <datetime [timepicker]="false" [datepicker]="datepickerOpts" [(ngModel)]="invoice_data.prod_to_date" [ngModelOptions]="{standalone: true}"></datetime>
+                </div>
+            </div>
+            <div class="track-record">                       
+                <button type="submit" class="btn btn-primary" (click)="getProductionData()">Submit</button>
+            </div>
+        </div>
+
+        <br>
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-body no-padding">
+                    <table class="table">
+                        <tbody>
+                            <tr style="border-bottom: 0.5px #cccccc47 solid;">
+                                <th colspan="2">Product</th>
+                                <th>Bank Count</th>
+                                <th>Vendor Count</th>
+                                <th>Rate</th>
+                                <th>Amount</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                            <tr colspan="4" *ngIf="invoice_data.deliverables_type == 'FDR'">
+                                <td style="width: 9%;"><strong>FDR</strong></td>
+                            </tr>
+                            <tr  *ngIf="invoice_data.deliverables_type == 'FDR'">
+                                <td>&nbsp;</td>
+                                <td>Printing & Collation</td>                               
+                                <td><a href="#" (click)="downloadProductionReport('type1');">{{deliverablesSubType1.part1BankCount}}</a></td>
+                                <td><input type="number" #varbank_f_pr_count="ngModel" [(ngModel)]="deliverablesSubType1.part1VendorCount" [ngModelOptions]="{standalone: true}" (input)="onChange($event,deliverablesSubType1.part1BankCount)" [disabled]="disableEditMode"/></td>
+                                <td>{{deliverablesSubType1.part1Rate}}</td>
+                                <td>{{deliverablesSubType1.part1VendorCount * deliverablesSubType1.part1Rate}}</td>
+                            </tr>
+                            <tr style="border-bottom: 0.5px #cccccc47 solid;"  *ngIf="invoice_data.deliverables_type == 'FDR'">
+                                <td>&nbsp;</td>
+                                <td>Envelope</td>                               
+                                <td><a href="#" (click)="downloadProductionReport('type2');">{{deliverablesSubType2.part2BankCount}}</a></td>
+                                <td><input type="number" #varbank_f_en_count="ngModel"  [(ngModel)]="deliverablesSubType2.part2VendorCount" [ngModelOptions]="{standalone: true}" (input)="onChange($event,deliverablesSubType2.part2BankCount)" [disabled]="disableEditMode"/></td>                         
+                                <td>{{deliverablesSubType2.part2Rate}}</td>
+                                <td>
+                                    {{deliverablesSubType2.part2VendorCount * deliverablesSubType2.part2Rate}}
+                                </td>
+                                <td><button type="submit" (click)="createInvoice()" class="btn btn-info pull-right"  *ngIf="invoice_data.invoiceMode == 'Edit'">Create Invoice</button>
+                                    <button type="submit" (click)="printInvoice()" class="btn btn-info pull-right"  *ngIf="this.invoice_data.invoiceMode == 'View'">Print</button></td>
+                            </tr>
+
+                            <tr colspan="4"  *ngIf="invoice_data.deliverables_type == 'WelcomeKit'">
+                                <td style="width: 9%;"><strong>Welcome Kit</strong></td>
+                            </tr>
+                            <tr  *ngIf="invoice_data.deliverables_type == 'WelcomeKit'">
+                                <td>&nbsp;</td>
+                                <td>Welcome Letter</td>                               
+                                <td><a href="#" (click)="downloadProductionReport('type1');">{{deliverablesSubType1.part1BankCount}}</a></td>
+                                <td><input type="number" #varbank_wl_count="ngModel"  [(ngModel)]="deliverablesSubType1.part1VendorCount" [ngModelOptions]="{standalone: true}" (input)="onChange($event,deliverablesSubType1.part1BankCount)" [disabled]="disableEditMode"/></td>
+                                <td>{{deliverablesSubType1.part1Rate}}</td>
+                                <td>{{deliverablesSubType1.part1VendorCount * deliverablesSubType1.part1Rate}}</td>
+
+                            </tr>
+                            <tr style="border-bottom: 0.5px #cccccc47 solid;"  *ngIf="invoice_data.deliverables_type == 'WelcomeKit'">
+                                <td>&nbsp;</td>
+                                <td>Welcome Letter Collation</td>                               
+                                <td><a href="#" (click)="downloadProductionReport('type2');">{{deliverablesSubType2.part2BankCount}}</a></td>
+                                <td><input type="number"  #varbank_wlc_count="ngModel" [(ngModel)]="deliverablesSubType2.part2VendorCount" [ngModelOptions]="{standalone: true}" (input)="onChange($event,bank_wlc_count)" [disabled]="disableEditMode"/></td>
+                                <td>{{deliverablesSubType2.part2Rate}}</td>
+                                <td>{{deliverablesSubType2.part2VendorCount * deliverablesSubType2.part2Rate}}</td>
+                                <td>
+                                    <button type="submit" (click)="createInvoice()" class="btn btn-info pull-right"  *ngIf="invoice_data.invoiceMode == 'Edit'">Create Invoice</button>
+                                    <button type="submit" (click)="printInvoice()" class="btn btn-info pull-right"  *ngIf="this.invoice_data.invoiceMode == 'View'">Print</button>
+                                </td>
+                            </tr>
+
+
+                            <tr colspan="4" *ngIf="invoice_data.deliverables_type == 'DebitCard'">
+                                <td style="width: 9%;"><strong>Debit Card</strong></td>
+                            </tr>
+                            <tr *ngIf="invoice_data.deliverables_type == 'DebitCard'">
+                                <td>&nbsp;</td>
+                                <td>608045</td>                               
+                                <td><a href="#" (click)="downloadProductionReport('type1');">{{deliverablesSubType1.part1BankCount}}</a></td>
+                                <td><input type="number" #varbank_debit_45_count="ngModel"  [(ngModel)]="deliverablesSubType1.part1VendorCount" [ngModelOptions]="{standalone: true}" (input)="onChange($event,deliverablesSubType1.part1BankCount)"  [disabled]="disableEditMode"/></td>
+                                <td>{{deliverablesSubType1.part1Rate}}</td>
+                                <td>{{deliverablesSubType1.part1VendorCount * deliverablesSubType1.part1Rate}}</td>
+                            </tr>
+                            <tr style="border-bottom: 0.5px #cccccc47 solid;" *ngIf="invoice_data.deliverables_type == 'DebitCard'">
+                                <td>&nbsp;</td>
+                                <td>608075</td>                               
+                                <td><a href="#" (click)="downloadProductionReport('type2');">{{deliverablesSubType2.part2BankCount}}</a></td>
+                                <td><input type="number" #varbank_debit_75_count="ngModel"  [(ngModel)]="deliverablesSubType2.part2VendorCount" [ngModelOptions]="{standalone: true}" (input)="onChange($event,deliverablesSubType2.part2BankCount)"  [disabled]="disableEditMode"/></td>
+                                <td>{{deliverablesSubType2.part2Rate}}</td>
+                                <td>{{deliverablesSubType2.part2VendorCount * deliverablesSubType2.part2Rate}}</td>
+                                <td>
+                                    <button type="submit" (click)="createInvoice()" class="btn btn-info pull-right"  *ngIf="invoice_data.invoiceMode == 'Edit'">Create Invoice</button>
+                                    <button type="submit" (click)="printInvoice()" class="btn btn-info pull-right"  *ngIf="this.invoice_data.invoiceMode == 'View'">Print</button>
+                                </td>
+                            </tr>
+
+                            <tr colspan="4" *ngIf="invoice_data.deliverables_type == 'ChequeBook'">
+                                <td style="width: 9%;"><strong>Cheque Book</strong></td>
+                            </tr>
+                            <tr *ngIf="invoice_data.deliverables_type == 'ChequeBook'">
+                                <td>&nbsp;</td>
+                                <td>20 Leaf</td>                               
+                                <td><a href="#" (click)="downloadProductionReport('type1');">{{deliverablesSubType1.part1BankCount}}</a></td>
+                                <td><input type="number"  #varbank_chq_20_count="ngModel" [(ngModel)]="deliverablesSubType1.part1VendorCount" [ngModelOptions]="{standalone: true}" (input)="onChange($event,deliverablesSubType1.part1BankCount)"  [disabled]="disableEditMode" /></td>
+                                <td>{{deliverablesSubType1.part1Rate}}</td>
+                                <td>{{deliverablesSubType1.part1VendorCount * deliverablesSubType1.part1Rate}}</td>
+                            </tr>
+                            <tr style="border-bottom: 0.5px #cccccc47 solid;" *ngIf="invoice_data.deliverables_type == 'ChequeBook'">
+                                <td>&nbsp;</td>
+                                <td>25 Leaf</td>                               
+                                <td><a href="#" (click)="downloadProductionReport('type2');">{{deliverablesSubType2.part2BankCount}}</a></td>
+                                <td><input type="number"  #varbank_chq_25_count="ngModel"  [(ngModel)]="deliverablesSubType2.part2VendorCount" [ngModelOptions]="{standalone: true}" (input)="onChange($event,deliverablesSubType2.part2BankCount)" [disabled]="disableEditMode" /></td>
+                                <td>{{deliverablesSubType2.part2Rate}}</td>
+                                <td>{{deliverablesSubType2.part2VendorCount * deliverablesSubType2.part2Rate}}</td>
+                            </tr>
+                            <tr style="border-bottom: 0.5px #cccccc47 solid;" *ngIf="invoice_data.deliverables_type == 'ChequeBook'">
+                                <td>&nbsp;</td>
+                                <td>Staffing</td>                               
+                                <td>--</td>
+                                <td><input type="number"  #varbank_staffing_count="ngModel"  [(ngModel)]="deliverablesSubType3.part3VendorCount" [ngModelOptions]="{standalone: true}" [disabled]="disableEditMode" /></td>
+                                <td>{{deliverablesSubType3.part3Rate}}</td>
+                                <td>{{deliverablesSubType3.part3VendorCount * deliverablesSubType3.part3Rate}}</td>
+                            </tr>
+                            <tr style="border-bottom: 0.5px #cccccc47 solid;" *ngIf="invoice_data.deliverables_type == 'ChequeBook'">
+                                <td>&nbsp;</td>
+                                <td>Collation</td>                               
+                                <td>--</td>
+                                <td><input type="number"  #varbank_collation_count="ngModel"  [(ngModel)]="deliverablesSubType4.part4VendorCount" [ngModelOptions]="{standalone: true}" [disabled]="disableEditMode" /></td>
+                                <td>{{deliverablesSubType4.part4Rate}}</td>
+                                <td>{{deliverablesSubType4.part4VendorCount * deliverablesSubType4.part4Rate}}</td>
+                                <td>
+                                    <button type="submit" (click)="createInvoice()" class="btn btn-info pull-right"  *ngIf="invoice_data.invoiceMode == 'Edit'">Create Invoice</button>
+                                    <button type="submit" (click)="printInvoice()" class="btn btn-info pull-right"  *ngIf="this.invoice_data.invoiceMode == 'View'">Print</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<popup #createinvoice (confirmClick)="submitInvoice()">
+
+    <div class="col-md-12" id="print-invoice-section">
+        <div class="box box-default">                      
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td colspan="5" class="invoice-heading"><strong>Checklist for Vendor Invoice Approval</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Nature of Expense</td>
+                        <td>Goods</td>
+                        <td><input type="checkbox" class="large-checkbox"></td>
+                        <td>Service </td>
+                        <td><input type="checkbox" class="large-checkbox"></td>
+                    </tr>
+                    <tr>
+                        <td>In Case of Goods</td>
+                        <td>Goods received</td>
+                        <td><input type="checkbox" class="large-checkbox"></td>
+                        <td>Delivery Challan attached </td>
+                        <td><input type="checkbox" class="large-checkbox"></td>
+                    </tr>
+                    <tr>
+                        <td>In case of Service mention nature of Service</td>
+                        <td colspan="4"><input type="email" class="form-control" name="nature_of_Service" ></td>
+                    </tr>
+                    <tr>
+                        <td>Availability of Contract</td>
+                        <td><input type="checkbox" class="large-checkbox"></td>
+                        <td>Yes</td>
+                        <td><input type="checkbox" class="large-checkbox"></td>
+                        <td>No</td>
+                    </tr>
+                    <tr>
+                        <td>Approval as per DFP Clause number</td>
+                        <td colspan="4"><input type="email" class="form-control" name="dfp_clause_number" ></td>
+                    </tr>
+                    <tr>
+                        <td>Approval as per DFP</td>
+                        <td>Individually</td>
+                        <td><input type="checkbox" class="large-checkbox"></td>
+                        <td>Jointly</td>
+                        <td><input type="checkbox" class="large-checkbox"></td>
+                    </tr>
+                    <tr>
+                        <td>Service Provider Name</td>
+                        <td colspan="4"><input type="text" class="form-control" name="vendor_name" [(ngModel)]="invoice_data.prod_vendor" [ngModelOptions]="{standalone: true}"></td>
+                    </tr>
+                    <tr>
+                        <td>Invoice Number</td>
+                        <td colspan="4"><input type="text" class="form-control" name="invoice_number" [(ngModel)]="invoice_data.invoice_number" [ngModelOptions]="{standalone: true}"></td>
+                    </tr>
+                    <tr>
+                        <td>Invoice for period</td>
+                        <td colspan="4"><input type="text" class="form-control" name="invoice_for_period" [(ngModel)]="invoice_data.invoice_for_period" [ngModelOptions]="{standalone: true}"></td>
+                    </tr>
+                    <tr>
+                        <td>Bill Amount</td>
+                        <td colspan="4"><input type="text" class="form-control" name="bill_amount" [(ngModel)]="invoice_data.bill_amount" [ngModelOptions]="{standalone: true}" disabled ></td>
+                    </tr>
+                    <tr>
+                        <td>Penalty Amount ( if any )</td>
+                        <td colspan="4"><input type="text" class="form-control" name="penalty_amount" [(ngModel)]="invoice_data.penalty_amount" [ngModelOptions]="{standalone: true}" (ngModelChange)="getFinalPay($event)"></td>
+                    </tr>
+                    <tr>
+                        <td>Final Amount to pay</td>
+                        <td colspan="4"><input type="text" class="form-control" name="final_amt_pay" [(ngModel)]="invoice_data.final_amount_to_pay" [ngModelOptions]="{standalone: true}" disabled></td>
+                    </tr>
+                    <tr>
+                        <td>Approver Name</td>
+                        <td colspan="4">
+                            <input type="text" class="form-control approver1" name="approver_name1">
+                            <input type="text" class="form-control approver2" name="approver_name2">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Approver Signature</td>
+                        <td colspan="4">
+                            <input type="text" class="form-control approver1" name="approver_sign1">
+                            <input type="text" class="form-control approver2" name="approver_sign2">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Requestor Name & Signature</td>
+                        <td colspan="4"><input type="text" class="form-control" name="req_name_sign" ></td>
+                    </tr>
+                </tbody></table> 
+        </div>
+    </div>
+
+</popup>

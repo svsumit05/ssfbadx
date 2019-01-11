@@ -1,0 +1,114 @@
+<popup #updateAssetsProjection>
+    <h4 class="details-heading">Branch Details</h4>
+
+    <table class="table">
+        <tbody>
+
+            <tr>
+                <td>Branch State</td>
+                <td>{{branchParams.branchState}}</td>
+            </tr>
+            <tr>
+                <td>Branch district</td>
+                <td>{{branchParams.branchDistrict}}</td>
+            </tr>
+            <tr>
+                <td>Branch City</td>
+                <td>{{branchParams.branchCity}}</td>
+            </tr>
+            <tr>
+                <td>Branch Location</td>
+                <td>{{branchParams.branchLocation}}</td>
+            </tr>
+            <tr>
+                <td>Branch Type</td>
+                <td>{{branchParams.branchType}}</td>
+            </tr>
+            <tr>
+                <td>Strength</td>
+                <td>{{branchParams.strength}}</td>
+            </tr>
+
+            <tr>
+                <td>Approx Area</td>
+                <td>{{branchParams.approxArea}}</td>
+            </tr>
+            <tr>
+                <td>Type of Business</td>
+                <td>{{branchParams.typeOfBusiness}}</td>
+            </tr>
+            <tr>
+                <td>Head Person Count</td>
+                <td>{{branchParams.headPersonCount}}</td>
+            </tr>
+            <tr>
+                <td>Employee Count</td>
+                <td>{{branchParams.employeeCount}}</td>
+            </tr>
+            <tr>
+                <td>Budget</td>
+                <td>{{branchParams.budget}}</td>
+            </tr>
+            <tr>
+                <td>Period</td>
+                <td>{{branchParams.period}}</td>
+            </tr>
+            <tr>
+                <td>Exp Branch Open Date</td>
+                <td>{{branchParams.expBranchOpenDate}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- <h4 class="details-heading">Network Feasibility Details</h4>
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>Is Network feasible </td>
+                <td>{{networkFeasibility.isNetworkFeasible}}</td>
+            </tr>
+        </tbody>
+    </table> -->
+
+    <h4 class="details-heading">Assets Details</h4>
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Assets Name</th>
+                <th>Assets Quantity</th>
+                <th>Is Delivery Done</th>
+                <th>Is Installation Done</th>
+            </tr>
+            <tr *ngFor="let assets of assetsList; let i=index">
+                <td>{{assets.branchAsset.branchAssetsName}}</td>
+                <td>{{assets.projectedQuantity}}</td>
+                <td>
+                    <input type="radio" name="isDeliveryDone{{i}}" value="YES" [(ngModel)]="assets.isDeliveryDone" [disabled]="viewMode == 'SUBMIT'">
+                    <label>YES</label>
+                    <input type="radio" name="isDeliveryDone{{i}}" value="NO" [(ngModel)]="assets.isDeliveryDone" [disabled]="viewMode == 'SUBMIT'" (click)="resetInstallation(i);">
+                    <label>NO </label>
+                </td>
+                <td>
+                    <input type="radio" name="isInstallationDone{{i}}" value="YES" [(ngModel)]="assets.isInstallationDone" [disabled]="viewMode == 'SUBMIT' || assets.isDeliveryDone != 'YES'">
+                    <label>YES</label>
+                    <input type="radio" name="isInstallationDone{{i}}" value="NO" [(ngModel)]="assets.isInstallationDone" [disabled]="viewMode == 'SUBMIT'">
+                    <label>NO </label>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="box-footer" *ngIf="viewMode == 'SAVE' || viewMode == null">
+        <button type="reset" class="btn btn-default" (click)="closeAssetsPopup()">Cancel</button>
+        <button type="submit" class="btn btn-submit pull-right" (click)="saveAssetsDetails('SUBMIT')">Save & Submit Details</button>
+        <button type="submit" class="btn btn-info pull-right" (click)="saveAssetsDetails('SAVE')">Save Details</button>
+    </div>
+</popup>
+
+<div id="preview" class="col s12 m9 l12">
+    <p>
+        <button type="button" class="btn waves-effect waves-light blue" (click)="rerender()">
+            <i class="fa fa-refresh" aria-hidden="true"></i> Refresh
+        </button>
+    </p>
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover"></table>
+</div>

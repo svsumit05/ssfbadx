@@ -1,0 +1,43 @@
+<popup #validatePrereq>
+    <div class="box box-info">
+        <form class="form-horizontal" #prereqForm="ngForm" >
+            <div class="box-body" >
+
+                <div class="form-group" *ngFor="let prereq of addPrereqMastersData; let i=index">
+                    <label class="col-sm-4 control-label">{{prereq.itemName}}</label>
+                    <input type="hidden" name="itemName_{{(prereq.itemListId != undefined) ? prereq.itemListId : prereq.validatePreItemId}}" [(ngModel)]="prereq.itemName" />
+                    <input type="hidden" name="itemId_{{(prereq.itemListId != undefined) ? prereq.itemListId : prereq.validatePreItemId}}" [(ngModel)]="prereq.itemListId" />
+                    <div class="col-sm-2" *ngIf="this._userServ.canCurrentUser('BRANCH_BANKING_TEAM') && this.displayMode == 'VIEW' || this.displayMode == 'VIEW_UPDATE' ">
+                        <input type="radio" name="itemStatus_{{(prereq.itemListId != undefined) ? prereq.itemListId : prereq.validatePreItemId}}" value="YES" [(ngModel)]="prereq.isInstallationDone" > YES
+                        <input type="radio" name="itemStatus_{{(prereq.itemListId != undefined) ? prereq.itemListId : prereq.validatePreItemId}}" value="NO"  [(ngModel)]="prereq.isInstallationDone" > NO
+                    </div>
+                    <div class="col-sm-2" *ngIf="this.displayMode == 'VIEW_SUBMIT' || this.displayMode == 'NO_ACTION'">
+                        {{prereq.isInstallationDone}}
+                    </div>
+                    <div class="col-sm-4" *ngIf="this._userServ.canCurrentUser('IT_INFRA_TEAM') && this.displayMode == 'VIEW_SUBMIT' ">
+                        <input type="radio" name="itemMaker_{{(prereq.itemListId != undefined) ? prereq.itemListId : prereq.validatePreItemId}}" value="Approve" [(ngModel)]="prereq.comments" > Approve
+                        <input type="radio" name="itemMaker_{{(prereq.itemListId != undefined) ? prereq.itemListId : prereq.validatePreItemId}}" value="Reject"  [(ngModel)]="prereq.comments" > Reject
+                    </div>
+                    <div class="col-sm-2" *ngIf="this.displayMode == 'NO_ACTION' ">
+                        {{prereq.comments}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="box-footer" *ngIf="( this._userServ.canCurrentUser('BRANCH_BANKING_TEAM') && this.displayMode != 'VIEW_SUBMIT' ) || this._userServ.canCurrentUser('IT_INFRA_TEAM') && this.displayMode == 'VIEW_SUBMIT'">
+                <button type="submit" class="btn btn-default" (click)="closePreReq()">Cancel</button>
+                <button type="submit" class="btn btn-submit pull-right" [disabled]="!prereqForm.form.valid" (click)="savePreReq(prereqForm.value,'SUBMIT');">Save & Submit</button>
+                <button type="submit" class="btn btn-info pull-right" (click)="savePreReq(prereqForm.value,'SAVE')" >Save</button>
+            </div>
+        </form>
+    </div>
+</popup>
+
+<div id="preview" class="col s12 m9 l12">
+    <p>
+        <button type="button" class="btn waves-effect waves-light blue" (click)="rerender()">
+            <i class="fa fa-refresh" aria-hidden="true"></i> Refresh
+        </button>
+    </p>
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover"></table>
+</div>

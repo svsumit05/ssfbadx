@@ -1,0 +1,14 @@
+:host >>> div#ng2-opd-popup-main {
+    top: -5% !important;
+}
+
+.form-horizontal .control-label {
+    text-align: left !important;
+}
+
+input[type="radio"] {
+    margin: 11px 0px 0px 25px !important;
+    -ms-transform: scale(1.5); /* IE 9 */
+    -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
+    transform: scale(1.5);
+}

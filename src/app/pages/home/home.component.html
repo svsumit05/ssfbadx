@@ -1,0 +1,127 @@
+<section class="content">
+
+    <div class="row">
+        <div class="col-md-3">
+
+            <div class="box box-primary">
+                <div class="box-body box-profile">
+                    <img class="profile-user-img img-responsive img-circle" src="public/assets/img/avatar.png" alt="User profile picture">
+
+                    <h3 class="profile-username text-center">{{currentUser.firstname}} {{currentUser.lastname}}</h3>
+
+                    <p class="text-muted text-center">{{currentUser.userId}}</p>
+
+                    <ul class="list-group list-group-unbordered">
+                        <li class="list-group-item">
+                            <b>Role</b>
+                            <a class="pull-right small-text">{{userFileBean?.role}}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Designation</b>
+                            <a class="pull-right small-text">{{userFileBean?.designation}}</a>
+                        </li>
+                        <li class="list-group-item" *ngIf="userApplRoleMatrixChildList.length > 0">
+                            <b>Status</b>
+                            <a class="pull-right small-text">{{userFileBean?.recordStatus}}</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">About Me</h3>
+                </div>
+                <div class="box-body">
+                    <strong>
+                        <i class="fa fa-book margin-r-5"></i> Email</strong>
+                    <p class="text-muted">
+                        {{userFileBean?.emailID}}
+                    </p>
+
+                    <hr>
+
+                    <strong>
+                        <i class="fa fa-map-marker margin-r-5"></i> Branch</strong>
+
+                    <p class="text-muted">{{userFileBean?.location}}</p>
+
+                    <hr>
+                    <strong>
+                        <i class="fa fa-map-marker margin-r-5"></i> Date Of Joining</strong>
+
+                    <p class="text-muted">{{userFileBean?.dateOfJoin}}</p>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#activity" data-toggle="tab" aria-expanded="true">Application Permissions</a>
+                    </li>
+                    <!-- <li class="">
+                        <a href="#timeline" data-toggle="tab" aria-expanded="false">Notifications</a>
+                    </li> -->
+                    <!-- <li class=""><a href="#settings" data-toggle="tab" aria-expanded="false">Settings</a></li> -->
+                </ul>
+                <div class="tab-content">
+
+                    <div class="tab-pane active" id="activity">
+
+
+                        <div class="box" *ngIf="userApplRoleMatrixChildList.length > 0">
+                            <div class="box-body no-padding" style="overflow-x:scroll;">
+                                <table class="table table-striped">
+                                    <tbody>
+                                        <tr>
+                                            <th>Application Name</th>
+                                            <th>Current Role</th>
+                                            <th *ngIf="userFileBean.recordStatus == 'USER_CREATION_PROCESS_NOT_INITIATED'">Required Role</th>
+                                            <th>Status</th>
+                                        </tr>
+                                        <tr *ngFor="let PMA of userApplRoleMatrixChildList; let feildCount = index;">
+                                            <td>{{PMA.application.applicationName}}</td>
+                                            <td>{{PMA.applicationRole.applicationRoleName}}</td>
+                                            <td *ngIf="userFileBean.recordStatus == 'USER_CREATION_PROCESS_NOT_INITIATED'">
+                                                <div class="form-group">
+                                                    <select class="form-control" name="ApplicationRoleValue_{{feildCount}}" [(ngModel)]="ApplicationRoleValue[feildCount]" required>
+                                                        <option value="undefined" selected disabled>Select Option</option>
+                                                        <option [value]="PMA.applicationRole.applicationRoleId">No Change</option>
+                                                        <option *ngFor="let ARL of ApplicationRoleList[feildCount]" [value]="ARL.applicationRoleId">
+                                                            {{ARL.applicationRoleName}}
+                                                        </option>                                                        
+                                                    </select>
+                                                </div>
+                                            </td>
+                                            <td *ngIf="userFileBean.recordStatus != 'USER_CREATION_PROCESS_NOT_INITIATED'">{{PMA.isCreateOrUpdateAPIExecutedSuccesfully}}</td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="box-footer" *ngIf="userFileBean.recordStatus == 'USER_CREATION_PROCESS_NOT_INITIATED'">
+                                <button type="submit" [disabled]='submitUserAppButton' (click)="submitUserApplicationRoleMapping()" class="btn btn-info pull-right">Submit</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="tab-pane" id="timeline">
+
+                    </div>
+
+                    <div class="tab-pane" id="settings">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+
+    </div>
+</section>

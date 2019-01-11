@@ -1,0 +1,204 @@
+<popup #viewTemplate>
+  <div class="box box-info">
+    <form class="form-horizontal" #viewTemp="ngForm" (ngSubmit)="updateTemp(viewTemp.value); viewTemp.reset();">
+      <div class="box-body">
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Template Name : </label>
+          <div class="col-sm-10">
+            {{tempDetails.templateName}}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Response Email Id : </label>
+          <div class="col-sm-10">
+            {{tempDetails.responseEmailId}}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Department Name : </label>
+          <div class="col-sm-10">
+            {{tempDetails.department.departmentName}}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Notification Type : </label>
+          <div class="col-sm-10">
+            {{tempDetails.notificationType}}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Frequency : </label>
+          <div class="col-sm-10">
+            {{tempDetails.frequency}}  <span *ngIf="tempDetails.scheduledDate != null  && tempDetails.scheduledDate != ''"> ( {{tempDetails.scheduledDate}} ) </span> 
+          </div>
+        </div>
+
+        <div class="form-group" *ngIf="tempDetails.frequency == 'Adhoc'">
+          <label class="col-sm-2 control-label">User List : </label>
+          <div class="col-sm-10">
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <th>Users Names</th>
+                </tr>
+                <tr *ngFor="let UL of tempDetails.userList">
+                  <td>{{UL.employeeId}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Processing Type : </label>
+          <div class="col-sm-10">
+            {{tempDetails.processingType}}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Source System : </label>
+          <div class="col-sm-10">
+            {{tempDetails.sourceSystem.sourceSystemName}}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Data Level : </label>
+          <div class="col-sm-10">
+            {{tempDetails.queryCriteria}}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">SMS Type : </label>
+          <div class="col-sm-10">
+            {{tempDetails.textType}}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Message Text : </label>
+          <div class="col-sm-10">
+            {{tempDetails.messageText}}
+          </div>
+        </div>
+
+
+        <div class="form-group" *ngIf="tempDetails.dynamicList != null">
+          <label class="col-sm-2 control-label">Message Fields : </label>
+          <div class="col-sm-10">
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <th>Field Name</th>
+                  <th>Field Value</th>
+                </tr>
+                <tr *ngFor="let DL of tempDetails.dynamicList">
+                  <td>{{DL.key}}</td>
+                  <td>{{DL.valueString}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="form-group" *ngIf="tempDetails.conditionalParameterList != null">
+          <label class="col-sm-2 control-label">Conditions : </label>
+          <div class="col-sm-10">
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <th>Parameter Name</th>
+                  <th>Condition</th>
+                  <th>Value</th>
+                </tr>
+                <tr *ngFor="let CPL of tempDetails.conditionalParameterList">
+                  <td>{{CPL.parameterDisplayName}}</td>
+                  <td>{{CPL.condition}}</td>
+                  <td *ngIf="CPL.condition == 'in'">{{CPL.valueDisplayname}}</td>
+                  <td *ngIf="CPL.condition != 'in'">{{CPL.value}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Comment</label>
+          <div class="col-sm-10">
+            <p>{{tempDetails.rejectionComment}}</p>
+          </div>
+        </div>
+
+        <div class="form-group" *ngIf="tempDetails.frequency != 'Adhoc'">
+          <label class="col-sm-2 control-label">Start Date : </label>
+          <div class="col-sm-4">
+            <input class="form-control" type="date" name="startDate" [(ngModel)]="startDate" [disabled]="startDateCondition" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"/>
+          </div>
+        </div>
+
+        <div class="form-group" *ngIf="tempDetails.frequency != 'Adhoc'">
+          <label class="col-sm-2 control-label">End Date : </label>
+          <div class="col-sm-4">
+            <input class="form-control" type="date" name="endDate" [(ngModel)]="endDate" [disabled]="endDateCondition" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"/>
+          </div>
+        </div>
+
+      </div>
+      <div class="box-footer">
+        <button type="reset" class="btn btn-default pull-left" (click)="closeviewTempDetails();viewTemp.reset();">Close</button>
+        <button *ngIf="tempDetails.frequency != 'Adhoc' && ( !startDateCondition || !endDateCondition)" type="submit" class="btn btn-primary pull-right" [disabled]="!viewTemp.form.valid">Update</button>
+      </div>
+    </form>
+  </div>
+</popup>
+
+<popup #copyTemplate>
+  <div class="box box-info">
+    <form class="form-horizontal" #copyForm="ngForm" (ngSubmit)="onCopySubmit(copyForm.value)">
+      <div class="box-body">
+        <div class="form-group">
+          <label for="templateName" class="col-sm-2 control-label">Template Name</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="templateName" name="templateName" (blur)="checkTemplateNameExistance($event)"
+              ngModel required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Start Date : </label>
+          <div class="col-sm-4">
+            <input class="form-control" type="date" name="startDate" ngModel  pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"/>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">End Date : </label>
+          <div class="col-sm-4">
+            <input class="form-control" type="date" name="endDate" ngModel pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"/>
+          </div>
+        </div>
+
+      </div>
+      <div class="box-footer">
+        <button type="reset" class="btn btn-default" (click)="closeviewTempDetails()">Cancel</button>
+        <button type="submit" [disabled]="!copyForm.form.valid" class="btn btn-info pull-right">Copy</button>
+      </div>
+    </form>
+  </div>
+</popup>
+
+<div id="preview" class="col s12 m9 l12">
+  <p>
+    <button type="button" class="btn waves-effect waves-light blue" (click)="rerender()">
+      <i class="fa fa-refresh" aria-hidden="true"></i> Refresh
+    </button>
+  </p>
+  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover"></table>
+</div>

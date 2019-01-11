@@ -1,0 +1,191 @@
+<popup #editMatrix (cancelClick)="closePopup()">
+  <div class="col-md-9">
+    <div class="nav-tabs-custom">
+      <ul class="nav nav-tabs">
+        <li class="active">
+          <a href="#activity" data-toggle="tab" aria-expanded="true">Application Permissions</a>
+        </li>
+        <!--  <li class="">
+          <a href="#timeline" data-toggle="tab" aria-expanded="false">Notifications</a>
+        </li> -->
+        <!-- <li class=""><a href="#settings" data-toggle="tab" aria-expanded="false">Settings</a></li> -->
+      </ul>
+      <div class="tab-content">
+
+        <div class="tab-pane active" id="activity">
+          <div class="box">
+            <div class="box-body no-padding">
+              <table class="table table-striped">
+                <tbody>
+                  <tr>
+                    <th>Application Name</th>
+                    <th>Current Role</th>
+                    <th>Required Role</th>
+                    <th>Action (API)</th>
+                    <!-- <th>Action (Email)</th>-->
+                    <th>Action (Update)</th>
+                    <th>Action (Submit)</th>
+                  </tr>
+                  <tr *ngFor="let ARM of applRoleMatrixList; let feildCount = index;">
+                    <td>{{ARM.application.applicationName}}</td>
+                    <td>{{ARM.predefineMatrixApplicationRole.applicationRoleName}}</td>
+                    <td>{{ARM.applicationRole.applicationRoleName}}</td>
+
+                    <!-- FOR API Start-->
+                    <td *ngIf="ARM.isCreateOrUpdateAPIExecutedSuccesfully == '0'">
+                      <input [disabled]="ARM.application.isAPIAvailable == '0'" type="radio" name="callAPI_{{feildCount}}" id="callAPI_{{feildCount}}"
+                        value="1"> Execute api & update status
+                    </td>
+                    <td *ngIf="ARM.isCreateOrUpdateAPIExecutedSuccesfully == '1'">
+                      Activity Completed Sucessfully.
+                    </td>
+                    <!-- FOR API END-->
+
+                    <!-- FOR EMAIL Start-->
+                    <!-- <td *ngIf="ARM.isEmailSent == '0'">
+                      <input [disabled]="ARM.application.isEmailAvailable == '0'" type="radio" name="callAPI_{{feildCount}}" id="callEmail_{{feildCount}}"
+                        value="2" (click)="getEmailDetails(ARM.roleMatrixChildId, feildCount)"> Send Email
+                    </td>
+                    <td *ngIf="ARM.isEmailSent == '1'">
+                      Email Send Sucessfully
+                    </td> -->
+                    <!-- FOR EMAIL end-->
+
+                    <!-- FOR UPDATE Start-->
+                    <td *ngIf="ARM.isCreateOrUpdateAPIExecutedSuccesfully == '0'">
+                      <input type="radio" name="callAPI_{{feildCount}}" id="callUpdate_{{feildCount}}" value="0"> Update status
+                    </td>
+                    <td *ngIf="ARM.isCreateOrUpdateAPIExecutedSuccesfully == '1'">
+                      Activity Completed Sucessfully.
+                    </td>
+                    <!-- FOR UPDATE end-->
+
+                    <td *ngIf="ARM.isCreateOrUpdateAPIExecutedSuccesfully == '0'">
+                      <button type="button" class="btn btn-default" (click)="callApplicationAPI(ARM.roleMatrixChildId, feildCount);">Submit</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="tab-pane" id="timeline">
+
+        </div>
+
+        <div class="tab-pane" id="settings">
+
+        </div>
+      </div>
+    </div>
+  </div>
+</popup>
+
+<popup #emailTemplate (cancelClick)="closeEmailPopup()">
+  <div class="col-md-12">
+    <div class="box box-info">
+      <form class="form-horizontal">
+        <div class="box-body">
+          <div class="form-group">
+            <label for="email_id" class="col-sm-2 control-label">Email</label>
+            <div class="col-sm-10">
+              <input type="email" class="form-control" id="email_id">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="bodyMessage" class="col-sm-2 control-label">Body</label>
+            <div class="col-sm-10">
+              <textarea class="form-control" id="bodyMessage" name="bodyMessage">{{emailResponceData.statusMessge}}</textarea>
+            </div>
+          </div>
+        </div>
+        <input type="hidden" name="feildCount" id="feildCount">
+        <div class="box-footer">
+          <button type="submit" class="btn btn-default" (click)="closeEmailPopup()">Cancel</button>
+          <button type="submit" class="btn btn-info pull-right" (click)="submitSendEmail()">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</popup>
+
+<popup #viewWorkline (cancelClick)="closePopup()">
+
+  <table class="table table-bordered">
+    <tbody>
+      <tr>
+        <td>Employee Id</td>
+        <td>{{worklineData.employeeId}}</td>
+      </tr>
+      <tr>
+        <td>Employee Name</td>
+        <td>{{worklineData.employeeName}}</td>
+      </tr>
+      <tr>
+        <td>Date Of Joining</td>
+        <td>{{worklineData.dateOfJoin}}</td>
+      </tr>
+      <tr>
+        <td>Business Unit</td>
+        <td>{{worklineData.businessUnit}}</td>
+      </tr>
+      <tr>
+        <td>Product</td>
+        <td>{{worklineData.product}}</td>
+      </tr>
+      <tr>
+        <td>Function</td>
+        <td>{{worklineData.function}}</td>
+      </tr>
+      <tr>
+        <td>Sub Function</td>
+        <td>{{worklineData.subFunction}}</td>
+      </tr>
+      <tr>
+        <td>Designation</td>
+        <td>{{worklineData.designation}}</td>
+      </tr>
+      <tr>
+        <td>Role</td>
+        <td>{{worklineData.role}}</td>
+      </tr>
+      <tr>
+        <td>Region</td>
+        <td>{{worklineData.region}}</td>
+      </tr>
+      <tr>
+        <td>Location</td>
+        <td>{{worklineData.location}}</td>
+      </tr>
+      <tr>
+        <td>Location Type</td>
+        <td>{{worklineData.locType}}</td>
+      </tr>
+      <tr>
+        <td>Function Appraisar Id</td>
+        <td>{{worklineData.functionAppraisarId}}</td>
+      </tr>
+      <tr>
+        <td>Area</td>
+        <td>{{worklineData.area}}</td>
+      </tr>
+      <tr>
+        <td>Record Action</td>
+        <td>{{worklineData.recordAction}}</td>
+      </tr>
+      <tr>
+        <td>Mobile No</td>
+        <td>{{worklineData.mobNo}}</td>
+      </tr>
+
+    </tbody>
+  </table>
+
+</popup>
+
+<div style="clear: both"></div>
+<div id="preview" class="col s12 m9 l12">
+  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover"></table>
+</div>

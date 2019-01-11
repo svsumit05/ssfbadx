@@ -1,0 +1,12 @@
+.track-record {
+    margin-top: 24px;   
+}
+
+.deliverables-expanded {
+    margin-top: 5%;
+}
+
+:host >>> .nav-item > a > span {
+    font-weight: bold !important;
+}
+

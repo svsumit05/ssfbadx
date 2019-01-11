@@ -1,0 +1,33 @@
+<div class="form-horizontal">
+    <div class="box-body">
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">From Date</label>
+            <div class="col-sm-9 datepicker">
+                <datetime [timepicker]="false" [datepicker]="datepickerOpts" [(ngModel)]="fromDate"></datetime>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">To Date</label>
+            <div class="col-sm-9 datepicker">
+                <datetime [timepicker]="false" [datepicker]="datepickerOpts" [(ngModel)]="toDate"></datetime>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">Select Report Type</label>
+            <div class="col-sm-4">
+                <select class="form-control" [(ngModel)]="reportType">
+                    <option value="" selected disabled>Select Report Formate</option>
+                    <option value="EXCEL">EXCEL</option>
+                    <option value="PDF">PDF</option>
+                </select>
+            </div>
+        </div>
+
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-info pull-right" (click)="downloadFile()">Download</button>
+    </div>
+</div>

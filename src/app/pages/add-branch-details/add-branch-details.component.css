@@ -1,0 +1,22 @@
+:host >>> div#ng2-opd-popup-main {
+    top: -5% !important;
+}
+.img-gallery {
+    margin-left: 18%;
+    font-weight: bold;
+}
+.datepicker-input {
+    margin-left: 1.5% ;
+}
+
+:host >>> .form-inline.ng2-datetime {
+    margin-left: 1.5% !important;
+}
+
+.form-text-label {
+    margin-top: 0.8%;
+}
+
+label.col-sm-2.control-label {
+    margin-top: -0.3%;
+}

@@ -1,0 +1,76 @@
+<!-- <button class="btn btn-primary pull-right upload-button" (click)="uploadExcel()">
+  <i class="fa fa-plus-circle" aria-hidden="true"></i> Upload Excel
+</button> -->
+
+<popup #uploadExcelView>
+  <div class="box box-info">
+    <form class="form-horizontal" name="uploadExcelForm" #uploadExcelForm="ngForm" (ngSubmit)="saveExcel()">
+      <div class="box-body">
+
+        <div class="form-group">
+          <label for="type" class="col-sm-2 control-label">Uplaod File.</label>
+          <div class="col-sm-10">
+            <input type="file" id="FileInput" name="FileInput" (focus)="ordfileEvent($event)" accept=".xlsx, .xls, .csv" required>
+          </div>
+        </div>
+
+      </div>
+      <div class="box-footer">
+        <input class="btn btn-default" type="reset" value="Cancle" (click)="onClose()">
+        <input class="btn btn-info pull-right" type="submit" value="Submit" [disabled]="!uploadExcelForm.form.valid">
+      </div>
+    </form>
+  </div>
+</popup>
+
+<div class="row">
+  <div class="col-lg-3">
+    <div class="input-group">
+      <span class="input-group-addon">
+        From Date
+      </span>
+      <datetime [timepicker]="false" [datepicker]="datepickerOpts" [(ngModel)]="fromDate"></datetime>
+    </div>
+  </div>
+  <div class="col-lg-3">
+    <div class="input-group">
+      <span class="input-group-addon">
+        To Date
+      </span>
+      <datetime [timepicker]="false" [datepicker]="datepickerOpts" [(ngModel)]="toDate"></datetime>
+    </div>
+  </div>
+  <div class="col-lg-2">
+    <select class="form-control" [(ngModel)]="branch" [disabled]="">
+      <option value="" selected disabled>Select Branch</option>
+      <option value="ALL">All</option>
+      <option *ngFor="let BDF of branchDropDown" [ngValue]="BDF.branchCode">{{BDF.branchName}}</option>
+    </select>
+  </div>
+  <div class="col-lg-2">
+    <select class="form-control" [(ngModel)]="recordTypeId">
+      <option value="" selected disabled>Select Report</option>
+      <!-- <option *ngFor="let RTD of recordTypeDropDown" [ngValue]="RTD.recordTypeId">{{RTD.recordType}}</option> -->
+      <option value="3">SR</option>
+      <option value="4">Account Opening Form</option>
+    </select>
+  </div>
+  <div class="col-lg-2">
+    <div class="input-group">
+      <button type="button" class="btn waves-effect waves-light blue" (click)="rerender()">
+        Submit
+      </button>
+    </div>
+  </div>
+</div>
+<br>
+<div id="preview" class="col s12 m9 l12">
+  <p>
+
+    <button type="button" class="btn waves-effect waves-light blue" (click)="rerender()">
+      <i class="fa fa-refresh" aria-hidden="true"></i> Refresh
+    </button>
+
+  </p>
+  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover"></table>
+</div>

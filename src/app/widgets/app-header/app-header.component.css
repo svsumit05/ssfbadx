@@ -1,0 +1,12 @@
+:host >>> img.site-logo-dashboard {
+    width: 100%;
+    margin-top: -5px;
+}
+
+:host >>> .skin-blue .main-header .logo {
+    background-color: #fff !important;
+}
+
+:host >>> .logo-white {
+    background-color: #fff;
+}

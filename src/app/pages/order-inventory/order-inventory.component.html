@@ -1,0 +1,334 @@
+<button class="btn btn-primary pull-right add-new-order-button" (click)="orderInventory()" *ngIf="navID == 'pending'">
+    <i class="fa fa-plus-circle" aria-hidden="true"></i> Add new order
+</button>
+
+<popup #orderInventoryPopup>
+
+    <div class="box box-info">
+        <form class="form-horizontal" name="orderForm" #orderForm="ngForm" (ngSubmit)="onOrderPlace(); orderForm.reset();">
+
+            <div class="box-body">
+
+                <div class="form-group">
+                    <label for="type" class="col-sm-2 control-label">Inventory type</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" [(ngModel)]="addorderDetails.inventory.inventoryId" name="inventoryId" required (change)="onInput()">
+                            <option value="" selected disabled>Select Inventory</option>
+                            <option *ngFor="let itl of inventoryListDropDown" [ngValue]="itl.inventoryId">{{itl.itemName}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group" *ngIf="enableInstaKit">
+                    <label for="type" class="col-sm-2 control-label">Product Type</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" [(ngModel)]="addorderDetails.productType" name="productType" required (change)="onInputInstaKit()">
+                            <option value="" selected disabled>Select Inventory</option>
+                            <option *ngFor="let inkit of instaKitListDropDown" [ngValue]="inkit.productType">{{inkit.productDescription}}</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+
+                    <div class="col-sm-10 pull-right">
+                        <table class="table" *ngIf="orderData.length > 0">
+                            <tr>
+                                <th *ngIf="enableInstaKit == false">Item Name</th>
+                                <th *ngIf="enableInstaKit == true">Product type</th>
+                                <th>Rate</th>
+                                <th>Quantity</th>
+                                <th *ngIf="enableInstaKit == true">DebitCard Req.</th>
+                                <th *ngIf="enableInstaKit == true">ChequeBook Req.</th>
+                                <th>Action</th>
+                            </tr>
+                            <tr *ngFor="let OD of orderData; let i = index">
+                                <td *ngIf="enableInstaKit == false">{{OD.inventoryName}}</td>
+                                <td *ngIf="enableInstaKit == true">{{OD.productType}}</td>
+                                <td>{{OD.inventoryRate}}</td>
+                                <td>
+                                    <input type="number" class="form-control" name="quantityRequired" (blur)="checkThresholdLimit(i)" required id="quantity_{{i}}"
+                                        [value]="OD.quantityRequired" min="1">
+                                </td>
+                                <th *ngIf="enableInstaKit == true">
+                                    <input class="checkbox_dc" type="checkbox" name="DebitCard" id="DebitCard_{{i}}" (blur)="checkdebitcard(i)">
+                                </th>
+
+                                <th *ngIf="enableInstaKit == true">
+                                    <input class="checkbox_dc" type="checkbox" name="ChequeBook" id="ChequeBook_{{i}}" (blur)="checkcreditcard(i)">
+                                </th>
+                                <td *ngIf="enableInstaKit == false">
+                                    <button type="button" (click)="removeElement(OD.inventory.inventoryId)" class="btn btn-block btn-danger btn-flat">Remove</button>
+                                </td>
+                                <td *ngIf="enableInstaKit == true">
+                                    <button type="button" (click)="removeElementType(OD.productType)" class="btn btn-block btn-danger btn-flat">Remove</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+
+
+
+                <div class="form-group">
+                    <label for="type" class="col-sm-2 control-label">Branch</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" [(ngModel)]="branch" name="branchCode" required [disabled]="this.currentUser.user_extra_info.role.roleID == '3'">
+                            <option value="" selected disabled>Select Branch</option>
+                            <option *ngFor="let BD of branchDropDown" [ngValue]="BD.branchCode">{{BD.branchName}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="type" class="col-sm-2 control-label">Branch Code</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" name="branchcode_readonly" [value]="branch" disabled>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="box-footer">
+
+                <input class="btn btn-default" type="submit" value="Cancle" (click)="onOrderReset()">
+                <input class="btn btn-info pull-right" type="submit" value="Submit" [disabled]="!isvalid">
+
+            </div>
+        </form>
+    </div>
+</popup>
+
+<popup #approveInventoryPopup>
+    <div class="box box-info">
+        <form class="form-horizontal" name="orderUForm" #orderUForm="ngForm">
+
+            <div class="box-body">
+
+                <div class="form-group">
+                    <label for="type" class="col-sm-2 control-label">Inventory Name :</label>
+                    <div class="col-sm-10">
+                        <span class="linefix">{{approvedInvData.inventory.itemName}}</span>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="inputEmai3" class="col-sm-2 control-label">Quantity :</label>
+                    <div class="col-sm-10">
+                        <span class="linefix">{{approvedInvData.quantityRequired}}</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmai3" class="col-sm-2 control-label">Rate Per Quantity :</label>
+                    <div class="col-sm-10">
+                        <span class="linefix">{{approvedInvData.inventory.ratePerUnit}}</span>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="type" class="col-sm-2 control-label">Branch Name:</label>
+                    <div class="col-sm-10">
+                        <span class="linefix">{{approvedInvData.dlmsBranchMaster.branchName}}</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="type" class="col-sm-2 control-label">Branch Code:</label>
+                    <div class="col-sm-10">
+                        <span class="linefix">{{approvedInvData.dlmsBranchMaster.branchCode}}</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmai3" class="col-sm-2 control-label">Comment :</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" rows="3" name="comment" required ngModel></textarea>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="box-footer">
+                <button type="reset" class="btn btn-default" (click)="onOrderReset()">Cancel</button>
+                <button type="submit" class="btn btn-primary pull-right approve-button" (click)="userAction(approvedInvData.orderIndentId,'APPROVED',orderUForm.value);orderUForm.reset()"
+                    [disabled]="!orderUForm.form.valid">Approve</button>
+                <button type="submit" class="btn btn-primary pull-right reject-button" (click)="userAction(approvedInvData.orderIndentId,'REJECTED',orderUForm.value);orderUForm.reset()"
+                    [disabled]="!orderUForm.form.valid">Reject</button>
+            </div>
+        </form>
+    </div>
+</popup>
+
+
+<popup #viewInventoryPopup (cancelClick)="onOrderReset()">
+    <div class="box box-info">
+        <form class="form-horizontal" name="orderVForm" #orderVForm="ngForm">
+
+            <div class="box-body">
+
+                <div class="form-group">
+                    <label for="type" class="col-sm-2 control-label">Inventory Name :</label>
+                    <div class="col-sm-10">
+                        <span class="linefix">{{approvedInvData.inventory.itemName}}</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmai3" class="col-sm-2 control-label">Quantity :</label>
+                    <div class="col-sm-10">
+                        <span class="linefix">{{approvedInvData.quantityRequired}}</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmai3" class="col-sm-2 control-label">Rate Per Quantity :</label>
+                    <div class="col-sm-10">
+                        <span class="linefix">{{approvedInvData.inventory.ratePerUnit}}</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="type" class="col-sm-2 control-label">Branch Name:</label>
+                    <div class="col-sm-10">
+                        <span class="linefix">{{approvedInvData.dlmsBranchMaster.branchName}}</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="type" class="col-sm-2 control-label">Branch Code:</label>
+                    <div class="col-sm-10">
+                        <span class="linefix">{{approvedInvData.dlmsBranchMaster.branchCode}}</span>
+                    </div>
+                </div>
+
+                <br>
+                <div class="form-group" *ngIf="iInventoryData.length > 0">
+                    <!-- <label for="type" class="col-sm-2 control-label">Order Details :</label> -->
+                    <div class="col-sm-12">
+                        <p class="head-table">Order Details</p>
+                    </div>
+                    <div class="col-sm-12">
+                        <table class="table table-striped">
+                            <tr>
+                                <th *ngIf="checkIsInstaKit == 0">Last Disp Qty</th>
+                                <th *ngIf="checkIsInstaKit == 0">T. Disp Qty</th>
+                                <th *ngIf="checkIsInstaKit == 0">Bal Qty</th>
+                                <th *ngIf="checkIsInstaKit == 1">Account No</th>
+                                <th *ngIf="checkIsInstaKit == 1">Product Type</th>
+                                <th>Courier</th>
+                                <th>AWB No</th>
+                                <th>Disp Date</th>
+                                <th>Status</th>
+                                <th>Receipt Date</th>
+                                <th>Remarks</th>
+                                <th>Action</th>
+                            </tr>
+                            <tr *ngFor="let iData of iInventoryData;let idx = index">
+                                <td *ngIf="checkIsInstaKit == 0">{{iData.lastDispatchedQuantity}}</td>
+                                <td *ngIf="checkIsInstaKit == 0">{{iData.totalDispatchedQuantTillNow}}</td>
+                                <td *ngIf="checkIsInstaKit == 0">{{iData.balancedQuantity}}</td>
+                                <td *ngIf="checkIsInstaKit == 1">{{iData.acNo}}</td>
+                                <td *ngIf="checkIsInstaKit == 1">{{iData.productType}}</td>
+                                <td>{{iData.courierName}}</td>
+                                <td>{{iData.awbNo}}</td>
+                                <td>{{iData.dispatchedDate}}</td>
+                                <td *ngIf="iData.isActionDone == '0' && checkIsInstaKit == '0'">
+                                    <select name="userAction_{{idx}}" class="form-control" [(ngModel)]="iData.userAction" [ngModelOptions]="{standalone: true}">
+                                        <option value="" selected disabled>Select Satus</option>
+                                        <option value="Accept" [disabled]="iData.balancedQuantity > 0">Accept</option>
+                                        <option value="Partial Received" [disabled]="iData.balancedQuantity == 0">Partial Received</option>
+                                        <option value="Lost In Transit">Lost In Transit</option>
+                                    </select>
+                                </td>
+                                <td *ngIf="iData.isActionDone == '0' && checkIsInstaKit == '1'">
+                                    <select name="userAction_{{idx}}" class="form-control" [(ngModel)]="iData.userAction" [ngModelOptions]="{standalone: true}">
+                                        <option value="" selected disabled>Select Satus</option>
+                                        <option value="Accept" [disabled]="iData.balancedQuantity > 0">Accept</option>
+                                        <option value="Lost In Transit">Lost In Transit</option>
+                                        <option value="Received in bad condition">Received in bad condition</option>
+                                    </select>
+                                </td>
+                                <td *ngIf="iData.isActionDone == '1'">
+                                    {{iData.userAction}}
+                                </td>
+                                <td *ngIf="iData.isActionDone == '1'">
+                                    {{iData.receiptDate}}
+                                </td>
+                                <td *ngIf="showDatePicker && iData.isActionDone == '0' ">
+                                    <input type="date" class="form-control" name="receiptDate_{{idx}}" [(ngModel)]="iData.receiptDate" [value]="iData.receiptDate"
+                                        min="datepickerOptsArray[idx].startDate">
+                                </td>
+                                <td *ngIf="iData.isActionDone == '1'">
+                                    {{iData.remark}}
+                                </td>
+                                <td *ngIf="iData.isActionDone == '0'">
+                                    <textarea class="form-control" rows="3" name="remark" [(ngModel)]="iData.remark"></textarea>
+                                </td>
+                                <td *ngIf="iData.isActionDone == '0' && checkIsInstaKit == 0">
+                                    <button type="button" class="btn btn-block btn-info" (click)="updateIndentAcceptanceStatus(idx,iData.orderIndentTransId,iData.orderIndentId,iData.lastDispatchedQuantity)">Save</button>
+                                </td>
+                                <td *ngIf="iData.isActionDone == '0' && checkIsInstaKit == 1">
+                                    <button type="button" class="btn btn-block btn-info" (click)="updateIndentAcceptanceStatus(idx,iData.instaKitBeanId,iData.orderIndentId,iData.lastDispatchedQuantity)">Save</button>
+                                </td>
+                                <td *ngIf="iData.isActionDone == '1'">
+                                    --
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="box-footer">
+                <button type="reset" class="btn btn-default" (click)="onOrderReset()">Close</button>
+            </div>
+        </form>
+    </div>
+</popup>
+
+<div class="row" *ngIf="navID != 'pending'">
+    <div class="col-lg-3">
+        <div class="input-group">
+            <span class="input-group-addon">
+                From Date
+            </span>
+            <datetime [timepicker]="false" [datepicker]="datepickerOpts" [(ngModel)]="fromDate"></datetime>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="input-group">
+            <span class="input-group-addon">
+                To Date
+            </span>
+            <datetime [timepicker]="false" [datepicker]="datepickerOpts" [(ngModel)]="toDate"></datetime>
+        </div>
+    </div>
+
+    <div class="col-lg-2">
+        <select class="form-control" [(ngModel)]="branch" [disabled]="this.currentUser.user_extra_info.role.roleID == '3'">
+            <option value="" selected disabled>Select Branch</option>
+            <option *ngFor="let BDF of branchDropDown" [ngValue]="BDF.branchCode">{{BDF.branchName}}</option>
+        </select>
+    </div>
+    <div class="col-lg-2">
+        <button type="button" class="btn waves-effect waves-light blue" (click)="rerender()">
+            Search
+        </button>
+    </div>
+</div>
+
+<div id="preview" class="col s12 m9 l12">
+    <br>
+    <p>
+        <button type="button" class="btn waves-effect waves-light blue" (click)="rerender()">
+            <i class="fa fa-refresh" aria-hidden="true"></i> Refresh
+        </button>
+    </p>
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover"></table>
+</div>

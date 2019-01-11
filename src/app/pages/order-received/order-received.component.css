@@ -1,0 +1,11 @@
+label.col-sm-2.control-label {
+    line-height: 50%;
+}
+
+.moveright {
+    margin-left: 0px;
+}
+
+.moveleft {
+    margin-left: 25px;
+}

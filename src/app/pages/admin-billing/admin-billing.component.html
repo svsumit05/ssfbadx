@@ -1,0 +1,74 @@
+<div class="admin-billing">
+    <popup #updateBillPopup>
+
+        <form class="form-horizontal"  #adminBilling="ngForm" (ngSubmit)="adminBillConfirmEvent(); adminBilling.reset();" >
+              
+           <div class="form-group">
+                <label for="inputEmai3" class="col-sm-3 control-label">Product Details</label>
+                <div class="col-sm-7">
+                    <table>
+                        <tr>
+                            <th>Inventory Type</th>
+                            <th>Quantity</th>
+                            <th>Rate</th>                           
+                        </tr>
+                        <tr *ngFor="let types of orderReceivedDetails.inventData.data">
+                            <td>{{types.inventoryType}}</td>
+                            <td>{{types.quantity}}</td>
+                            <td>{{types.rate}}</td>                           
+                        </tr>
+                    </table>
+                </div>
+            </div>   
+            
+            <div class="form-group">
+                <label for="inputEmai3" class="col-sm-3 control-label">Mode Of Payment </label>
+                <div class="col-sm-7">
+                    <select class="form-control" name="inventModePayment" id="inventModePayment" [(ngModel)]="orderReceivedDetails.inventModePayment" required>
+                        <option value="" [disabled]="true">Select Payment Method</option>
+                        <option value="NEFT">NEFT</option>
+                        <option value="Cheque">Cheque</option>
+                        <option value="RTGS">RTGS</option>
+                    </select>
+                </div>
+            </div> 
+
+            <div class="form-group">
+                <label for="inputEmai3" class="col-sm-3 control-label">Details of Payment</label>
+                <div class="col-sm-7">
+                    <textarea class="form-control" rows="5" name="inventDetailPayment" id="inventDetailPayment" [(ngModel)]="orderReceivedDetails.inventDetailPayment" required></textarea>
+                </div>
+            </div>
+
+            <div class="form-group" *ngIf="showDatePicker">
+                <label for="inputEmai3" class="col-sm-3 control-label">Date of Payment</label>
+                <div class="col-sm-7 datepicker-input">
+                    <datetime [timepicker]="false" [datepicker]="datepickerOpts" [(ngModel)]="orderReceivedDetails.inventDatePayment" [ngModelOptions]="{standalone: true}" required></datetime>
+                </div>
+            </div>
+              
+            <div class="form-group">
+                <label class="col-sm-7"></label>
+                <div class="col-sm-4">                
+                    <input class="btn btn-default reset-button" type="button" value="Cancle" (click)="adminBillCancelEvent()">
+                    <input class="btn btn-mbe-attack submit-button" type="submit" value="Submit" [disabled]="!adminBilling.form.valid">
+                </div>
+            </div> 
+
+
+        </form>
+
+    </popup>
+</div>    
+
+
+<div id="preview" class="col s12 m9 l12">
+    <p>
+
+        <button type="button" class="btn waves-effect waves-light blue" (click)="rerender()">
+            <i class="fa fa-refresh" aria-hidden="true"></i> Refresh
+        </button>
+
+    </p>
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover"></table>
+</div>

@@ -1,0 +1,262 @@
+<popup #viewLoiPopUp>
+
+    <div class="container-fluid" id="print-loi-section">
+        <h3 class="text-center"><u>LETTER OF INTENT</u></h3>    
+        <p class="text-left">Date: {{branchParams.loiGeneratedDate}}</p>
+        <table>
+            <tr>
+                <td>Proposed Branch Name :</td>
+                <td>{{branchParams.proposedBranchName}}</td>
+            </tr>
+            <tr>
+                <td>Owner Name :</td>
+                <td>{{branchParams.ownerName}}</td>
+            </tr>
+            <tr>
+                <td>Owner Address :</td>
+                <td>{{branchParams.ownerAddress}}</td>
+            </tr>
+            <tr>
+                <td>Premise Address :</td>
+                <td>{{branchParams.premisesAddress}}</td>
+            </tr>
+            <tr>
+                <td>Owner’s Bank Account Number with IFSC Code :</td>                
+                <td>A/C No : {{branchParams.ownerBankAccNo}} , IFSC Code : {{branchParams.ownerIFSCNO}}</td>
+            </tr>
+            <tr>
+                <td>Owner’s Pan Card Number :</td>                
+                <td>{{branchParams.ownerPanCardNo}}</td>
+            </tr>
+        </table>
+        <br>
+        <table class="table" cellpadding="1" cellspacing="0">
+            <thead>
+                <tr>
+                    <td>Sl.No</td>
+                    <td>Particular</td>
+                    <td>Details</td>
+                </tr>
+            </thead>
+          
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Area of Premise</td>
+                    <td>{{branchParams.areaOfPremises}}</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Monthly Rental</td>
+                    <td>{{branchParams.monthlyRental}}</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Security Deposit</td>
+                    <td>{{branchParams.securityDeposite}}</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Period of Lease</td>
+                    <td>{{branchParams.periodOfLease}}</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>Date of Agreement</td>
+                    <td>{{branchParams.dateOfAggrement}}</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>Rent Start Date</td>
+                    <td>{{branchParams.rentalStartDate}}</td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>Escalation of Rent</td>
+                    <td>{{branchParams.escalationOfRent}}</td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>Payment of Rent</td>
+                    <td>{{branchParams.paymentOfRent}}</td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td>All Applicable Taxes of this Premise</td>
+                    <td>{{branchParams.isApplicableTaxPaid}}</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>Electricity Bill</td>
+                    <td>{{branchParams.electricityBill}}</td>
+                </tr>
+                <tr>
+                    <td>11</td>
+                    <td>Maintenance Charges</td>
+                    <td>{{branchParams.maintananceCharge}}</td>
+                </tr>
+                <tr>
+                    <td>12</td>
+                    <td>Notary/Registration Charges</td>
+                    <td>{{branchParams.noteryCharge}}</td>
+                </tr>
+                <tr>
+                    <td>13</td>
+                    <td>Lock-in-period</td>
+                    <td>{{branchParams.lockInPeriod}}</td>
+                </tr>
+                <tr>
+                    <td>14</td>
+                    <td>Notice for Termination</td>
+                    <td>{{branchParams.terminationNotice}}</td>
+                </tr>
+                <tr>
+                    <td>15</td>
+                    <td>White Washing of Premise Done</td>
+                    <td>{{branchParams.isWhiteWashingDone}}</td>
+                </tr>
+                <tr>
+                    <td>16</td>
+                    <td>Parking Area Available</td>
+                    <td>{{branchParams.isParkingAvailable}}</td>
+                </tr>                
+                <tr>
+                    <td>17</td>
+                    <td>Brokerage</td>
+                    <td>{{branchParams.brokerage}}</td>
+                </tr>                    
+            </tbody>
+        </table>
+        <p class="text-left">It is requested that the copy of this LOI be acknowledged as acceptance of the terms mentioned above.</p>
+        <br>
+        <p class="text-left">Thanking you,</p>
+        <p class="text-left">For Suryoday Small Finance Bank Ltd.</p>
+        <br>
+        <p class="text-left">Authorised Signatory</p>
+        <hr>
+        <p class="text-left">Acceptances by the Owner- I {{ branchParams.ownerName }} agree with all above terms and conditions.</p>
+
+        <p class="text-left">Date:</p>  
+        <p class="text-left">Signature of Owner</p>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-default" (click)="cancelGenerateLoi()">Cancel</button>
+        <button type="submit" class="btn btn-info pull-right" (click)="generateLoi()">Print</button>
+    </div>
+
+</popup>
+
+<popup #updateLoiPopUp>
+    <div class="box box-info">
+
+        <form class="form-horizontal" #updateLOIForm="ngForm">
+            <div class="box-body">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">LOI accepted by Owner</label>
+                    <div class="col-sm-9">
+                        <input id="loi_owner_action_yes" type="radio" name="isLoiAcceptedByOwner" value="Approve" [(ngModel)]="branchParams.isLoiAcceptedByOwner" [disabled]="isReadonly"> 
+                        <label for="loi_owner_action_yes">Approve</label>                            
+                        <input id="loi_owner_action_no" type="radio" name="isLoiAcceptedByOwner" value="Reject" [(ngModel)]="branchParams.isLoiAcceptedByOwner"  [disabled]="isReadonly"> 
+                        <label for="loi_owner_action_no">Reject</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Is LSR clear?</label>
+
+                    <div class="col-sm-10">
+                        <input id="loi_lsr_yes" type="radio" name="isLSRCleared" value="YES" [(ngModel)]="branchParams.isLSRCleared"  [disabled]="isReadonly"> 
+                        <label for="loi_lsr_yes">Yes</label>                            
+                        <input id="loi_lsr_no" type="radio" name="isLSRCleared" value="NO" [(ngModel)]="branchParams.isLSRCleared"  [disabled]="isReadonly"> 
+                        <label for="loi_lsr_no">No</label>
+
+                        <input id="loi_lsr_no_con" type="radio" name="isLSRCleared" value="Conditional" [(ngModel)]="branchParams.isLSRCleared"  [disabled]="isReadonly"> 
+                        <label for="loi_lsr_no_con">Conditional</label>
+                    </div>
+                </div>
+
+                <div class="form-group" *ngIf="branchParams.isLSRCleared == 'Conditional' ">
+                    <label class="col-sm-2 control-label">Comment/ Justification</label>
+
+                    <div class="col-sm-10">
+                        <textarea class="form-control" name="comments" [(ngModel)]="branchParams.comments"  [disabled]="isReadonly"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group"  *ngIf="branchParams.isLSRCleared == 'Conditional'  && !isReadonly ">
+                    <label class="col-sm-2 control-label">Upload NOC/ Indemnity cum undertaking</label>
+
+                    <div class="col-sm-10">
+                        <dropzone [config]="config" [message]="'Click or drag images here to upload'" (error)="onUploadError($event)" (success)="onUploadSuccessinputFiles($event,'nocDocuments')"></dropzone>
+                    </div>
+                </div>
+                
+                <div class="form-group" *ngIf="branchParams.nocDocumentsString != null ">
+                    <label class="col-sm-2 control-label">NOC/ Indemnity</label>
+                    <div class="col-sm-10">
+                        <ul>
+                            <li *ngFor="let nocDoc of branchParams.nocDocumentsString.split(',')">
+                                <a target="_blank" href="{{imgfirstURL}}{{nocDoc}}{{imgsecoundURL}}">View Document</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Is Lease / License agreement is registered? </label>
+                    <div class="col-sm-10">
+                        <input id="loi_lease_yes" type="radio" name="isLicenseaggRegistered" value="Yes" [(ngModel)]="branchParams.isLicenseaggRegistered" [disabled]="isReadonly"> 
+                        <label for="loi_lease_yes">Yes</label>                            
+                        <input id="loi_lease_no" type="radio" name="isLicenseaggRegistered" value="No" [(ngModel)]="branchParams.isLicenseaggRegistered" [disabled]="isReadonly"> 
+                        <label for="loi_lease_no">No</label>
+                    </div>
+                </div>
+
+                <div class="form-group"  *ngIf="!isReadonly">
+                    <label class="col-sm-2 control-label">Upload Registered L&L agreement </label>
+                    <div class="col-sm-10">
+                        <dropzone [config]="config" [message]="'Click or drag images here to upload'" (error)="onUploadError($event)" (success)="onUploadSuccessinputFiles($event,'regDocuments')"></dropzone>
+                    </div>
+                </div>
+                
+                <div class="form-group" *ngIf="branchParams.regDocumentsString != null ">
+                    <label class="col-sm-2 control-label">Registered L&L agreement</label>
+                    <div class="col-sm-10">
+                        <ul>
+                            <li *ngFor="let regDoc of branchParams.regDocumentsString.split(',')">
+                                <a target="_blank" href="{{imgfirstURL}}{{regDoc}}{{imgsecoundURL}}">View Document</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Is Possession taken by SSFBL?</label>
+                    <div class="col-sm-10">
+                        <input id="loi_poss_yes" type="radio" name="isPossesionToSSFBL" value="Yes" [(ngModel)]="branchParams.isPossesionToSSFBL" [disabled]="isReadonly"> 
+                        <label for="loi_poss_yes">Yes</label>                            
+                        <input id="loi_poss_no" type="radio" name="isPossesionToSSFBL" value="No" [(ngModel)]="branchParams.isPossesionToSSFBL" [disabled]="isReadonly"> 
+                        <label for="loi_poss_no">No</label>
+                    </div>
+                </div>
+
+            </div>
+            <div class="box-footer" *ngIf="!isReadonly">
+                <button type="reset" class="btn btn-default" (click)="updateLoiPopUpClose()">Cancel</button>
+                <button type="submit" class="btn btn-submit pull-right" [disabled]="!updateLOIForm.form.valid" (click)="updateLoi(updateLOIForm.value,'SUBMIT');">Save & Submit</button>
+                <button type="submit" class="btn btn-info pull-right" (click)="updateLoi(updateLOIForm.value,'SAVE');">Save</button>
+                
+            </div>
+        </form>
+    </div>
+</popup>
+
+<div id="preview" class="col s12 m9 l12">
+    <p>
+        <button type="button" class="btn waves-effect waves-light blue" (click)="rerender()">
+             <i class="fa fa-refresh" aria-hidden="true"></i> Refresh
+        </button>
+    </p>
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover"></table>
+</div>

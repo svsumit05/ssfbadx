@@ -1,0 +1,90 @@
+<div class="admin-billing">
+    <popup #cpuUpdateBillPopup>
+
+        <form class="form-horizontal" #cpuBilling="ngForm" (ngSubmit)="cpuBillConfirmEvent(); cpuBilling.reset();" >
+              <div class="form-group">
+                <label for="type" class="col-sm-3 control-label"> Amount to be deducted </label>    
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" name="inventAmountToDeduct" [(ngModel)]="cpuReceivedDetails.inventAmountToDeduct"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="type" class="col-sm-3 control-label">Add Amount</label>    
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" name="inventAmountToAdd" [(ngModel)]="cpuReceivedDetails.inventAmountToAdd"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmai3" class="col-sm-3 control-label">Subtract Amount</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" [(ngModel)]="cpuReceivedDetails.inventAmountToSub" name="inventAmountToSub" id="inventAmountToSub">
+                </div>
+            </div> 
+            <div class="form-group">
+                <label for="inputEmai3" class="col-sm-3 control-label">Original Bill Amount</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" [(ngModel)]="cpuReceivedDetails.totalAmount" name="totalAmount" id="totalAmount" >
+                </div>
+            </div> 
+            <div class="form-group">
+                <label for="inputEmai3" class="col-sm-3 control-label">Amount to be paid</label>
+                <div class="col-sm-7">
+
+                    <input type="text" class="form-control"  name="inventAmountToPaid" id="inventAmountToPaid" value="{{ ( cpuReceivedDetails.totalAmount*1 ) + ( cpuReceivedDetails.inventAmountToAdd*1 )  -  ( cpuReceivedDetails.inventAmountToSub*1)  - (cpuReceivedDetails.inventAmountToDeduct*1 ) }}" >
+                </div>
+            </div> 
+
+            <div class="form-group">
+                <label for="inputEmai3" class="col-sm-3 control-label">Product Details</label>
+                <div class="col-sm-7">
+                    <table>
+                        <tr>
+                            <th>Inventory Type</th>
+                            <th>Quantity</th>
+                            <th>Rate</th>                           
+                        </tr>
+                        <tr *ngFor="let types of cpuReceivedDetails.inventData.data">
+                            <td>{{types.inventoryType}}</td>
+                            <td>{{types.quantity}}</td>
+                            <td>{{types.rate}}</td>                            
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="type" class="col-sm-3 control-label">Status</label>    
+                <div class="col-sm-7">
+                    <select class="form-control" name="inventStatus" id="inventStatus" [(ngModel)]="cpuReceivedDetails.inventStatus" required>
+                        <option value="" [disabled]="true">Select Status</option>
+                        <option value="Approve">Approve</option>
+                        <option value="Reject">Reject</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-7"></label>
+                <div class="col-sm-4">                
+                    <input class="btn btn-default reset-button" type="button" value="Cancle" (click)="cpuBillCancelEvent()">
+                    <input class="btn btn-mbe-attack submit-button" type="submit" value="Submit" [disabled]="!cpuBilling.form.valid">
+                </div>
+            </div>  
+
+        </form>
+
+    </popup>
+</div>    
+
+
+<div id="preview" class="col s12 m9 l12">
+    <p>
+
+        <button type="button" class="btn waves-effect waves-light blue" (click)="rerender()">
+            <i class="fa fa-refresh" aria-hidden="true"></i> Refresh
+        </button>
+
+    </p>
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover"></table>
+</div>

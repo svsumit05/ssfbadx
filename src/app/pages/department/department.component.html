@@ -1,0 +1,56 @@
+<button class="btn btn-primary pull-right" (click)="addNewDepartment()"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Add Department</button>
+
+<popup #addDepartment>
+  <div class="box box-info">
+    <form class="form-horizontal" #addDep="ngForm" (ngSubmit)="onSubmitAddDep(addDep.value); addDep.reset()">
+    <div class="box-body">
+      <div class="form-group">
+
+        <label for="DepartmentName" class="col-sm-2 control-label">Department Name</label>
+
+        <div class="col-sm-10">
+          <input type="email" class="form-control" id="DepartmentName" placeholder="Department Name" name="DepartmentName" ngModel required>
+        </div>
+      </div>
+    </div>
+
+    <div class="box-footer">
+      <button type="reset" (click)="closeDepPop()" class="btn btn-default">Cancel</button>
+      <button type="submit" class="btn btn-info pull-right" [disabled]="!addDep.form.valid">Submit</button>
+    </div>
+    </form>
+  </div>
+</popup>
+
+<popup #editDepartment>
+    <div class="box box-info">
+        <form class="form-horizontal" #editDep="ngForm" (ngSubmit)="onSubmitEditDep(editDep.value); editDep.reset()">
+        <div class="box-body">
+          <div class="form-group">
+    
+            <label for="departmentName" class="col-sm-2 control-label">Department Name</label>
+    
+            <div class="col-sm-10">
+              <input type="email" class="form-control" id="departmentName" placeholder="Department Name" name="departmentName" [(ngModel)]="departmentValues.departmentName" required>
+            </div>
+          </div>
+        </div>
+    
+        <div class="box-footer">
+          <button type="reset" (click)="closeDepPop()" class="btn btn-default">Cancel</button>
+          <button type="submit" class="btn btn-info pull-right" [disabled]="!editDep.form.valid">Submit</button>
+        </div>
+        </form>
+      </div>
+</popup>
+
+
+
+<div id="preview" class="col s12 m9 l12">
+  <p>
+    <button type="button" class="btn waves-effect waves-light blue" (click)="rerender()">
+      <i class="fa fa-refresh" aria-hidden="true"></i> Refresh
+    </button>
+  </p>
+  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover"></table>
+</div>

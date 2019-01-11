@@ -1,0 +1,43 @@
+:host >>> div#ng2-opd-popup-main {
+    top: -3% !important;
+}
+
+.text-left {
+    text-align: left!important;
+}
+.text-center {
+    text-align: center!important;
+}
+.table {
+    width: 100%;
+    max-width: 100%;
+}
+table.table {
+    border: 1px solid #000;
+}
+table.table > thead > tr > td {
+    border: 1px solid #000;
+}
+table.table > tbody > tr > td {
+    border: 1px solid #000;
+}
+
+:host >>> input[type="radio"] {
+    margin-top: 1.5%;
+}
+
+input[type="radio"] {
+    margin: 11px 0 0 !important;
+    -ms-transform: scale(1.5); /* IE 9 */
+    -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
+    transform: scale(1.5);
+}
+label {
+    padding-left: 1% !important;
+    padding-right: 1% !important;
+}
+
+#ownerBankAccountNo {
+    margin-bottom: 2%;
+    width: 450px;
+}

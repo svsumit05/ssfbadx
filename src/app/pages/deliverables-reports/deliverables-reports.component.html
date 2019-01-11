@@ -1,0 +1,312 @@
+<div class="row">
+    <div class="col-md-6"  *ngIf="reportType == 'ho'">
+        <div class="box">
+            <div class="box-header with-border"> 
+                <h3 class="box-title">Production Ageing </h3>
+            </div>
+
+            <div class="box-body">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <th style="width: 10px">Deliverables Type</th>
+                            <th>T+1</th>
+                            <th>T+2</th>
+                            <th>T+3</th>
+                            <th>T+N</th>
+                        </tr>
+
+                        <tr>
+                            <td>FDR</td>
+                            <td><a href="#" (click)="downloadAgengReport('FDR','Production','1');">{{fdr_production_data.t1}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('FDR','Production','2');">{{fdr_production_data.t2}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('FDR','Production','3');">{{fdr_production_data.t3}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('FDR','Production','4');">{{fdr_production_data.tn}}</a></td>
+                        </tr>
+                        <tr>
+                            <td>Welcome Kit</td>
+                            <td><a href="#" (click)="downloadAgengReport('WelcomeKit','Production','1');">{{welcomekit_production_data.t1}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('WelcomeKit','Production','2');">{{welcomekit_production_data.t2}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('WelcomeKit','Production','3');">{{welcomekit_production_data.t3}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('WelcomeKit','Production','4');">{{welcomekit_production_data.tn}}</a></td>
+                        </tr> 
+                        <tr>
+                            <td>ChequeBook</td>
+                            <td><a href="#" (click)="downloadAgengReport('ChequeBook','Production','1');">{{chequebook_production_data.t1}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('ChequeBook','Production','2');">{{chequebook_production_data.t2}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('ChequeBook','Production','3');">{{chequebook_production_data.t3}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('ChequeBook','Production','4');">{{chequebook_production_data.tn}}</a></td>
+                        </tr> 
+                        <tr>
+                            <td>DebitCard</td>
+                            <td><a href="#" (click)="downloadAgengReport('DebitCard','Production','1');">{{debitcard_production_data.t1}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('DebitCard','Production','2');">{{debitcard_production_data.t2}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('DebitCard','Production','3');">{{debitcard_production_data.t3}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('DebitCard','Production','4');">{{debitcard_production_data.tn}}</a></td>
+                        </tr> 
+                    </tbody></table>
+            </div>
+            <p>&nbsp;&nbsp; Note : </p> 
+            <ul> <li>Standard TAT T+2</li> </ul>
+            <br>
+        </div>
+    </div> 
+    <div class="col-md-6"  *ngIf="reportType == 'ho'">    
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Courier Ageing</h3>
+            </div>
+
+            <div class="box-body">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <th style="width: 10px">Deliverables Type</th>
+                            <th>T+1</th>
+                            <th>T+2</th>
+                            <th>T+3</th>
+                            <th>T+N</th>
+                        </tr>
+                        <tr>
+                            <td>FDR</td>
+                            <td><a href="#" (click)="downloadAgengReport('FDR','Courier','1');">{{fdr_courier_data.t1}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('FDR','Courier','2');">{{fdr_courier_data.t2}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('FDR','Courier','3');">{{fdr_courier_data.t3}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('FDR','Courier','4');">{{fdr_courier_data.tn}}</a></td>
+                        </tr>    
+                        <tr>
+                            <td>Welcome Kit</td>
+                            <td><a href="#" (click)="downloadAgengReport('WelcomeKit','Courier','1');">{{welcomekit_courier_data.t1}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('WelcomeKit','Courier','2');">{{welcomekit_courier_data.t2}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('WelcomeKit','Courier','3');">{{welcomekit_courier_data.t3}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('WelcomeKit','Courier','4');">{{welcomekit_courier_data.tn}}</a></td>
+                        </tr> 
+                        <tr>
+                            <td>Cheque Book</td>
+                            <td><a href="#" (click)="downloadAgengReport('ChequeBook','Courier','1');">{{chequebook_courier_data.t1}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('ChequeBook','Courier','2');">{{chequebook_courier_data.t2}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('ChequeBook','Courier','3');">{{chequebook_courier_data.t3}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('ChequeBook','Courier','4');">{{chequebook_courier_data.tn}}</a></td>
+                        </tr> 
+                        <tr>
+                            <td>Debit Card</td>
+                            <td><a href="#" (click)="downloadAgengReport('DebitCard','Courier','1');">{{debitcard_courier_data.t1}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('DebitCard','Courier','2');">{{debitcard_courier_data.t2}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('DebitCard','Courier','3');">{{debitcard_courier_data.t3}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('DebitCard','Courier','4');">{{debitcard_courier_data.tn}}</a></td>
+                        </tr> 
+                    </tbody></table>
+            </div>
+            <p>&nbsp;&nbsp; Note : </p> 
+            <ul> <li>Standard TAT T+5</li> <li>Dispatched mode speed post is excluded from report.</li></ul>
+        </div>
+    </div>
+    <div class="col-md-6 pull-right"  *ngIf="reportType == 'ho'">    
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">RTO Ageing</h3>
+            </div>
+
+            <div class="box-body">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <th style="width: 10px">Deliverables Type</th>
+                            <th>T+1</th>
+                            <th>T+2</th>
+                            <th>T+3</th>
+                            <th>T+N</th>
+                        </tr>
+                        <tr>
+                            <td>FDR</td>
+                            <td><a href="#" (click)="downloadAgengReport('FDR','RTO','1');">{{fdr_rto_data.t1}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('FDR','RTO','2');">{{fdr_rto_data.t2}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('FDR','RTO','3');">{{fdr_rto_data.t3}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('FDR','RTO','4');">{{fdr_rto_data.tn}}</a></td>
+                        </tr>
+                        <tr>
+                            <td>Welcome Kit</td>
+                            <td><a href="#" (click)="downloadAgengReport('WelcomeKit','RTO','1');">{{welcomekit_rto_data.t1}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('WelcomeKit','RTO','2');">{{welcomekit_rto_data.t2}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('WelcomeKit','RTO','3');">{{welcomekit_rto_data.t3}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('WelcomeKit','RTO','4');">{{welcomekit_rto_data.tn}}</a></td>
+                        </tr> 
+                        <tr>
+                            <td>Cheque Book</td>
+                            <td><a href="#" (click)="downloadAgengReport('ChequeBook','RTO','1');">{{chequebook_rto_data.t1}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('ChequeBook','RTO','2');">{{chequebook_rto_data.t2}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('ChequeBook','RTO','3');">{{chequebook_rto_data.t3}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('ChequeBook','RTO','4');">{{chequebook_rto_data.tn}}</a></td>
+                        </tr> 
+                        <tr>
+                            <td>Debit Card</td>
+                            <td><a href="#" (click)="downloadAgengReport('DebitCard','RTO','1');">{{debitcard_rto_data.t1}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('DebitCard','RTO','2');">{{debitcard_rto_data.t2}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('DebitCard','RTO','3');">{{debitcard_rto_data.t3}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('DebitCard','RTO','4');">{{debitcard_rto_data.tn}}</a></td>
+                        </tr>                         
+                    </tbody></table>
+            </div>
+            <p>&nbsp;&nbsp; Note : </p> 
+            <ul> <li>Standard TAT T+3</li> <li>Dispatched mode speed post is excluded from report.</li></ul>
+        </div>
+    </div>
+    <div class="col-md-6 pull-left">    
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Branch Action Ageing</h3>
+            </div>
+
+            <div class="box-body">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <th style="width: 10px">Deliverables Type</th>
+                            <th>T+1</th>
+                            <th>T+2</th>
+                            <th>T+3</th>
+                            <th>T+N</th>
+                        </tr>
+                        <tr>
+                            <td>FDR</td>
+                            <td><a href="#" (click)="downloadAgengReport('FDR','RTOBranchAgeing','1');">{{fdr_branchrto_data.t1}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('FDR','RTOBranchAgeing','2');">{{fdr_branchrto_data.t2}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('FDR','RTOBranchAgeing','3');">{{fdr_branchrto_data.t3}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('FDR','RTOBranchAgeing','4');">{{fdr_branchrto_data.tn}}</a></td>
+                        </tr>
+                        <tr>
+                            <td>Welcome Kit</td>
+                            <td><a href="#" (click)="downloadAgengReport('WelcomeKit','RTOBranchAgeing','1');">{{welcomekit_branchrto_data.t1}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('WelcomeKit','RTOBranchAgeing','2');">{{welcomekit_branchrto_data.t2}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('WelcomeKit','RTOBranchAgeing','3');">{{welcomekit_branchrto_data.t3}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('WelcomeKit','RTOBranchAgeing','4');">{{welcomekit_branchrto_data.tn}}</a></td>
+                        </tr> 
+                        <tr>
+                            <td>Cheque Book</td>
+                            <td><a href="#" (click)="downloadAgengReport('ChequeBook','RTOBranchAgeing','1');">{{chequebook_branchrto_data.t1}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('ChequeBook','RTOBranchAgeing','2');">{{chequebook_branchrto_data.t2}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('ChequeBook','RTOBranchAgeing','3');">{{chequebook_branchrto_data.t3}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('ChequeBook','RTOBranchAgeing','4');">{{chequebook_branchrto_data.tn}}</a></td>
+                        </tr> 
+                        <tr>
+                            <td>Debit Card</td>
+                            <td><a href="#" (click)="downloadAgengReport('DebitCard','RTOBranchAgeing','1');">{{debitcard_branchrto_data.t1}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('DebitCard','RTOBranchAgeing','2');">{{debitcard_branchrto_data.t2}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('DebitCard','RTOBranchAgeing','3');">{{debitcard_branchrto_data.t3}}</a></td>
+                            <td><a href="#" (click)="downloadAgengReport('DebitCard','RTOBranchAgeing','4');">{{debitcard_branchrto_data.tn}}</a></td>
+                        </tr>                         
+                    </tbody></table>
+            </div>
+            <p>&nbsp;&nbsp; Note : </p> 
+            <ul> <li>Standard TAT T+0</li> </ul>
+            <br>
+        </div>
+    </div>
+</div>
+
+
+<div class="box">
+    <div class="box-header">
+        <h3 class="box-title">Deliverables Consolidated Report</h3>
+    </div>
+    
+    <div style="clear: both"></div>
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="input-group">
+                <span class="input-group-addon">
+                    From Date
+                </span>
+                <datetime [timepicker]="false" [datepicker]="datepickerOpts" (ngModelChange)="handleDateFromChange($event)" [(ngModel)]="disb_from_date"></datetime>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="input-group">
+                <span class="input-group-addon">
+                    To Date
+                </span>
+                <datetime [timepicker]="false" [datepicker]="datepickerToOpts" [(ngModel)]="disb_to_date"></datetime>
+            </div>
+        </div>
+
+        <div class="col-lg-3">            
+            <div class="input-group">               
+                <select class="form-control" [(ngModel)]="disb_branch_name">
+                    <option value='All' selected="selected">All</option>
+                    <option *ngFor="let dpsl of branchList" [ngValue]="dpsl.id">{{dpsl.value}}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-lg-3">
+            <button type="button" class="btn waves-effect waves-light blue" (click)="getColletedReport()">
+                Search
+            </button>
+        </div>
+    </div>
+    <br><br>
+
+    <div class="box-body no-padding">
+        <table class="table table-bordered consolidated">
+            <tbody>
+                <tr>
+                    <th>Deliverables Type</th>
+                    <th><span class="report-th-primary">A/C Open / issuance</span></th>
+                    <th><span class="report-th-warning">Dispatched</span></th>
+                    <th><span class="report-th-info">In Transit</span></th>
+                    <th><span class="report-th-success">Delivered</span></th>
+                    <th><span class="report-th-danger">RTO</span></th>                    
+                    <th><span class="report-th-danger1">Lost In Transit/Destroyed</span></th>                    
+                    <th><span class="report-th-danger2">FRFC Destroyed</span></th>                    
+                </tr>
+                <tr>
+                    <td>FDR</td>
+                    <td><a href="#" (click)="downloadReport('FDR','accoutntOpen');">{{fdr_collated_data.ACdate}}</a></td>
+                    <td><a href="#" (click)="downloadReport('FDR','dispatch');">{{fdr_collated_data.dispatch}}</a></td>
+                    <td><a href="#" (click)="downloadReport('FDR','inTransit');">{{fdr_collated_data.inTransitData}}</a></td>
+                    <td><a href="#" (click)="downloadReport('FDR','delivery');">{{fdr_collated_data.deliver}}</a></td>
+                    <td><a href="#" (click)="downloadReport('FDR','RTO');">{{fdr_collated_data.rtoCount}}</a></td>
+                    <td><a href="#" (click)="downloadReport('FDR','LostInTransit');">{{fdr_collated_data.lostInTransit}}</a></td>
+                    <td><a href="#" (click)="downloadReport('FDR','destructAtCPU');">{{fdr_collated_data.destructAtCPU}}</a></td>
+
+                </tr>
+                <tr>                   
+                    <td>Welcome Kit</td>
+                    <td><a href="#" (click)="downloadReport('WelcomeKit','accoutntOpen');">{{welcomekit_collated_data.ACdate}}</a></td>
+                    <td><a href="#" (click)="downloadReport('WelcomeKit','dispatch');">{{welcomekit_collated_data.dispatch}}</a></td>
+                    <td><a href="#" (click)="downloadReport('WelcomeKit','inTransit');">{{welcomekit_collated_data.inTransitData}}</a></td>
+                    <td><a href="#" (click)="downloadReport('WelcomeKit','delivery');">{{welcomekit_collated_data.deliver}}</a></td>
+                    <td><a href="#" (click)="downloadReport('WelcomeKit','RTO');">{{welcomekit_collated_data.rtoCount}}</a></td>
+                    <td><a href="#" (click)="downloadReport('WelcomeKit','LostInTransit');">{{welcomekit_collated_data.lostInTransit}}</a></td>
+                    <td><a href="#" (click)="downloadReport('WelcomeKit','destructAtCPU');">{{welcomekit_collated_data.destructAtCPU}}</a></td>
+
+                </tr>
+                <tr>
+                    <td>Cheque Book</td>
+                    <td><a href="#" (click)="downloadReport('ChequeBook','accoutntOpen');">{{chequebook_collated_data.ACdate}}</a></td>
+                    <td><a href="#" (click)="downloadReport('ChequeBook','dispatch');">{{chequebook_collated_data.dispatch}}</a></td>
+                    <td><a href="#" (click)="downloadReport('ChequeBook','inTransit');">{{chequebook_collated_data.inTransitData}}</a></td>
+                    <td><a href="#" (click)="downloadReport('ChequeBook','delivery');">{{chequebook_collated_data.deliver}}</a></td>
+                    <td><a href="#" (click)="downloadReport('ChequeBook','RTO');">{{chequebook_collated_data.rtoCount}}</a></td>
+                    <td><a href="#" (click)="downloadReport('ChequeBook','LostInTransit');">{{chequebook_collated_data.lostInTransit}}</a></td>
+                    <td><a href="#" (click)="downloadReport('ChequeBook','destructAtCPU');">{{chequebook_collated_data.destructAtCPU}}</a></td>
+
+                </tr>
+                <tr>
+                    <td>Debit Card</td>
+                    <td><a href="#" (click)="downloadReport('DebitCard','accoutntOpen');">{{debitcard_collated_data.ACdate}}</a></td>
+                    <td><a href="#" (click)="downloadReport('DebitCard','dispatch');">{{debitcard_collated_data.dispatch}}</a></td>
+                    <td><a href="#" (click)="downloadReport('DebitCard','inTransit');">{{debitcard_collated_data.inTransitData}}</a></td>
+                    <td><a href="#" (click)="downloadReport('DebitCard','delivery');">{{debitcard_collated_data.deliver}}</a></td>
+                    <td><a href="#" (click)="downloadReport('DebitCard','RTO');">{{debitcard_collated_data.rtoCount}}</a></td>
+                    <td><a href="#" (click)="downloadReport('DebitCard','LostInTransit');">{{debitcard_collated_data.lostInTransit}}</a></td>
+                    <td><a href="#" (click)="downloadReport('DebitCard','destructAtCPU');">{{debitcard_collated_data.destructAtCPU}}</a></td>
+
+                </tr>
+            </tbody></table>
+    </div>
+    
+    <br>
+    <p>Note : <ul> <li>All Data is based on As on Date ( A/C Opening date )</li></ul>
+    <br>
+</div>

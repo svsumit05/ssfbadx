@@ -1,0 +1,197 @@
+<button class="btn btn-primary pull-right add-new-order-button" (click)="addInventory()">
+    <i class="fa fa-plus-circle" aria-hidden="true"></i> Add New Inventory</button>
+
+
+<popup #inventroyAddPopup>
+    <div class="box box-info">
+        <form class="form-horizontal" name="invAdd" #invAdd="ngForm" (ngSubmit)="addInventroyDetails(invAdd.value)">
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="inputEmai3" class="col-sm-2 control-label">Item Name.</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="itemName" [(ngModel)]="addInventoryData.itemName" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmai3" class="col-sm-2 control-label">Rate per unit.</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" name="ratePerUnit" [(ngModel)]="addInventoryData.ratePerUnit" pattern="^[1-9][0-9]*$"
+                            min="1" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmai3" class="col-sm-2 control-label">Threshold Limit.</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" name="thresholdLimit" [(ngModel)]="addInventoryData.thresholdLimit" pattern="^[1-9][0-9]*$"
+                            min="1" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmai3" class="col-sm-2 control-label">GST %.</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" name="gst" [(ngModel)]="addInventoryData.gst" pattern="^[1-9][0-9]*$" min="1" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 control-label">Product category :</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" name="productName" [(ngModel)]="addInventoryData.productName" required>
+                            <option value="" selected>Select product category</option>
+                            <option *ngFor="let WLPL of WorkLineProductList" [value]="WLPL.productName">{{WLPL.productName}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmai3" class="col-sm-2 control-label">Inventory type ?</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" name="isInstakit" [(ngModel)]="addInventoryData.isInstakit">
+                            <option value="0">Regular Inventory</option>
+                            <option value="1">InstaKit</option>
+                            <option value="2">DD</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="box-footer">
+                <button type="reset" class="btn btn-default" (click)="closeForm()">Cancel</button>
+                <button type="submit" class="btn btn-info pull-right" [disabled]="!invAdd.form.valid">Submit</button>
+            </div>
+        </form>
+    </div>
+</popup>
+
+<popup #inventroyDetailViewPopup>
+
+    <div class="box box-info">
+        <form class="form-horizontal" name="invEdit" #invEdit="ngForm" (ngSubmit)="editInventroyDetails(invEdit.value)">
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="inputEmai3" class="col-sm-2 control-label">Item Name.</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="itemName" [(ngModel)]="addInventoryData.itemName" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmai3" class="col-sm-2 control-label">Rate per unit.</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" name="ratePerUnit" [(ngModel)]="addInventoryData.ratePerUnit" min="1" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmai3" class="col-sm-2 control-label">Threshold Limit.</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" name="thresholdLimit" [(ngModel)]="addInventoryData.thresholdLimit" min="1" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmai3" class="col-sm-2 control-label">GST %.</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" name="gst" [(ngModel)]="addInventoryData.gst" min="1" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 control-label">Product category :</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" name="productName" [(ngModel)]="addInventoryData.productName" required>
+                            <option value="" selected>Select product category</option>
+                            <option *ngFor="let WLPL2 of WorkLineProductList" [value]="WLPL2.productName">{{WLPL2.productName}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmai3" class="col-sm-2 control-label">Inventory type ?</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" name="isInstakit" [(ngModel)]="addInventoryData.isInstakit">
+                            <option value="0">Regular Inventory</option>
+                            <option value="1">InstaKit</option>
+                            <option value="2">DD</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="box-footer">
+                <button type="reset" class="btn btn-default" (click)="closeForm()">Cancel</button>
+                <button type="submit" class="btn btn-info pull-right" [disabled]="!invEdit.form.valid">Submit</button>
+            </div>
+        </form>
+    </div>
+
+</popup>
+
+<popup #inventroyApprovalViewPopup>
+
+    <div class="box box-info">
+        <form class="form-horizontal" name="invAppView" #invAppView="ngForm">
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="inputEmai3" class="col-sm-2 control-label">Item Name.</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="itemName" [value]="addInventoryData.itemName" readonly>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmai3" class="col-sm-2 control-label">Rate per unit.</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="ratePerUnit" [value]="addInventoryData.ratePerUnit" min="1" readonly>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmai3" class="col-sm-2 control-label">Threshold Limit.</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="thresholdLimit" [value]="addInventoryData.thresholdLimit" min="1" readonly>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmai3" class="col-sm-2 control-label">GST %.</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="gst" [value]="addInventoryData.gst" min="1" readonly>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 control-label">Product category :</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" name="productName" [(ngModel)]="addInventoryData.productName" disabled>
+                            <option value="" selected>Select product category</option>
+                            <option *ngFor="let WLPL1 of WorkLineProductList" [value]="WLPL1.productName">{{WLPL1.productName}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmai3" class="col-sm-2 control-label">Inventory type ?</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" name="isInstakit" [(ngModel)]="addInventoryData.isInstakit" disabled>
+                            <option value="0">Regular Inventory</option>
+                            <option value="1">InstaKit</option>
+                            <option value="2">DD</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmai3" class="col-sm-2 control-label">Comment</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" rows="3" name="comment" required ngModel></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box-footer">
+                <button type="reset" class="btn btn-default" (click)="closeForm()">Cancel</button>
+                <button type="submit" class="btn btn-primary pull-right approve-button" (click)="userAction(addInventoryData.inventoryModId,'APPROVED',invAppView.value);invAppView.reset()"
+                    [disabled]="!invAppView.form.valid">Approve</button>
+                <button type="submit" class="btn btn-primary pull-right reject-button" (click)="userAction(addInventoryData.inventoryModId,'REJECTED',invAppView.value);invAppView.reset()"
+                    [disabled]="!invAppView.form.valid">Reject</button>
+            </div>
+        </form>
+    </div>
+
+</popup>
+
+
+<div id="preview" class="col s12 m9 l12">
+    <p>
+        <button type="button" class="btn waves-effect waves-light blue" (click)="rerender()">
+            <i class="fa fa-refresh" aria-hidden="true"></i> Refresh
+        </button>
+    </p>
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover"></table>
+</div>

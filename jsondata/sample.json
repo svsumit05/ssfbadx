@@ -1,0 +1,81 @@
+{
+  "data": [
+    {
+      "id": 860,
+      "firstName": "Superman",
+      "lastName": "Yoda",
+      "properties_details": [
+        {
+          "prop_name": " ABC",
+          "prop_no": " 123"
+        },
+        {
+          "prop_name": " XYZ",
+          "prop_no": " 456"
+        },
+        {
+          "prop_name": " XYZ",
+          "prop_no": " 456"
+        },
+        {
+          "prop_name": " XYZ",
+          "prop_no": " 456"
+        }
+      ]
+    },
+    {
+      "id": 870,
+      "firstName": "Foo",
+      "lastName": "Whateveryournameis",
+      "properties_details": []
+    },
+    {
+      "id": 590,
+      "firstName": "Toto",
+      "lastName": "Titi",
+      "properties_details": []
+    },
+    {
+      "id": 803,
+      "firstName": "Luke",
+      "lastName": "Kyle",
+      "properties_details": []
+    },
+    {
+      "id": 474,
+      "firstName": "Toto",
+      "lastName": "Bar",
+      "properties_details": []
+    },
+    {
+      "id": 476,
+      "firstName": "Zed",
+      "lastName": "Kyle",
+      "properties_details": []
+    },
+    {
+      "id": 464,
+      "firstName": "Cartman",
+      "lastName": "Kyle",
+      "properties_details": []
+    },
+    {
+      "id": 505,
+      "firstName": "Superman",
+      "lastName": "Yoda",
+      "properties_details": []
+    },
+    {
+      "id": 308,
+      "firstName": "Louis",
+      "lastName": "Kyle",
+      "properties_details": []
+    },
+    {
+      "id": 184,
+      "firstName": "Toto",
+      "lastName": "Bar",
+      "properties_details": []
+    }
+  ]
+}

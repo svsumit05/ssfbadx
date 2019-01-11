@@ -1,0 +1,402 @@
+<popup #uploadExcelView>
+  <div class="box box-info">
+    <form class="form-horizontal" name="uploadExcelForm" #uploadExcelForm="ngForm" (ngSubmit)="saveExcel()">
+      <div class="box-body">
+        <div class="form-group">
+          <label for="type" class="col-sm-2 control-label">Uplaod File.</label>
+          <div class="col-sm-10">
+            <input type="file" id="FileInput" name="FileInput" (focus)="ordfileEvent($event)" accept=".xlsx, .xls, .csv" required>
+          </div>
+        </div>
+      </div>
+      <div class="box-footer">
+        <input class="btn btn-default" type="reset" value="Cancle" (click)="onClose()">
+        <input class="btn btn-info pull-right" type="submit" value="Submit" [disabled]="!uploadExcelForm.form.valid">
+      </div>
+    </form>
+  </div>
+</popup>
+
+<popup #downloadExcelView>
+  <div class="box box-info">
+    <form class="form-horizontal" name="downloadExcelForm" #downloadExcelForm="ngForm" (ngSubmit)="downloadExcel(downloadExcelForm.value)">
+      <div class="box-body">
+        <div class="form-group">
+          <label for="type" class="col-sm-2 control-label">Start Date.</label>
+          <div class="col-sm-4">
+            <input type="date" class="form-control" name="startDate" ngModel required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="type" class="col-sm-2 control-label">End Date.</label>
+          <div class="col-sm-4">
+            <input type="date" class="form-control" name="endDate" ngModel required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="type" class="col-sm-2 control-label">Record Type.</label>
+          <div class="col-sm-4">
+            <select class="form-control" name="recordTypeId" ngModel>
+              <option value="" selected>Select Record Type</option>
+              <option *ngFor="let RTDF of recordTypeDropDown" [ngValue]="RTDF">{{RTDF}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="type" class="col-sm-2 control-label">Branch.</label>
+          <div class="col-sm-4">
+            <p class="form-control">{{branch}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="box-footer">
+        <input class="btn btn-default" type="reset" value="Cancle" (click)="onClose()">
+        <input class="btn btn-info pull-right" type="submit" value="Downlaod" [disabled]="!downloadExcelForm.form.valid">
+      </div>
+    </form>
+  </div>
+</popup>
+
+<popup #uploadUpdatedRecordsExcelView>
+  <div class="box box-info">
+    <form class="form-horizontal" name="uploadUpdatedRecordsExcelForm" #uploadUpdatedRecordsExcelForm="ngForm" (ngSubmit)="saveUpdatedExcel(uploadUpdatedRecordsExcelForm.value)">
+      <div class="box-body">
+        <div class="form-group">
+          <label for="type" class="col-sm-2 control-label">Uplaod File.</label>
+          <div class="col-sm-10">
+            <input type="file" id="FileInput" name="FileInput" (focus)="ordfileEvent($event)" accept=".xlsx, .xls, .csv" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="type" class="col-sm-2 control-label">Record Type.</label>
+          <div class="col-sm-4">
+            <select class="form-control" name="recordTypeId" ngModel required>
+              <option value="" selected>Select Record Type</option>
+              <option *ngFor="let RTDU of recordTypeDropDown" [ngValue]="RTDU">{{RTDU}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="box-footer">
+        <input class="btn btn-default" type="reset" value="Cancle" (click)="onClose()">
+        <input class="btn btn-info pull-right" type="submit" value="Submit" [disabled]="!uploadUpdatedRecordsExcelForm.form.valid">
+      </div>
+    </form>
+  </div>
+</popup>
+
+<div class="row">
+  <div class="box-body pad table-responsive">
+    <table class="table table-bordered text-center">
+      <tbody>
+        <tr>
+          <td>
+            <button class="btn btn-primary upload-button" (click)="uploadExcel()">
+              <i class="fa fa-plus-circle" aria-hidden="true"></i> Upload New Records
+            </button>
+          </td>
+          <td>
+            <button class="btn btn-primary upload-button" (click)="downloadViewExcel()">
+              <i class="fa fa-plus-circle" aria-hidden="true"></i> Download Records
+            </button>
+          </td>
+          <td>
+            <button class="btn btn-primary upload-button" (click)="uploadUpdatedExcel()">
+              <i class="fa fa-plus-circle" aria-hidden="true"></i> Upload Updated Records
+            </button>
+          </td>
+          <td>
+            <button class="btn btn-primary upload-button" (click)="addNewRecord()">
+              <i class="fa fa-plus-circle" aria-hidden="true"></i> Add Records
+            </button>
+          </td>
+          <td>
+            <button class="btn btn-primary upload-button" (click)="addSRRecord()">
+              <i class="fa fa-plus-circle" aria-hidden="true"></i> Add SR
+            </button>
+          </td>
+          <td>
+            <button class="btn btn-primary upload-button" (click)="addVoucherRecord()">
+              <i class="fa fa-plus-circle" aria-hidden="true"></i> Add Voucher
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<popup #addRecord>
+  <div class="box box-info">
+    <form class="form-horizontal" name="recordAdd" #recordAdd="ngForm" (ngSubmit)="saveRecord();">
+      <div class="box-body">
+
+        <div class="form-group">
+          <label for="type" class="col-sm-2 control-label">Account No</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" name="acNo" [(ngModel)]="addRecordData.acNo" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="type" class="col-sm-2 control-label">Customer No</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" name="customerNo" [(ngModel)]="addRecordData.customerNo" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="type" class="col-sm-2 control-label">Branch Name</label>
+          <div class="col-sm-10">
+            <p class="form-control">{{addRecordData.branchName}}</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="type" class="col-sm-2 control-label">Branch Code</label>
+          <div class="col-sm-10">
+            <p class="form-control">{{addRecordData.branchCode}}</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="type" class="col-sm-2 control-label">Account Title</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" name="acTitle" [(ngModel)]="addRecordData.acTitle">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="type" class="col-sm-2 control-label">Account Type</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" name="acType" [(ngModel)]="addRecordData.acType">
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <label for="type" class="col-sm-2 control-label">Scheme Code</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" name="schemeCode" [(ngModel)]="addRecordData.schemeCode">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="type" class="col-sm-2 control-label">Document Type</label>
+          <div class="col-sm-10">
+            <select class="form-control" name="productName" [(ngModel)]="addRecordData.productName">
+              <option value="" selected>Select Document Type</option>
+              <option *ngFor="let DDD of documentDropDown" [ngValue]="DDD.documentType">{{DDD.documentType}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="type" class="col-sm-2 control-label">ACCT_STAT</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" name="acStat" [(ngModel)]="addRecordData.acStat">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="type" class="col-sm-2 control-label">Account Opening Date</label>
+          <div class="col-sm-10">
+            <input type="date" class="form-control" name="acOpenDate" [(ngModel)]="addRecordData.acOpenDate">
+          </div>
+        </div>
+
+      </div>
+      <div class="box-footer">
+        <input class="btn btn-default" type="reset" value="Cancle" (click)="onClose()">
+        <input class="btn btn-info pull-right" type="submit" value="Submit" [disabled]="!recordAdd.form.valid">
+      </div>
+    </form>
+  </div>
+</popup>
+
+<popup #addSRRecordView>
+  <div class="box box-info">
+    <form class="form-horizontal" name="recordSRAdd" #recordSRAdd="ngForm" (ngSubmit)="saveSRRecord();">
+      <div class="box-body">
+
+        <div class="form-group">
+          <label for="type" class="col-sm-2 control-label">Account No</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" name="acNo" [(ngModel)]="addRecordData.acNo" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="type" class="col-sm-2 control-label">Customer No</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" name="customerNo" [(ngModel)]="addRecordData.customerNo" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="type" class="col-sm-2 control-label">Branch Name</label>
+          <div class="col-sm-10">
+            <p class="form-control">{{addRecordData.branchName}}</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="type" class="col-sm-2 control-label">Branch Code</label>
+          <div class="col-sm-10">
+            <p class="form-control">{{addRecordData.branchCode}}</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="type" class="col-sm-2 control-label">Account Title</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" name="acTitle" [(ngModel)]="addRecordData.acTitle">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="type" class="col-sm-2 control-label">Account Type</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" name="acType" [(ngModel)]="addRecordData.acType">
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <label for="type" class="col-sm-2 control-label">Scheme Code</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" name="schemeCode" [(ngModel)]="addRecordData.schemeCode">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="type" class="col-sm-2 control-label">Document Type</label>
+          <div class="col-sm-10">
+            <select class="form-control" name="productName" [(ngModel)]="addRecordData.productName">
+              <option value="" selected>Select Document Type</option>
+              <option *ngFor="let DDD of documentDropDown" [ngValue]="DDD.documentType">{{DDD.documentType}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="type" class="col-sm-2 control-label">ACCT_STAT</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" name="acStat" [(ngModel)]="addRecordData.acStat">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="type" class="col-sm-2 control-label">Account Opening Date</label>
+          <div class="col-sm-10">
+            <input type="date" class="form-control" name="acOpenDate" [(ngModel)]="addRecordData.acOpenDate">
+          </div>
+        </div>
+
+      </div>
+      <div class="box-footer">
+        <input class="btn btn-default" type="reset" value="Cancle" (click)="onClose()">
+        <input class="btn btn-info pull-right" type="submit" value="Submit" [disabled]="!recordSRAdd.form.valid">
+      </div>
+    </form>
+  </div>
+</popup>
+
+<popup #addVoucherRecordView>
+  <div class="col-md-12">
+    <div class="box">
+      <div class="box-body no-padding">
+        <table class="table">
+          <tbody>
+            <tr>
+              <th>Date</th>
+              <th>Book</th>
+              <th>Action</th>
+            </tr>
+            <tr id="v_{{i}}" *ngFor="let item of ' '.repeat(this.addMoreCount).split(''); let i = index;">
+              <td>
+                <input type="date" class="form-control" id="vDate_{{i}}">
+              </td>
+              <td>
+                <input type="number" class="form-control" id="vCount_{{i}}" min="1">
+              </td>
+              <td>
+                <button type="button" class="btn btn-block btn-danger btn-flat" (click)="removeRow(i)">Remove</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="col-md-2 pull-left">
+          <button type="button" class="btn btn-info pull-left" (click)="addMore()">Add More.</button>
+        </div>
+        <br>
+        <br>
+      </div>
+      <div class="box-footer">
+        <div class="col-md-2 pull-left">
+          <button type="button" class="btn btn-default pull-left" (click)="onClose()">close</button>
+        </div>
+        <div class="col-md-2 pull-right">
+          <button type="button" class="btn btn-info pull-right" (click)="submitVoucher()">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</popup>
+
+
+
+<div class="row">
+  <div class="col-lg-3">
+    <div class="input-group">
+      <span class="input-group-addon">
+        From Date
+      </span>
+      <datetime [timepicker]="false" [datepicker]="datepickerOpts" [(ngModel)]="fromDate"></datetime>
+    </div>
+  </div>
+  <div class="col-lg-3">
+    <div class="input-group">
+      <span class="input-group-addon">
+        To Date
+      </span>
+      <datetime [timepicker]="false" [datepicker]="datepickerOpts" [(ngModel)]="toDate"></datetime>
+    </div>
+  </div>
+  <div class="col-lg-2">
+    <div class="input-group">
+      <select class="form-control" name="recordTypeId" [(ngModel)]="recordTypeId">
+        <option value="" selected>Select Record Type</option>
+        <option *ngFor="let RTD of recordTypeDropDown" [ngValue]="RTD">{{RTD}}</option>
+      </select>
+    </div>
+  </div>
+  <div class="col-lg-2">
+    <div class="input-group">
+      <span class="input-group-addon">
+        Branch Code
+      </span>
+      <p class="form-control">{{branch}}</p>
+    </div>
+  </div>
+  <div class="col-lg-2">
+    <div class="input-group">
+      <button type="button" class="btn waves-effect waves-light blue" (click)="rerender()">
+        Submit
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<br>
+<div id="preview" class="col s12 m9 l12">
+  <!-- <p>
+    <button type="button" class="btn waves-effect waves-light blue" (click)="rerender()">
+      <i class="fa fa-refresh" aria-hidden="true"></i> Refresh
+    </button>
+  </p> -->
+  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover"></table>
+</div>

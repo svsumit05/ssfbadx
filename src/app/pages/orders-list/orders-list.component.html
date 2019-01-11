@@ -1,0 +1,102 @@
+<div class="update-inventory-form">
+    <popup #updateOrderInventoryPopup>
+
+    <form class="form-horizontal" name="orderUpdateForm" #orderUpdateForm="ngForm" (ngSubmit)="onOrderUpdate(orderUpdateForm.value); orderUpdateForm.reset();" >
+        
+        <div class="form-group">
+            <label for="type" class="col-sm-3 control-label">Inventory type</label>    
+            <div class="col-sm-7">
+                <input type="text" class="form-control" [(ngModel)]="orderDetails.inventType" name="inventType" id="inventType" disabled>
+            </div>
+        </div>       
+        
+        <div class="form-group">
+            <label for="inputEmai3" class="col-sm-3 control-label">Quantity </label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control-inline" [(ngModel)]="orderDetails.inventQuantity" name="inventQuantity" id="inventQuantity" disabled>
+                <label>Rate &nbsp;&nbsp;</label>
+                <input type="text" class="form-control-inline" [(ngModel)]="orderDetails.inventRate" name="inventRate" id="inventRate" disabled>
+            </div>
+        </div> 
+        
+        <div class="form-group"  *ngIf="this.orderDetails.orderHStatus =='Dispatched'">
+            <label for="inputEmai3" class="col-sm-3 control-label">Quantity dispatched</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control-inline" [(ngModel)]="orderDetails.inventQuantityDisp" name="inventQuantityDisp" id="inventQuantityDisp" disabled>
+                <label>Bal. &nbsp;&nbsp;</label>
+                <input type="text" class="form-control-inline" [(ngModel)]="orderDetails.inventQuantityBal" name="inventQuantityBal" id="inventQuantityBal" disabled>
+            </div>
+        </div>
+          
+        <div class="form-group" *ngIf="this.orderDetails.orderHStatus =='Dispatched' || this.orderDetails.orderHStatus =='Order Completed'">
+            <label for="type" class="col-sm-3 control-label">Inventory Status</label>    
+            <div class="col-sm-7">
+                <select class="form-control" name="inventStatus" id="inventStatus" [(ngModel)]="orderDetails.inventStatus" required (change)="changeInventStatus($event)">
+                    <option value="" [disabled]="true">Select Inventory Status</option>
+                    <option value="Partially Received">Partially Received</option>
+                    <option value="Consumed" [disabled]="orderDetails.inventQuantityBal > 0">Received</option>
+                    <option value="Damaged">Damaged</option>
+                    <option value="Lost in Transit">Lost in Transit</option>
+                    <option value="Destroyed">Destroyed</option>
+                </select>
+            </div>
+        </div>   
+          
+        <div class="form-group" *ngIf="this.orderDetails.orderHStatus =='Dispatched' && this.showQuantityReceived">
+            <label for="type" class="col-sm-3 control-label">Quantity Received</label>    
+            <div class="col-sm-7">
+                <input type="text" class="form-control" [(ngModel)]="orderDetails.inventQuantityReceived" name="inventQuantityReceived" id="inventQuantityReceived">
+            </div>
+        </div>   
+        
+        
+        <div class="form-group">
+            <label for="inputEmai3" class="col-sm-3 control-label">Comment</label>
+            <div class="col-sm-7">
+                <textarea class="form-control" rows="5" name="inventComment" id="inventComment" [(ngModel)]="orderDetails.inventComment" required></textarea>
+            </div>
+        </div>
+        
+        <div class="form-group" *ngIf="this.currentUser.canCurrentUser('STATIC_INVENTORY_CAN_VERIFY_ORDER') && this.orderDetails.orderHStatus ==''">
+            <label for="type" class="col-sm-3 control-label">Request Status</label>    
+            <div class="col-sm-7">
+                <select class="form-control" name="inventReqStatus" id="inventReqStatus" [(ngModel)]="orderDetails.inventReqStatus" (change)="changeOutcome($event)" required>
+                    <option value="" [disabled]="true">Select Request Status</option>
+                    <option value="Approve">Approve</option>
+                    <option value="Reject">Reject</option>
+                </select>
+            </div>
+        </div>
+
+
+        
+        
+        <div class="form-group" *ngIf="this.orderDetails.inventStatus !='' && showDatePicker">
+                <label for="inputEmai3" class="col-sm-3 control-label">Date </label>
+                <div class="col-sm-7 datepicker-input">
+                    <datetime [timepicker]="false" [datepicker]="datepickerOpts" [(ngModel)]="orderDetails.inventReceivedDate" [ngModelOptions]="{standalone: true}" [required]="true"></datetime>
+                </div>
+        </div>
+        
+        <div class="form-group">
+            <label class="col-sm-7"></label>
+            <div class="col-sm-4">                
+                <input class="btn btn-default reset-button" type="button" value="Cancle" (click)="onOrderReset()">
+                <input class="btn btn-mbe-attack submit-button" type="submit" value="Submit" [disabled]="!orderUpdateForm.form.valid">
+            </div>
+        </div>
+    </form>
+</popup>
+</div>
+
+<div id="preview" class="col s12 m9 l12">
+  <p>
+  
+    <button type="button" class="btn waves-effect waves-light blue" (click)="rerender()">
+      <i class="fa fa-refresh" aria-hidden="true"></i> Refresh
+    </button>
+
+  </p>
+  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover"></table>
+</div>
+        

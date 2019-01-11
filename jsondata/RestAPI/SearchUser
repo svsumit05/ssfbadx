@@ -1,0 +1,31 @@
+{
+  "count": "1139",
+  "status": "SUCCESS",
+  "statusMessage": "",
+  "UsersList": [
+    {
+      "DISPLAY_NAME": "johnmat",
+      "FIRST_NAME": "john",
+      "MOBILE": "-",
+      "COUNTRY": "-",
+      "OBJECT_GUID": "{25AB1089-C673-4CC1-AF04-D3D8C8B3D39D}",
+      "LOGON_NAME": "john-3786@csez.admanagerplusin.com",
+      "CITY": "-",
+      "INITIAL": "-",
+      "EMAIL_ADDRESS": "john.a@admanagerplus.com",
+      "LAST_NAME": "mat"
+    },
+    {
+      "DISPLAY_NAME": "charlie M",
+      "FIRST_NAME": "charlieM",
+      "MOBILE": "-",
+      "COUNTRY": "-",
+      "OBJECT_GUID": "{3B030A75-2F7C-4400-82E5-B738D352970A}",
+      "LOGON_NAME": "charlie-pt1394@csez.admanagerplusin.com",
+      "CITY": "-",
+      "INITIAL": "-",
+      "EMAIL_ADDRESS": "charlie.m@admanagerplus.com",
+      "LAST_NAME": "-"
+    }
+  ]
+}

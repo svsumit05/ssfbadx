@@ -1,0 +1,146 @@
+<popup #editMatrix (cancelClick)="closePopup()">
+  <div class="col-md-9">
+    <div class="nav-tabs-custom">
+      <ul class="nav nav-tabs">
+        <li class="active">
+          <a href="#activity" data-toggle="tab" aria-expanded="true">Application Permissions</a>
+        </li>
+      </ul>
+      <div class="tab-content">
+
+        <div class="tab-pane active" id="activity">
+
+
+          <div class="box">
+            <div class="box-body no-padding">
+              <table class="table table-striped">
+                <tbody>
+                  <tr>
+                    <th>Application Name</th>
+                    <th>Current Role</th>
+                    <th>Required Role</th>
+                  </tr>
+                  <tr *ngFor="let ARM of applRoleMatrixList; let feildCount = index;">
+                    <td>{{ARM.application.applicationName}}</td>
+                    <td>{{ARM.predefineMatrixApplicationRole.applicationRoleName}}</td>
+                    <td>{{ARM.applicationRole.applicationRoleName}}</td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+            <div class="box-footer">
+              <button type="button" class="btn btn-default reject-button pull-right" (click)="submitUserApplRoleMatrixApproval('Rejected')">Reject</button>
+              <button type="button" class="btn btn-default approve-button pull-right" (click)="submitUserApplRoleMatrixApproval('Approved')">Approve</button>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="tab-pane" id="timeline">
+
+        </div>
+
+        <div class="tab-pane" id="settings">
+
+        </div>
+      </div>
+    </div>
+  </div>
+</popup>
+
+<popup #viewWorkline (cancelClick)="closePopup()">
+
+  <table class="table table-bordered">
+    <tbody>
+      <tr>
+        <td>Employee Id</td>
+        <td>{{worklineData.employeeId}}</td>
+      </tr>
+      <tr>
+        <td>Employee Name</td>
+        <td>{{worklineData.employeeName}}</td>
+      </tr>
+      <tr>
+        <td>Date Of Joining</td>
+        <td>{{worklineData.dateOfJoin}}</td>
+      </tr>
+      <tr>
+        <td>Business Unit</td>
+        <td>{{worklineData.businessUnit}}</td>
+      </tr>
+      <tr>
+        <td>Product</td>
+        <td>{{worklineData.product}}</td>
+      </tr>
+      <tr>
+        <td>Function</td>
+        <td>{{worklineData.function}}</td>
+      </tr>
+      <tr>
+        <td>Sub Function</td>
+        <td>{{worklineData.subFunction}}</td>
+      </tr>
+      <tr>
+        <td>Designation</td>
+        <td>{{worklineData.designation}}</td>
+      </tr>
+      <tr>
+        <td>Role</td>
+        <td>{{worklineData.role}}</td>
+      </tr>
+      <tr>
+        <td>Region</td>
+        <td>{{worklineData.region}}</td>
+      </tr>
+      <tr>
+        <td>Location</td>
+        <td>{{worklineData.location}}</td>
+      </tr>
+      <tr>
+        <td>Location Type</td>
+        <td>{{worklineData.locType}}</td>
+      </tr>
+      <tr>
+        <td>Function Appraisar Id</td>
+        <td>{{worklineData.functionAppraisarId}}</td>
+      </tr>
+      <tr>
+        <td>Area</td>
+        <td>{{worklineData.area}}</td>
+      </tr>
+      <tr>
+        <td>Record Action</td>
+        <td>{{worklineData.recordAction}}</td>
+      </tr>
+      <tr>
+        <td>Mobile No</td>
+        <td>{{worklineData.mobNo}}</td>
+      </tr>
+
+    </tbody>
+  </table>
+
+</popup>
+
+<div style="clear: both"></div>
+<div class="row">
+  <div class="col-lg-2">
+    <select class="form-control" [(ngModel)]="approvalStage">
+      <option value="">Select Approval Stage</option>
+      <option [disabled]="!this._userServ.canCurrentUser('CAN_APPROVE_APPLICATION_ROLE_LEVEL_ONE')" value="fetchUserApplRoleMatrixForInitialApproval">Level 1</option>
+      <option [disabled]="!this._userServ.canCurrentUser('CAN_APPROVE_APPLICATION_ROLE_LEVEL_TWO')" value="fetchUserApplRoleMatrixForFinalApproval">Level 2 ( Exceptional Approval )</option>
+    </select>
+  </div>
+
+  <div class="col-lg-2">
+    <button type="button" class="btn waves-effect waves-light blue" (click)="rerender()">
+      Search
+    </button>
+  </div>
+</div>
+<br>
+<div id="preview" class="col s12 m9 l12">
+
+  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover"></table>
+</div>

@@ -1,0 +1,41 @@
+[
+  {
+    "branchDocumentRecordRetrivalID": "2",
+    "branchDocumentRecord": {
+      "branchDocumentRecordID": "6",
+      "documetnTypeId": "1",
+      "barcodeNo": "222",
+      "acNo": "222",
+      "cifId": "222",
+      "customerName": "222",
+      "awbNo": "222",
+      "courierName": "222",
+      "dispatchDate": "16-05-2018",
+      "status": "ACCEPTED_BY_VENDOR",
+      "isActive": "1",
+      "branchCode": "10011",
+      "branchName": "CBD BELAPUR",
+      "customerNo": "222",
+      "acTitle": "222",
+      "acOpenDate": "16-05-2018",
+      "acType": "222",
+      "schemeCode": "222",
+      "acStat": null,
+      "receiptDate": "16-05-2018",
+      "receiptBy": "1002",
+      "dispatchBy": null,
+      "fileBarcode": null,
+      "cartonBarcode": null
+    },
+    "documentName": "NACH details.xls",
+    "retrivalRequestBy": "admin",
+    "retrivalRequestOn": "07-05-2018",
+    "actionBy": null,
+    "actionOn": null,
+    "remarks": null,
+    "mailSentToVendor": null,
+    "documentReceivedOn": null,
+    "documentReceiveBy": null,
+    "status": "REQUESTED_FOR_RECORD_RETRIVAL"
+  }
+]

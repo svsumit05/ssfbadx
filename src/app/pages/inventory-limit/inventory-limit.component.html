@@ -1,0 +1,70 @@
+<button class="btn btn-primary pull-right add-new-invet-button" (click)="addInventoryLimit()"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Inventory Limit</button>
+<div style="clear: both"></div>
+
+<popup #inventroyAddPopup (confirmClick)="addInventroyLimitDetails()">
+
+    <form class="form-horizontal" name="inventroyLimitDetail" id="inventroyLimitDetail">
+        <div class="form-group">
+            <label for="type" class="col-sm-3 control-label">Inventory type</label>    
+            <div class="col-sm-7">      
+
+                <select class="form-control" [(ngModel)]="addInventoryData.invId"  name="invId" required>
+                    <option *ngFor="let itl of inventoryListDropDown" [ngValue]="itl.id">{{itl.inventory_name}}</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="inputEmai3" class="col-sm-3 control-label">Branch Code</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" name="invBranch" [(ngModel)]="addInventoryData.invBranch">
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="inputEmai3" class="col-sm-3 control-label">Inventory Limit</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" name="invLimit" [(ngModel)]="addInventoryData.invLimit">
+            </div>
+        </div>
+
+    </form>
+
+</popup>
+
+<div style="clear: both"></div>
+<popup #inventroyDetailViewPopup (confirmClick)="updateInventroyLimitDetails()">
+
+    <form class="form-horizontal" name="inventroyLimitDetailUpdate" id="inventroyLimitDetailUpdate">
+        <div class="form-group">
+            <label for="type" class="col-sm-3 control-label">Inventory type</label>    
+            <div class="col-sm-7">      
+
+                <select class="form-control" [(ngModel)]="addInventoryData.invId"  name="invId" disabled>
+                    <option *ngFor="let itl of inventoryListDropDown" [ngValue]="itl.id">{{itl.inventory_name}}</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="inputEmai3" class="col-sm-3 control-label">Branch Code</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" name="invBranch" [(ngModel)]="addInventoryData.invBranch" disabled>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="inputEmai3" class="col-sm-3 control-label">Inventory Limit</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" name="invLimit" [(ngModel)]="addInventoryData.invLimit">
+            </div>
+        </div>
+        
+    </form>
+
+</popup>
+
+
+<div style="clear: both"></div>
+
+<table datatable [dtOptions]="dtOptions" class="row-border hover"></table>

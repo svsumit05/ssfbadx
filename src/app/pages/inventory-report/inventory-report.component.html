@@ -1,0 +1,51 @@
+<div class="form-horizontal">
+    <div class="box-body">
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">From Date</label>
+            <div class="col-sm-9 datepicker">
+                <datetime [timepicker]="false" [datepicker]="datepickerOpts" [(ngModel)]="fromDate"></datetime>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">To Date</label>
+            <div class="col-sm-9 datepicker">
+                <datetime [timepicker]="false" [datepicker]="datepickerOpts" [(ngModel)]="toDate"></datetime>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">Select Branch</label>
+            <div class="col-sm-8">
+                <select class="form-control" [(ngModel)]="branch" [disabled]="this.currentUser.user_extra_info.role.roleID == 3">
+                    <option value="ALL" selected>All Branch</option>
+                    <option *ngFor="let BDD of branchDropDown" [ngValue]="BDD.branchCode">{{BDD.branchName}}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">Select Inventory</label>
+            <div class="col-sm-8">
+                <select class="form-control" [(ngModel)]="inventory">
+                    <option value="ALL" selected>All Inventory</option>
+                    <option *ngFor="let IDD of inventoryDropDown" [ngValue]="IDD.inventoryId">{{IDD.itemName}}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">Select Vendor</label>
+            <div class="col-sm-8">
+                <select class="form-control" [(ngModel)]="vendor">
+                    <option value="ALL" selected>All Vendor</option>
+                    <option *ngFor="let VDD of vendorDropDown" [ngValue]="VDD.vendorId">{{VDD.vendorName}}</option>
+                </select>
+            </div>
+        </div>
+
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-info pull-right" (click)="downloadFile()">Download</button>
+    </div>
+</div>

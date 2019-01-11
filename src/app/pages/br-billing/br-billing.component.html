@@ -1,0 +1,185 @@
+<popup #addBillingPopup>
+    <div class="box box-info">
+        <form class="form-horizontal" #billingForm="ngForm" (ngSubmit)="saveBilling(billingForm.value); billingForm.reset()" >
+            <div class="box-body">
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"> Upload Billing Document </label>
+                    <div class="col-sm-10">                        
+                        <dropzone [config]="config" [message]="'Click or drag images here to upload'" (error)="onUploadError($event)" (success)="onUploadSuccessinputFiles($event,'branchPaymentReceipt')"></dropzone>
+                    </div>
+                </div>
+
+                <div class="form-group" *ngIf="addBillingParams.branchPaymentReceiptString !='' ">
+                    <label class="col-sm-2 control-label">Upload Bills & Payment Receipts</label>
+                    <div class="col-sm-10">
+                        <ul>
+                            <li *ngFor="let billingDoc of addBillingParams.branchPaymentReceiptString.split(',')">
+                                <a target="_blank" href="{{imgfirstURL}}{{billingDoc}}{{imgsecoundURL}}">View Document</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box-footer">
+                <button type="reset" class="btn btn-default" (click)="closeBilling()">Cancel</button>
+                <button type="submit" class="btn btn-info pull-right" [disabled]="!billingForm.form.valid">Submit</button>
+            </div>
+        </form>
+    </div>
+</popup>
+
+<popup #viewBillingDetails>
+    <div class="box box-info">
+        <div class="box-body">
+            <div class="form-group" *ngIf="billingData.billPaymentReceipt != '' ">
+                <label class="col-sm-2 control-label">Upload Bills & Payment Receipts</label>
+                <div class="col-sm-10">
+                    <ul>
+                        <li *ngFor="let billingdataDoc of billingData.billPaymentReceipt.split(',')">
+                            <a target="_blank" href="{{imgfirstURL}}{{billingdataDoc}}{{imgsecoundURL}}">View Document</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section_divider" *ngIf="this._userServ.canCurrentUser('ADMIN_INFRA_TEAM')">
+        <h4 class="details-heading">Action</h4>
+        <table class="table table-bordered">
+            <tr>
+                <td>CSO Action</td>
+                <td>{{cso_action.prevAction}}</td>
+            </tr>
+            <tr>
+                <td>CSO Comments</td>
+                <td>{{cso_action.comment}}</td>
+            </tr>
+            <tr>
+                <td>CEO Action</td>
+                <td>{{ceo_action.prevAction}}</td>
+            </tr>
+            <tr>
+                <td>CEO Comments</td>
+                <td>{{ceo_action.comment}}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section_divider" *ngIf="this._userServ.canCurrentUser('CHIEF_SERVICE_OFFICER')">
+        <h4 class="details-heading">CSO Action</h4>
+        <div *ngIf="cso_action.prevAction != 'Approve';else other_cso">
+            <div class="box-body">
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Approve/Reject</label>
+                    <div class="col-sm-10">
+                        <input id="cso_action_yes" type="radio" name="action" value="Approve" [(ngModel)]="cso_action.action"> 
+                        <label for="cso_action_yes">Approve</label>                            
+                        <input id="cso_action_no" type="radio" name="action" value="Reject" [(ngModel)]="cso_action.action"> 
+                        <label for="cso_action_no">Reject</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Comments</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" [(ngModel)]="cso_action.comment"></textarea>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary pull-right" (click)="saveUserAction('cso_action')">Submit</button>
+            </div>
+        </div>
+        <ng-template #other_cso>
+            <table class="table table-bordered">
+                <tr>
+                    <td>CSO Action</td>
+                    <td>{{cso_action.prevAction}}</td>
+                </tr>
+                <tr>
+                    <td>CFO Comments</td>
+                    <td>{{cso_action.comment}}</td>
+                </tr>
+            </table>
+        </ng-template>
+    </div>
+
+    <div class="section_divider"  *ngIf="this._userServ.canCurrentUser('MD_AND_CEO')">
+        <h4 class="details-heading">MD & CEO Action</h4>
+        <div *ngIf="cso_action.prevAction == 'Approve' && ceo_action.prevAction == '' ;else other_ceo">
+            <div class="box-body">
+
+                <div class="form-group">
+                    <table class="table table-bordered">
+                        <tr>
+                            <td>CSO Action</td>
+                            <td>{{cso_action.prevAction}}</td>
+                        </tr>
+                        <tr>
+                            <td>CSO Comments</td>
+                            <td>{{cso_action.comment}}</td>
+                        </tr>
+
+                    </table>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Approve/Reject</label>
+                    <div class="col-sm-10">
+                        <input id="ceo_action_yes" type="radio" name="cso_action" value="Approve" [(ngModel)]="ceo_action.action"> 
+                        <label for="ceo_action_yes">Approve</label>                            
+                        <input id="ceo_action_no" type="radio" name="cso_action" value="Reject" [(ngModel)]="ceo_action.action"> 
+                        <label for="ceo_action_no">Reject</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Comments</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" name="comment" [(ngModel)]="ceo_action.comment"></textarea>
+                    </div>
+                </div>
+
+            </div>
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary pull-right" (click)="saveUserAction('ceo_action')">Submit</button>
+            </div>
+        </div>
+        <ng-template #other_ceo>
+            <table class="table table-bordered">
+                <tr>
+                    <td>CSO Action</td>
+                    <td>{{cso_action.prevAction}}</td>
+                </tr>
+                <tr>
+                    <td>CSO Comments</td>
+                    <td>{{cso_action.comment}}</td>
+                </tr>
+                <tr>
+                    <td>CEO Action</td>
+                    <td>{{ceo_action.prevAction}}</td>
+                </tr>
+                <tr>
+                    <td>CEO Comments</td>
+                    <td>{{ceo_action.comment}}</td>
+                </tr>
+            </table>
+        </ng-template>
+    </div>
+</popup>
+
+<div id="preview" class="col s12 m9 l12">
+    <p>
+        <button type="button" class="btn waves-effect waves-light blue" (click)="rerender()">
+            <i class="fa fa-refresh" aria-hidden="true"></i> Refresh
+        </button>
+    </p>
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover"></table>
+</div>

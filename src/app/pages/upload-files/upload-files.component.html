@@ -1,0 +1,32 @@
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">Manual file upload</h3>
+    </div>
+    <!-- /.box-header -->
+    <!-- form start -->
+    <form role="form">
+        <div class="box-body">
+            <div class="form-group">
+                <label for="filetype">Select file type.</label>
+                <select class="form-control" name="inputFiles" [(ngModel)]="inputFiles" (change)="onFileTypeSelect($event)">
+                    <option [disabled]="disabled" value="">Select file</option>
+                    <option value="base_fdr">Base FDR</option>
+                    <option value="base_prf_file">Base PRF</option>
+                    <option value="base_cheque_book">Base Cheque Book</option>
+                    <option value="base_debit_card">Base Debit Card</option>
+                    <option value="vendor_file">Vendor file</option>
+                    <option value="courier_file">Courier file</option>
+                    <option value="ad_create_user_file" [disabled]="canUploadUserFile">AD Create Users File</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <dropzone class="upload-container" [config]="config" fxLayout="row" fxLayoutAlign="start strech" fxFlex [message]="'Click or drag images here to upload'"
+                    (error)="onUploadError($event)" (success)="onUploadComplete($event)"></dropzone>
+                <p class="help-block">Note: File uploaded here will directly uploaded to production ftp server.</p>
+            </div>
+
+        </div>
+        <!-- /.box-body -->
+    </form>
+</div>

@@ -1,0 +1,48 @@
+:host >>> div#ng2-opd-popup-main {
+    top: -3% !important;
+}
+.img-gallery {
+    margin-left: 18%;
+    font-weight: bold;
+}
+
+input[type="checkbox"] {
+    margin: 11px 0 0 !important;
+    -ms-transform: scale(1.5); /* IE 9 */
+    -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
+    transform: scale(1.5);
+}
+:host >>> input.inside-datatable {
+    margin-left: 30%;
+    -ms-transform: scale(1.5); /* IE 9 */
+    -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
+    transform: scale(1.5);
+}
+
+label {
+    padding-left: 1% !important;
+    padding-right: 1% !important;
+}
+
+label.col-sm-2.control-label {
+    margin-top: -0.5%;
+}
+
+input[type="radio"] {
+    margin: 11px 0 0 !important;
+    -ms-transform: scale(1.5); /* IE 9 */
+    -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
+    transform: scale(1.5);
+}
+
+button.btn.btn-primary.pull-right.upload-file {
+    margin-right: 1%;
+}
+
+:host >>> .form-inline.ng2-datetime {
+    margin-left: 1.5% !important;
+}
+
+input#uploadExcelFile {
+    margin-left: 1%;
+}

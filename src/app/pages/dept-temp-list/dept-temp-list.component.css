@@ -1,0 +1,16 @@
+:host >>> div#ng2-opd-popup-main {
+    top: -5% !important;
+}
+
+label.col-sm-2.control-label {
+    margin-top: -0.6%;
+}
+
+button.btn.btn-primary.pull-right.reject-button {
+    margin-right: 6px;
+    background-color: red;
+}
+
+button.btn.btn-primary.pull-right.approve-button {
+     background-color: green;
+}

@@ -1,0 +1,86 @@
+<popup #viewInventoryPopup (cancelClick)="onOrderReset()">
+    <div class="box box-info">
+        <form class="form-horizontal" name="orderVForm" #orderVForm="ngForm">
+
+            <div class="box-body">
+
+                <div class="form-group">
+                    <label for="type" class="col-sm-2 control-label">Inventory Name :</label>
+                    <div class="col-sm-10">
+                        <span class="linefix">{{approvedInvData.inventory.itemName}}</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmai3" class="col-sm-2 control-label">Quantity :</label>
+                    <div class="col-sm-10">
+                        <span class="linefix">{{approvedInvData.quantityRequired}}</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmai3" class="col-sm-2 control-label">Rate Per Quantity :</label>
+                    <div class="col-sm-10">
+                        <span class="linefix">{{approvedInvData.inventory.ratePerUnit}}</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="type" class="col-sm-2 control-label">Branch Name:</label>
+                    <div class="col-sm-10">
+                        <span class="linefix">{{approvedInvData.dlmsBranchMaster.branchName}}</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="type" class="col-sm-2 control-label">Branch Code:</label>
+                    <div class="col-sm-10">
+                        <span class="linefix">{{approvedInvData.dlmsBranchMaster.branchCode}}</span>
+                    </div>
+                </div>
+
+                <br>
+                <div class="form-group" *ngIf="iInventoryData.length > 0">
+                    <div class="col-sm-12">
+                        <p class="head-table">Order Details</p>
+                    </div>
+                    <div class="col-sm-12">
+                        <table class="table table-striped">
+                            <tr>
+                                <th>Last Disp Qty</th>
+                                <th>T. Disp Qty</th>
+                                <th>Bal Qty</th>
+                                <th>Courier</th>
+                                <th>AWB No</th>
+                                <th>Disp Date</th>
+                                <th>Status</th>
+                                <th>Receipt Date</th>
+                                <th>Remarks</th>
+                            </tr>
+                            <tr *ngFor="let iData of iInventoryData;let idx = index">
+                                <td>{{iData.lastDispatchedQuantity}}</td>
+                                <td>{{iData.totalDispatchedQuantTillNow}}</td>
+                                <td>{{iData.balancedQuantity}}</td>
+                                <td>{{iData.courierName}}</td>
+                                <td>{{iData.awbNo}}</td>
+                                <td>{{iData.dispatchedDate}}</td>
+                                <td>{{iData.userAction}}</td>
+                                <td>{{iData.receiptDate}}</td>
+                                <td>{{iData.remark}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="box-footer">
+                <button type="reset" class="btn btn-default" (click)="onOrderReset()">Close</button>
+            </div>
+        </form>
+    </div>
+</popup>
+<div id="preview" class="col s12 m9 l12">
+    <br>
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover"></table>
+</div>

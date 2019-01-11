@@ -1,0 +1,46 @@
+:host >>> div#ng2-opd-popup-main {
+    top: -5% !important;
+}
+
+.section_divider {
+    width: 100%;
+    clear: both;
+}
+
+.form-group{
+    clear: both;    
+}
+
+.details-heading {
+    font-style: italic;
+    border-bottom: 1px solid;
+    padding-bottom: 1%;
+}
+
+.box-info {
+    border-top-color:#fff !important;
+}
+
+
+:host >>> .form-inline.ng2-datetime {
+    margin-left: 1.5% !important;
+}
+
+input[type="radio"] {
+    margin: 11px 0 0 !important;
+    -ms-transform: scale(1.5); /* IE 9 */
+    -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
+    transform: scale(1.5);
+}
+
+input[type="checkbox"] {
+    margin: 11px 0 0 !important;
+    -ms-transform: scale(1.5); /* IE 9 */
+    -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
+    transform: scale(1.5);
+}
+
+label {
+    padding-left: 1% !important;
+    padding-right: 1% !important;
+}

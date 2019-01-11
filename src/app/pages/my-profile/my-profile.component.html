@@ -1,0 +1,64 @@
+<div class="col-md-6 my-profile">
+    <!-- Horizontal Form -->
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Change Password</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form #myProfile="ngForm" (ngSubmit)="onChangePassword(myProfile.value)" class="form-horizontal">    
+            <div class="box-body">
+                <div class="form-group has-feedback">
+                    <input type="password" class="form-control" placeholder="Old Password" #myProfileOldPassword="ngModel" class="form-control" name="old_password" ngModel required>
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+
+                </div>
+                <div class="form-group has-feedback">
+                    <input type="password" class="form-control" placeholder="New password" #myProfilePassword="ngModel" class="form-control" name="myProfilePassword" ngModel required minlength="4" maxlength="10">
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    
+                    <div *ngIf="myProfilePassword.errors && (myProfilePassword.dirty || myProfilePassword.touched)" class="alert alert-danger">
+                        <div [hidden]="!myProfilePassword.errors.required">
+                            Password is required.
+                        </div>
+                        <div [hidden]="!myProfilePassword.errors.minlength">
+                            Password must be at least 4 characters long.
+                        </div>
+                        <div [hidden]="!myProfilePassword.errors.maxlength">
+                            Password cannot exceed 10 characters.
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <div class="form-group has-feedback">
+                    <input type="password" class="form-control" placeholder="Retype password" #myProfilePasswordConfirm="ngModel" class="form-control" name="myProfilePasswordConfirm" ngModel required minlength="4" maxlength="10" appConfirmPassword="{{myProfilePasswordConfirm.value}}" myNewPassword="{{myProfilePassword.value}}">
+                    <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+                    <div *ngIf="myProfilePasswordConfirm.errors && (myProfilePasswordConfirm.dirty || myProfilePasswordConfirm.touched)" class="alert alert-danger">
+                        <div [hidden]="!myProfilePasswordConfirm.errors.required">
+                            Password is required.
+                        </div>
+                        <div [hidden]="!myProfilePasswordConfirm.errors.minlength">
+                            Password must be at least 4 characters long.
+                        </div>
+                        <div [hidden]="!myProfilePasswordConfirm.errors.maxlength">
+                            Password cannot exceed 10 characters.
+                        </div>
+                        <div [hidden]="!myProfilePasswordConfirm.errors.maxlength">
+                            Password cannot exceed 10 characters.
+                        </div>
+                    </div>
+                    
+                </div>
+                
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <button type="submit" class="btn btn-info pull-right" [disabled]="!myProfile.form.valid">Submit</button>
+            </div>
+            <!-- /.box-footer -->
+        </form>
+    </div>
+    <!-- /.box -->
+
+</div>

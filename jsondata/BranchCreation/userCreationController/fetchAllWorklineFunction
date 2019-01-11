@@ -1,0 +1,404 @@
+[
+  {
+    "worklineFunctionId": "8",
+    "worklineFunctionName": "Credit",
+    "isActive": "1",
+    "worklikneSubFunctionList": [
+      {
+        "worklineSubFunctionId": "12",
+        "worklineSubFunctionName": "Credit",
+        "isActive": "1"
+      }
+    ]
+  },
+  {
+    "worklineFunctionId": "3",
+    "worklineFunctionName": "Business HR",
+    "isActive": "1",
+    "worklikneSubFunctionList": [
+      {
+        "worklineSubFunctionId": "5",
+        "worklineSubFunctionName": "Business HR",
+        "isActive": "1"
+      }
+    ]
+  },
+  {
+    "worklineFunctionId": "16",
+    "worklineFunctionName": "Legal & Compliance",
+    "isActive": "1",
+    "worklikneSubFunctionList": [
+      {
+        "worklineSubFunctionId": "24",
+        "worklineSubFunctionName": "Legal",
+        "isActive": "1"
+      },
+      {
+        "worklineSubFunctionId": "25",
+        "worklineSubFunctionName": "Legal & Compliance",
+        "isActive": "1"
+      }
+    ]
+  },
+  {
+    "worklineFunctionId": "22",
+    "worklineFunctionName": "Risk & Policy",
+    "isActive": "1",
+    "worklikneSubFunctionList": [
+      {
+        "worklineSubFunctionId": "36",
+        "worklineSubFunctionName": "Risk & Policy",
+        "isActive": "1"
+      }
+    ]
+  },
+  {
+    "worklineFunctionId": "20",
+    "worklineFunctionName": "Product",
+    "isActive": "1",
+    "worklikneSubFunctionList": [
+      {
+        "worklineSubFunctionId": "32",
+        "worklineSubFunctionName": "Product",
+        "isActive": "1"
+      }
+    ]
+  },
+  {
+    "worklineFunctionId": "15",
+    "worklineFunctionName": "IT",
+    "isActive": "1",
+    "worklikneSubFunctionList": [
+      {
+        "worklineSubFunctionId": "19",
+        "worklineSubFunctionName": "IT",
+        "isActive": "1"
+      },
+      {
+        "worklineSubFunctionId": "20",
+        "worklineSubFunctionName": "IT Application",
+        "isActive": "1"
+      },
+      {
+        "worklineSubFunctionId": "21",
+        "worklineSubFunctionName": "IT Channels",
+        "isActive": "1"
+      },
+      {
+        "worklineSubFunctionId": "22",
+        "worklineSubFunctionName": "IT Infrastructure",
+        "isActive": "1"
+      }
+    ]
+  },
+  {
+    "worklineFunctionId": "11",
+    "worklineFunctionName": "Finance & Accounts",
+    "isActive": "1",
+    "worklikneSubFunctionList": [
+      {
+        "worklineSubFunctionId": "1",
+        "worklineSubFunctionName": "Accounts",
+        "isActive": "1"
+      },
+      {
+        "worklineSubFunctionId": "41",
+        "worklineSubFunctionName": "Taxation",
+        "isActive": "1"
+      }
+    ]
+  },
+  {
+    "worklineFunctionId": "18",
+    "worklineFunctionName": "Operations",
+    "isActive": "1",
+    "worklikneSubFunctionList": [
+      {
+        "worklineSubFunctionId": "26",
+        "worklineSubFunctionName": "Liability Operations",
+        "isActive": "1"
+      },
+      {
+        "worklineSubFunctionId": "27",
+        "worklineSubFunctionName": "MF Operations",
+        "isActive": "1"
+      },
+      {
+        "worklineSubFunctionId": "29",
+        "worklineSubFunctionName": "Operations",
+        "isActive": "1"
+      }
+    ]
+  },
+  {
+    "worklineFunctionId": "5",
+    "worklineFunctionName": "Collections",
+    "isActive": "1",
+    "worklikneSubFunctionList": [
+      {
+        "worklineSubFunctionId": "8",
+        "worklineSubFunctionName": "Collections",
+        "isActive": "1"
+      }
+    ]
+  },
+  {
+    "worklineFunctionId": "12",
+    "worklineFunctionName": "Human Resources",
+    "isActive": "1",
+    "worklikneSubFunctionList": [
+      {
+        "worklineSubFunctionId": "16",
+        "worklineSubFunctionName": "HR Operations",
+        "isActive": "1"
+      },
+      {
+        "worklineSubFunctionId": "34",
+        "worklineSubFunctionName": "Recruitment",
+        "isActive": "1"
+      }
+    ]
+  },
+  {
+    "worklineFunctionId": "6",
+    "worklineFunctionName": "Corporate Communications",
+    "isActive": "1",
+    "worklikneSubFunctionList": [
+      {
+        "worklineSubFunctionId": "10",
+        "worklineSubFunctionName": "Corporate Communications",
+        "isActive": "1"
+      }
+    ]
+  },
+  {
+    "worklineFunctionId": "13",
+    "worklineFunctionName": "Internal Audit",
+    "isActive": "1",
+    "worklikneSubFunctionList": [
+      {
+        "worklineSubFunctionId": "17",
+        "worklineSubFunctionName": "Internal Audit",
+        "isActive": "1"
+      }
+    ]
+  },
+  {
+    "worklineFunctionId": "1",
+    "worklineFunctionName": "Administration",
+    "isActive": "1",
+    "worklikneSubFunctionList": [
+      {
+        "worklineSubFunctionId": "2",
+        "worklineSubFunctionName": "Administration",
+        "isActive": "1"
+      },
+      {
+        "worklineSubFunctionId": "3",
+        "worklineSubFunctionName": "Branch Operations",
+        "isActive": "1"
+      },
+      {
+        "worklineSubFunctionId": "7",
+        "worklineSubFunctionName": "Claim Processing",
+        "isActive": "1"
+      },
+      {
+        "worklineSubFunctionId": "9",
+        "worklineSubFunctionName": "Compliance",
+        "isActive": "1"
+      },
+      {
+        "worklineSubFunctionId": "23",
+        "worklineSubFunctionName": "Learning & Development",
+        "isActive": "1"
+      },
+      {
+        "worklineSubFunctionId": "31",
+        "worklineSubFunctionName": "Process Management",
+        "isActive": "1"
+      },
+      {
+        "worklineSubFunctionId": "35",
+        "worklineSubFunctionName": "Regulatory Reporting",
+        "isActive": "1"
+      },
+      {
+        "worklineSubFunctionId": "39",
+        "worklineSubFunctionName": "Statutory Reporting",
+        "isActive": "1"
+      }
+    ]
+  },
+  {
+    "worklineFunctionId": "17",
+    "worklineFunctionName": "MIS & Analytics",
+    "isActive": "1",
+    "worklikneSubFunctionList": [
+      {
+        "worklineSubFunctionId": "28",
+        "worklineSubFunctionName": "MIS & Analytics",
+        "isActive": "1"
+      }
+    ]
+  },
+  {
+    "worklineFunctionId": "9",
+    "worklineFunctionName": "Customer Experience",
+    "isActive": "1",
+    "worklikneSubFunctionList": [
+      {
+        "worklineSubFunctionId": "13",
+        "worklineSubFunctionName": "Customer Care",
+        "isActive": "1"
+      },
+      {
+        "worklineSubFunctionId": "14",
+        "worklineSubFunctionName": "Customer Experience",
+        "isActive": "1"
+      }
+    ]
+  },
+  {
+    "worklineFunctionId": "7",
+    "worklineFunctionName": "Corporate Social Responsibility",
+    "isActive": "1",
+    "worklikneSubFunctionList": [
+      {
+        "worklineSubFunctionId": "11",
+        "worklineSubFunctionName": "Corporate Social Responsibility",
+        "isActive": "1"
+      }
+    ]
+  },
+  {
+    "worklineFunctionId": "2",
+    "worklineFunctionName": "Business Correspondent",
+    "isActive": "1",
+    "worklikneSubFunctionList": [
+      {
+        "worklineSubFunctionId": "4",
+        "worklineSubFunctionName": "Business Correspondent",
+        "isActive": "1"
+      }
+    ]
+  },
+  {
+    "worklineFunctionId": "4",
+    "worklineFunctionName": "CEOs Office & Strategy",
+    "isActive": "1",
+    "worklikneSubFunctionList": [
+      {
+        "worklineSubFunctionId": "6",
+        "worklineSubFunctionName": "CEOs Office & Strategy",
+        "isActive": "1"
+      }
+    ]
+  },
+  {
+    "worklineFunctionId": "23",
+    "worklineFunctionName": "Sales",
+    "isActive": "1",
+    "worklikneSubFunctionList": [
+      {
+        "worklineSubFunctionId": "37",
+        "worklineSubFunctionName": "Sales",
+        "isActive": "1"
+      }
+    ]
+  },
+  {
+    "worklineFunctionId": "25",
+    "worklineFunctionName": "Support",
+    "isActive": "1",
+    "worklikneSubFunctionList": [
+      {
+        "worklineSubFunctionId": "40",
+        "worklineSubFunctionName": "Support",
+        "isActive": "1"
+      }
+    ]
+  },
+  {
+    "worklineFunctionId": "14",
+    "worklineFunctionName": "Investor Relations and Financial Planning & Analysis",
+    "isActive": "1",
+    "worklikneSubFunctionList": [
+      {
+        "worklineSubFunctionId": "18",
+        "worklineSubFunctionName": "Investor Relations and Financial Planning & Analysis",
+        "isActive": "1"
+      }
+    ]
+  },
+  {
+    "worklineFunctionId": "24",
+    "worklineFunctionName": "Secretarial",
+    "isActive": "1",
+    "worklikneSubFunctionList": [
+      {
+        "worklineSubFunctionId": "38",
+        "worklineSubFunctionName": "Secretarial",
+        "isActive": "1"
+      }
+    ]
+  },
+  {
+    "worklineFunctionId": "21",
+    "worklineFunctionName": "Quality Assurance",
+    "isActive": "1",
+    "worklikneSubFunctionList": [
+      {
+        "worklineSubFunctionId": "33",
+        "worklineSubFunctionName": "Quality Assurance",
+        "isActive": "1"
+      }
+    ]
+  },
+  {
+    "worklineFunctionId": "26",
+    "worklineFunctionName": "Treasury",
+    "isActive": "1",
+    "worklikneSubFunctionList": [
+      {
+        "worklineSubFunctionId": "42",
+        "worklineSubFunctionName": "Treasury Back Office",
+        "isActive": "1"
+      },
+      {
+        "worklineSubFunctionId": "43",
+        "worklineSubFunctionName": "Treasury Front Office",
+        "isActive": "1"
+      },
+      {
+        "worklineSubFunctionId": "44",
+        "worklineSubFunctionName": "Treasury Mid Office",
+        "isActive": "1"
+      }
+    ]
+  },
+  {
+    "worklineFunctionId": "19",
+    "worklineFunctionName": "Partnership Products",
+    "isActive": "1",
+    "worklikneSubFunctionList": [
+      {
+        "worklineSubFunctionId": "30",
+        "worklineSubFunctionName": "Partnership Products",
+        "isActive": "1"
+      }
+    ]
+  },
+  {
+    "worklineFunctionId": "10",
+    "worklineFunctionName": "Digital Banking",
+    "isActive": "1",
+    "worklikneSubFunctionList": [
+      {
+        "worklineSubFunctionId": "15",
+        "worklineSubFunctionName": "Digital Banking",
+        "isActive": "1"
+      }
+    ]
+  }
+]

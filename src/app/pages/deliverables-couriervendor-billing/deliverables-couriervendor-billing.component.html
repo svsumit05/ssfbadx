@@ -1,0 +1,178 @@
+<div class="col-md-12">
+
+    <div class="col-lg-3">
+        <div class="form-group">
+            <label></label>
+            <select class="form-control" name="prod_vendor" [(ngModel)]="invoice_data.prod_vendor" [ngModelOptions]="{standalone: true}">
+                <option value="" disabled>Select Vendor</option>
+                <option value="Professional Couriers">Professional Couriers</option>
+                <option value="Speed Post">Speed Post</option>
+            </select>
+        </div>
+    </div>
+    <br>
+
+
+    <div class="col-lg-3">
+        <div class="input-group">
+            <span class="input-group-addon">
+                From Date
+            </span>
+            <datetime [timepicker]="false" [datepicker]="datepickerOpts" [(ngModel)]="invoice_data.prod_from_date" [ngModelOptions]="{standalone: true}"></datetime>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="input-group">
+            <span class="input-group-addon">
+                To Date
+            </span>
+            <datetime [timepicker]="false" [datepicker]="datepickerOpts"  [(ngModel)]="invoice_data.prod_to_date" [ngModelOptions]="{standalone: true}"></datetime>
+        </div>
+    </div>
+    <div class="track-record">                       
+        <button type="submit" class="btn btn-primary" (click)="getCourierData()">Submit</button>
+    </div>
+
+    <div class="clearfix"></div>
+
+
+    <div class="col-md-6">
+        <div class="box">
+            <div class="box-body no-padding">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th>Shipment </th>
+                            <th>Count</th>
+                            <th>App. Gross Amount</th>
+                            <th>15% fuel surcharge</th>
+                            <th>Appx. Net Amount ( after 18% GDT)</th>                            
+                        </tr>
+                        <tr>
+                            <td>Shipment</td>
+                            <td><a href="#" (click)="downloadCourier();"><strong>{{ (deliverablesFdr.totalCount*1) + (deliverablesWelcomeKit.totalCount*1) + (deliverablesChequebook.totalCount*1) + (deliverablesDebitCard.totalCount*1) + (deliverablesDD.totalCount*1) }}</strong></a></td>
+                            <td><strong>{{ (deliverablesFdr.totalAmount*1) + (deliverablesWelcomeKit.totalAmount*1) + (deliverablesChequebook.totalAmount*1) + (deliverablesDebitCard.totalAmount*1) + (deliverablesDD.totalAmount*1) }}</strong></td>
+                            <td><strong>{{ invoice_data.fuel_surcharge }}</strong></td>
+                            <td><strong>{{ invoice_data.tax_amount }}</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="col-lg-3" *ngIf="disableFileUpload">
+        <div class="form-group">
+            <label for="inputFiles">File input</label>
+            <input type="file" id="inputFiles" name="inputFiles" (change)="ordfileEvent($event)"  >
+            <p class="help-block">File formate Must be .xls </p>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary" (click)="misFileUpload()" *ngIf="showSubmitButton">Submit</button>
+        <button type="submit" class="btn btn-primary pull-right" (click)="createInvoice()" *ngIf="showCreateInvoice">Create Invoice </button>
+        <button type="submit" class="btn btn-primary pull-right" (click)="openCreateInvoice()" *ngIf="showPrintInvoice">Print Invoice </button>
+    </div>
+
+
+</div>
+
+
+<popup #createinvoice (confirmClick)="submitInvoice()">
+
+    <div class="col-md-12" id="print-invoice-section">
+        <div class="box box-default">                      
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td colspan="5" class="invoice-heading"><strong>Checklist for Vendor Invoice Approval</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Nature of Expense</td>
+                        <td>Goods</td>
+                        <td><input type="checkbox" class="large-checkbox"></td>
+                        <td>Service </td>
+                        <td><input type="checkbox" class="large-checkbox"></td>
+                    </tr>
+                    <tr>
+                        <td>In Case of Goods</td>
+                        <td>Goods received</td>
+                        <td><input type="checkbox" class="large-checkbox"></td>
+                        <td>Delivery Challan attached </td>
+                        <td><input type="checkbox" class="large-checkbox"></td>
+                    </tr>
+                    <tr>
+                        <td>In case of Service mention nature of Service</td>
+                        <td colspan="4"><input type="email" class="form-control" name="nature_of_Service" ></td>
+                    </tr>
+                    <tr>
+                        <td>Availability of Contract</td>
+                        <td><input type="checkbox" class="large-checkbox"></td>
+                        <td>Yes</td>
+                        <td><input type="checkbox" class="large-checkbox"></td>
+                        <td>No</td>
+                    </tr>
+                    <tr>
+                        <td>Approval as per DFP Clause number</td>
+                        <td colspan="4"><input type="email" class="form-control" name="dfp_clause_number" ></td>
+                    </tr>
+                    <tr>
+                        <td>Approval as per DFP</td>
+                        <td>Individually</td>
+                        <td><input type="checkbox" class="large-checkbox"></td>
+                        <td>Jointly</td>
+                        <td><input type="checkbox" class="large-checkbox"></td>
+                    </tr>
+                    <tr>
+                        <td>Service Provider Name</td>
+                        <td colspan="4"><input type="text" class="form-control" name="vendor_name" [(ngModel)]="invoice_data.prod_vendor" [ngModelOptions]="{standalone: true}"></td>
+                    </tr>
+                    <tr>
+                        <td>Invoice Number</td>
+                        <td colspan="4"><input type="text" class="form-control" name="invoice_number" [(ngModel)]="invoice_form_data.invoice_number" [ngModelOptions]="{standalone: true}"></td>
+                    </tr>
+                    <tr>
+                        <td>Invoice for period</td>
+                        <td colspan="4"><input type="text" class="form-control" name="invoice_for_period" [(ngModel)]="invoice_data.invoice_for_period" [ngModelOptions]="{standalone: true}"></td>
+                    </tr>
+                    <tr>
+                        <td>Bill Amount</td>
+                        <td colspan="4"><input type="text" class="form-control" name="bill_amount" [(ngModel)]="invoice_form_data.bill_amount" [ngModelOptions]="{standalone: true}"  ></td>
+                    </tr>
+                    <tr>
+                        <td>Penalty Amount ( if any )</td>
+                        <td colspan="4"><input type="text" class="form-control" name="penalty_amount" [(ngModel)]="invoice_form_data.penalty_amount" [ngModelOptions]="{standalone: true}"></td>
+                    </tr>
+                    <tr>
+                        <td>Final Amount to pay</td>
+                        <td colspan="4"><input type="text" class="form-control" name="final_amt_pay" [(ngModel)]="invoice_data.final_amount_to_pay" [ngModelOptions]="{standalone: true}"></td>
+                    </tr>
+                    <tr>
+                        <td>Approver Name</td>
+                        <td colspan="4">
+                            <input type="text" class="form-control approver1" name="approver_name1">
+                            <input type="text" class="form-control approver2" name="approver_name2">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Approver Signature</td>
+                        <td colspan="4">
+                            <input type="text" class="form-control approver1" name="approver_sign1">
+                            <input type="text" class="form-control approver2" name="approver_sign2">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Requestor Name & Signature</td>
+                        <td colspan="4"><input type="text" class="form-control" name="req_name_sign" ></td>
+                    </tr>
+                </tbody></table> 
+        </div>
+    </div>
+
+</popup>
+

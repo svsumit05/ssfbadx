@@ -1,0 +1,28 @@
+[
+  {
+    "branchType": "Mega",
+    "branchState": "Mahartastra",
+    "branchLocation": "Belapur",
+    "strength": "200",
+    "inputFiles": "2b324403-94e3-4d23-92e2-8a5a7c62d1ec,1fb9d9fd-abac-44cf-97e6-f0e15f0312e0,b41bb7a8-a43e-4d70-b70c-4b7de98744e1",
+    "branchCode": "BEL1234",
+    "ifscCode": "QWERT",
+    "micrCode": "1234",
+    "bsrCode": "456",
+    "licenseNo": "LICENCE123",
+    "isDocumentUploaded": "YES",
+    "isActive": "1",
+    "branchId": "16",
+    "status": "Processing by Admin",
+    "branchCity": "Navi Mumbai",
+    "rbiDocuments": "b41bb7a8-a43e-4d70-b70c-4b7de98744e1",
+    "approxArea": "423",
+    "typeOfBusiness": "32",
+    "headPersonCount": "userId",
+    "employeeCount": "userId",
+    "budget": "userId",
+    "period": "userId",
+    "expBranchOpenDate": "12-12-2017",
+    "userId": null
+  }
+]

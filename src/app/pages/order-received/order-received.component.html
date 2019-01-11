@@ -1,0 +1,46 @@
+<div class="col-md-12">
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Upload File</h3>
+
+            <a class="pull-right moveleft" href="javascript:void()" (click)="downloadFile('INSTAKIT')">
+                InstaKit File Formate
+            </a>
+            
+            <a class="pull-right moveright" href="javascript:void()" (click)="downloadFile('VENDORFILE')">
+                Venodor File Formate
+            </a>
+
+        </div>
+
+
+        <form class="form-horizontal" name="orderForm" #orderForm="ngForm" (ngSubmit)="vendorOrderConfirmEvent();">
+            <div class="box-body">
+
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-2 control-label">File Type :</label>
+                    <div class="col-sm-4">
+                        <select name="docType" class="form-control" required [(ngModel)]="docType">
+                            <option value="">Select File type</option>
+                            <option value="INSTAKIT">InstaKit File</option>
+                            <option value="VENDORFILE">Vendor File</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-2 control-label">File :</label>
+                    <div class="col-sm-10">
+                        <input type="file" id="FileInput" name="FileInput" (focus)="ordfileEvent($event)" accept=".xlsx, .xls, .csv" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box-footer">
+                <button type="reset" class="btn btn-default" (click)="vendorOrderCancelEvent()">Cancel</button>
+                <button type="submit" class="btn btn-info pull-right" [disabled]="!isValid">Upload</button>
+            </div>
+
+        </form>
+    </div>
+</div>

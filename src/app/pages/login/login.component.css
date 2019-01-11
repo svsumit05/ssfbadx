@@ -1,0 +1,14 @@
+/* 
+    Created on : 1 Jul, 2017, 1:04:37 PM
+    Author     : webwerks
+*/
+
+:host >>> .login-page, .register-page {
+    background: #d2d6de;
+    height: 100vh !important;
+}
+
+:host >>> img.site-logo {
+    width: 100%;
+    border-radius: 10px;
+}

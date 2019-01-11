@@ -1,0 +1,856 @@
+<popup #addPremisesSpec>
+    <div class="box box-info">
+        <form class="form-horizontal" #addPremisesSpecForm="ngForm" (ngSubmit)="savePremisesSepc(addPremisesSpecForm.value);addPremisesSpecForm.reset()">
+            <h5 class="details-heading">Technical Specification of the Premises</h5>
+            <div class="box-body">
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Property Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="propertyName" ngModel required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Area (in sq. ft.)</label>
+
+                    <div class="col-sm-10">
+                        <input type="number" min="1" class="form-control" name="area" ngModel required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Photo of Built / Layout</label>
+
+                    <div class="col-sm-10">
+                        <dropzone [config]="config" [message]="'Click or drag images here to upload'" (error)="onUploadError($event)" (success)="onUploadSuccessinputFiles($event,'layoutPhotoId')"></dropzone>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Upload dimension of the premises </label>
+                    <div class="col-sm-10">
+                        <dropzone [config]="config" [message]="'Click or drag images here to upload'" (error)="onUploadError($event)" (success)="onUploadSuccessinputFiles($event,'dimensionPhotoId')"></dropzone>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Address 1</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="addressLine1" ngModel required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Address 2</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="addressLine2" ngModel required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Address 3</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="addressLine3" ngModel required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">&nbsp;</label>
+                    <div class="col-sm-3">
+                        <label class="control-label required">State</label>
+                        <select class="form-control" name="state" [(ngModel)]="branchParams.branchState">
+                            <option value="" disabled selected>Select State</option>
+                            <option *ngFor="let sta of stateList" [ngValue]="sta.stateName">{{sta.stateName}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <label class="control-label required">City</label>
+                        <input type="text" class="form-control" name="city" [(ngModel)]=branchParams.branchCity>
+                    </div>
+                    <div class="col-sm-3">
+                        <label class="control-label required">Pincode</label>
+                        <input type="number" min="1" class="form-control" name="pincode" ngModel required>
+                    </div>
+                </div>
+
+                <div class="form-group" *ngFor="let qc_item of this.techQuestionList">
+                    <label class="col-sm-2 control-label">{{qc_item.questionName}}</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="qitem_{{qc_item.premisesQueId}}" [(ngModel)]="qc_item.questionAns">
+                    </div>
+                </div>
+
+            </div>
+            <h5 class="details-heading">Commercial Specification of the Premises</h5>
+            <div class="box-body">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Duration of Tenure Lease (in months)</label>
+                    <div class="col-sm-10">
+                        <input type="number" min="1" class="form-control" name="durationOfTenture" ngModel required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Start date of Lease</label>
+
+                    <div class="col-sm-10" *ngIf="showDatePicker">
+                        <datetime [timepicker]="false" name="startDateOfLeave" [datepicker]="datepickerOpts1" [(ngModel)]="startDateOfLeave" [ngModelOptions]="{standalone: true}"
+                            (ngModelChange)="rentStartDateChange($event)"></datetime>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">End date of Lease</label>
+
+                    <div class="col-sm-10" *ngIf="showDatePicker">
+                        <datetime [timepicker]="false" name="endDateOfLeave" [datepicker]="datepickerOpts2" [(ngModel)]="endDateOfLeave" [ngModelOptions]="{standalone: true}" (ngModelChange)="rentEndDateChange($event)" [readonly]="true"></datetime>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Rent per month</label>
+
+                    <div class="col-sm-10">
+                        <input type="number" min="1" class="form-control" name="rentPerMonth" ngModel required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Escalation in Rent (in percentage)</label>
+                    <div class="col-sm-10">
+                        <input type="number" min="1" class="form-control" name="escalationRent" ngModel required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Rent Start Date</label>
+
+                    <div class="col-sm-10" *ngIf="showDatePicker">
+                        <datetime [timepicker]="false" name="rentStartDate" [datepicker]="datepickerOpts" [(ngModel)]="rentStartDate" [ngModelOptions]="{standalone: true}"></datetime>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Interest free refundable deposit</label>
+                    <div class="col-sm-10">
+                        <input type="number" min="1" class="form-control" name="refundabaleDeposite" ngModel>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Lock-in period between SSFBL & Owner (in months)</label>
+                    <div class="col-sm-10">
+                        <input type="number" min="1" class="form-control" name="lockingPeriod" ngModel>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"> Scope of work to be under taken by Owner </label>
+                    <div class="col-sm-10">
+                        <div *ngFor="let techitem of commQuestionList">
+                            <p>{{techitem.questionName}}</p>
+                            <div class="radio-left">
+                                <input id="comm_q{{techitem.premisesQueId}}_yes" type="radio" name="qitem_{{techitem.premisesQueId}}" value="YES" [(ngModel)]="techitem.questionAns">
+                                <label for="comm_q{{techitem.premisesQueId}}_yes">Yes</label>
+                            </div>
+                            <div class="radio-right">
+                                <input id="comm_q{{techitem.premisesQueId}}_no" type="radio" name="qitem_{{techitem.premisesQueId}}" value="NO" [(ngModel)]="techitem.questionAns">
+                                <label for="comm_q{{techitem.premisesQueId}}_no">No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Referred By </label>
+
+                    <div class="col-sm-10">
+                        <select name="referredBy" class="form-control" ngModel>
+                            <option value="" selected>Select Referred By</option>
+                            <option value="Through Broker">Through Broker</option>
+                            <option value="Through Direct reference/ offer from the owners">Through Direct reference/ offer from the owners</option>
+                            <option value="Through Direct search by SSFBL employees">Through Direct search by SSFBL employees</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Upload Commercial Document </label>
+                    <div class="col-sm-10">
+                        <dropzone [config]="config" [message]="'Click or drag images here to upload'" (error)="onUploadError($event)" (success)="onUploadSuccessinputFiles($event,'approvalDocId')"></dropzone>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Justification</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" name="justification" ngModel></textarea>
+                    </div>
+                </div>
+
+
+            </div>
+            <h5 class="details-heading">Misc Premises Details</h5>
+            <div class="box-body">
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Owner Name</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="ownerName" ngModel required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Owner Address</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="ownerAddress" ngModel required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Owner Bank A/C Number </label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="ownerBankAccNo" ngModel required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Owner IFSC Code</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="ownerIFSCNO" ngModel required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Owner PAN Number</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="ownerPanCardNo" ngModel required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Payment of Rent</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="paymentOfRent" ngModel required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">All Applicable Taxes of this Premise</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="applicableTax" ngModel required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Electricity Bill</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="electircityBill" ngModel required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Maintenance Charges</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="maintananceCharge" ngModel required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Notary/Registration Charges</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="noteryRegCharge" ngModel required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Notice for Termination</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="noticeForTermination" ngModel required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">White Washing of Premise Done</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="isWhiteWashingDone" ngModel required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Parking Area Available</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="isParkingAreaAvailable" ngModel required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">Brokerage</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="brokerage" ngModel required>
+                    </div>
+                </div>
+
+            </div>
+            <div class="box-footer">
+                <button type="reset" class="btn btn-default" (click)="canceladdPremisesSpec()">Cancel</button>
+                <button type="submit" class="btn btn-info pull-right" [disabled]="!addPremisesSpecForm.form.valid">Submit</button>
+            </div>
+        </form>
+    </div>
+</popup>
+
+<popup #viewDetails (confirmClick)="closeViewPremises()" (cancelClick)="closeViewPremises()">
+    <h4 class="details-heading">Branch Details</h4>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>Branch State</td>
+                <td>{{branchParams.branchState}}</td>
+            </tr>
+            <tr>
+                <td>Branch District</td>
+                <td>{{branchParams.branchDistrict}}</td>
+            </tr>
+            <tr>
+                <td>Branch City</td>
+                <td>{{branchParams.branchCity}}</td>
+            </tr>
+            <tr>
+                <td>Branch Location</td>
+                <td>{{branchParams.branchLocation}}</td>
+            </tr>
+            <tr>
+                <td>Branch Nearest Location</td>
+                <td>{{branchParams.nearestLocation}}</td>
+            </tr>
+            <tr>
+                <td>Branch Type</td>
+                <td>{{branchParams.branchType}}</td>
+            </tr>
+            <tr>
+                <td>Branch Classification</td>
+                <td>{{branchParams.branchClassification}}</td>
+            </tr>
+            <tr>
+                <td>Branch Name</td>
+                <td>{{branchParams.proposedBranchName}}</td>
+            </tr>
+            <tr>
+                <td>Strength</td>
+                <td>{{branchParams.strength}}</td>
+            </tr>
+            <tr>
+                <td>Approx Area</td>
+                <td>{{branchParams.approxArea}}</td>
+            </tr>
+            <tr>
+                <td>Type of Business</td>
+                <td>{{branchParams.typeOfBusiness}}</td>
+            </tr>
+            <tr>
+                <td>Head Person Count</td>
+                <td>{{branchParams.headPersonCount}}</td>
+            </tr>
+            <tr>
+                <td>Employee Count</td>
+                <td>{{branchParams.employeeCount}}</td>
+            </tr>
+            <tr>
+                <td>Budget</td>
+                <td>{{branchParams.budget}}</td>
+            </tr>
+            <tr>
+                <td>Period (in months)</td>
+                <td>{{branchParams.period}}</td>
+            </tr>
+            <tr>
+                <td>Exp Branch Open Date</td>
+                <td>{{branchParams.expBranchOpenDate}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h4 class="details-heading">Premises Details:</h4>
+
+    <div class="section_divider">
+
+        <tabset *ngIf="!loading">
+            <tab *ngFor="let tabz of tabs; let increment = index" [heading]="tabz.propertyName" (removed)="removeTabHandler()">
+                <accordion [closeOthers]="true">
+                    <accordion-group [isOpen]="true" heading="Technical Specification of the Premises ( {{tabz.propertyName}} )">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td>Property Name</td>
+                                    <td>{{tabz.propertyName}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Area (in sq. ft.)</td>
+                                    <td>{{tabz.area}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Address 1</td>
+                                    <td>{{tabz.addressLine1}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Address 2</td>
+                                    <td>{{tabz.addressLine2}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Address 3</td>
+                                    <td>{{tabz.addressLine3}}</td>
+                                </tr>
+                                <tr>
+                                    <td>State</td>
+                                    <td>{{tabz.state}}</td>
+                                </tr>
+                                <tr>
+                                    <td>City</td>
+                                    <td>{{tabz.city}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Pincode</td>
+                                    <td>{{tabz.pincode}}</td>
+                                </tr>
+                                <tr *ngIf="tabz.dimensionPhotoId != '' ">
+                                    <td>Dimensions</td>
+                                    <td>
+                                        <div class="form-group">
+                                            <div class="col-sm-10">
+                                                <ul>
+                                                    <li *ngFor="let dimension of tabz.dimensionPhotoId.split(',')">
+                                                        <a target="_blank" href="{{imgfirstURL}}{{dimension}}{{imgsecoundURL}}">View Document</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr *ngFor="let tecList of tabz.premisesQuestionList">
+                                    <td *ngIf="tecList.questionType == 'Technical' ">{{tecList.questionName}}</td>
+                                    <td *ngIf="tecList.questionType == 'Technical' ">{{tecList.questionAns}}</td>
+                                </tr>
+                                <tr *ngIf="tabz.networkFeasibilty != null">
+                                    <td>Is Network Feasibilty ?</td>
+                                    <td>{{tabz.networkFeasibilty.isNetworkFeasible}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </accordion-group>
+                    <accordion-group heading="Commercial Specification of the Premises ( {{tabz.propertyName}} )">
+                        <table class="table">
+                            <tbody>
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td>Start date of Lease</td>
+                                            <td>{{tabz.startDateOfLeave}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>End date of Lease</td>
+                                            <td>{{tabz.endDateOfLeave}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Duration of Tenure Lease (in months)</td>
+                                            <td>{{tabz.durationOfTenture}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Rent per month</td>
+                                            <td>{{tabz.rentPerMonth}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Escalation in Rent (in percentage)</td>
+                                            <td>
+                                                <p>{{tabz.escalationRent}}</p>
+
+                                                <table class="table table-bordered">
+                                                    <tr>
+                                                        <th>Year</th>
+                                                        <th>Amount</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td> &#8377; {{tabz.rentPerMonth * 12 | number : '1.2-2'}}</td>
+                                                    </tr>
+                                                    <tr *ngFor="let rentItem of tabz.escalationRentData; let i = index;">
+                                                        <td>{{i + 2}}</td>
+                                                        <td> &#8377; {{rentItem | number : '1.2-2' }}</td>
+                                                    </tr>
+                                                </table>
+                                                <p>
+                                                    <strong>Note: </strong> Calculated on yearly basis.</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Rent Start Date</td>
+                                            <td>{{tabz.rentStartDate}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Interest free refundable deposit</td>
+                                            <td>{{tabz.refundabaleDeposite}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Lock-in period between SSFBL & Owner (in months)</td>
+                                            <td>{{tabz.lockingPeriod}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Scope of work to be under taken by Owner</td>
+                                            <table class="table table-bordered">
+                                                <tr *ngFor="let comList of tabz.premisesQuestionList">
+                                                    <td *ngIf="comList.questionType == 'Commercial' ">{{comList.questionName}}</td>
+                                                    <td *ngIf="comList.questionType == 'Commercial' ">{{comList.questionAns}}</td>
+                                                </tr>
+                                            </table>
+                                        </tr>
+                                        <tr>
+                                            <td>Referred By</td>
+                                            <td>{{tabz.referredBy}}</td>
+                                        </tr>
+                                        <tr *ngIf="tabz.approvalDocId != '' ">
+                                            <td>Approval Notes</td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <div class="col-sm-10">
+                                                        <ul>
+                                                            <li *ngFor="let approval of tabz.approvalDocId.split(',')">
+                                                                <a target="_blank" href="{{imgfirstURL}}{{approval}}{{imgsecoundURL}}">View Document</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Justification</td>
+                                            <td>{{tabz.justification}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </tbody>
+                        </table>
+                    </accordion-group>
+                    <accordion-group heading="Misc Premises Details ( {{tabz.propertyName}} )">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td>Owner Name</td>
+                                    <td>{{tabz.ownerName}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Owner Address</td>
+                                    <td>{{tabz.ownerAddress}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Owner Account No & IFSC Code</td>
+                                    <td>{{tabz.ownerBankAccNo}} , {{tabz.ownerIFSCNO}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Owner PAN Card No.</td>
+                                    <td>{{tabz.ownerPanCardNo}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Payment of Rent</td>
+                                    <td>{{tabz.paymentOfRent}}</td>
+                                </tr>
+                                <tr>
+                                    <td>All Applicable Taxes of this Premise</td>
+                                    <td>{{tabz.applicableTax}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Electricity Bill</td>
+                                    <td>{{tabz.electircityBill}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Maintenance Charges</td>
+                                    <td>{{tabz.maintananceCharge}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Notary/Registration Charges</td>
+                                    <td>{{tabz.noteryRegCharge}}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Notice for Termination</td>
+                                    <td>{{tabz.noticeForTermination}}</td>
+                                </tr>
+                                <tr>
+                                    <td>White Washing of Premise Done</td>
+                                    <td>{{tabz.isWhiteWashingDone}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Parking Area Available</td>
+                                    <td>{{tabz.isParkingAreaAvailable}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Brokerage</td>
+                                    <td>{{tabz.brokerage}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </accordion-group>
+                    <accordion-group [isOpen]="openRecommended" heading="Recommendations ( {{tabz.propertyName}} )">
+                        <div class="post clearfix" *ngIf="tabz.cfoUser != null">
+                            <div class="user-block">
+                                <img class="img-circle img-bordered-sm" src="public/assets/img/avatar.png" alt="User Image">
+                                <span class="username">
+                                </span>
+                                <span class="description">{{tabz.cfoUser}}</span>
+                            </div>
+                            <p>
+                                {{tabz.cfoComment}}
+                            </p>
+                        </div>
+                        <div class="post clearfix" *ngIf="tabz.businessHeadUser != null">
+                            <div class="user-block">
+                                <img class="img-circle img-bordered-sm" src="public/assets/img/avatar.png" alt="User Image">
+                                <span class="username">
+                                </span>
+                                <span class="description">{{tabz.businessHeadUser}}</span>
+                            </div>
+                            <p>
+                                {{tabz.businessHeadComment}}
+                            </p>
+                        </div>
+                    </accordion-group>
+                </accordion>
+                <br>
+                <br>
+                <form #cfoForm="ngForm">
+                    <div class="section_divider" *ngIf="this._userServ.canCurrentUser('CHIEF_FINANCIAL_OFFICER') && tabz.cfoUser == null ">
+                        <h4 class="details-heading">Write a recommendation</h4>
+                        <div class="form-group">
+                            <textarea class="form-control" rows="3" name="cfoComment_{{tabz.premisesId}}" placeholder="Write your recommendation here..."
+                                [disabled]="tabz.cfoUser != null" ngModel></textarea>
+                        </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-primary" (click)="saveUserAction('cfo_action','',cfoForm.value,tabz.branchId,tabz.premisesId,increment);"
+                                [disabled]="tabz.cfoUser != null">Submit</button>
+                        </div>
+                    </div>
+
+                </form>
+                <form #businessHeadForm="ngForm">
+                    <div class="section_divider" *ngIf="this._userServ.canCurrentUser('BUSINESS_HEAD') && tabz.businessHeadUser == null">
+                        <h4 class="details-heading">Write a recommendation</h4>
+                        <div class="form-group">
+                            <textarea class="form-control" rows="3" name="businessHeadComment_{{tabz.premisesId}}" placeholder="Write your recommendation here..."
+                                [disabled]="tabz.businessHeadUser != null" ngModel></textarea>
+                        </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-primary" (click)="saveUserAction('b_head_action','',businessHeadForm.value,tabz.branchId,tabz.premisesId,increment);"
+                                [disabled]="tabz.businessHeadUser != null">Submit</button>
+                        </div>
+                    </div>
+
+                </form>
+            </tab>
+        </tabset>
+    </div>
+
+    <div class="section_divider" *ngIf="this._userServ.canCurrentUser('ADMIN_INFRA_TEAM')">
+        <h4 class="details-heading">Actions</h4>
+        <table class="table table-bordered">
+            <tr>
+                <td>Premises Name</td>
+                <td>{{primisesName}}</td>
+            </tr>
+            <tr>
+                <td>CSO Action</td>
+                <td>{{cso_action.prevAction}}</td>
+            </tr>
+            <tr>
+                <td>CSO Comments</td>
+                <td>{{cso_action.comment}}</td>
+            </tr>
+            <tr>
+                <td>CEO Action</td>
+                <td>{{ceo_action.prevAction}}</td>
+            </tr>
+            <tr>
+                <td>CEO Comments</td>
+                <td>{{ceo_action.comment}}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section_divider" *ngIf="this._userServ.canCurrentUser('CHIEF_SERVICE_OFFICER')">
+        <h4 class="details-heading">CSO Action</h4>
+        <div *ngIf="cso_action.prevAction != 'Approve';else other_cso">
+            <div class="box-body">
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Select Approved Premises</label>
+                    <div class="col-sm-10">
+                        <select name="branchPremiseId" [(ngModel)]="cso_action.branchPremiseId" class="form-control">
+                            <option value="">Select Premises</option>
+                            <option *ngFor="let tabz of tabs" [disabled]=" tabz.cfoUser == null || tabz.businessHeadUser == null " [ngValue]="tabz.premisesId">{{tabz.propertyName}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Comments</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" [(ngModel)]="cso_action.comment"></textarea>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary pull-right approve-button" (click)="saveUserAction('cso_action','Approve')">Approve</button>
+                <button type="submit" class="btn btn-primary pull-right reject-button" (click)="saveUserAction('cso_action','Reject')">Reject</button>
+                <button type="reset" class="btn btn-default pull-left" (click)="closeViewPremises()">Close</button>
+            </div>
+        </div>
+        <ng-template #other_cso>
+            <table class="table table-bordered">
+                <tr>
+                    <td>Premises Name</td>
+                    <td>{{primisesName}}</td>
+                </tr>
+                <tr>
+                    <td>CSO Action</td>
+                    <td>{{cso_action.prevAction}}</td>
+                </tr>
+                <tr>
+                    <td>CFO Comments</td>
+                    <td>{{cso_action.comment}}</td>
+                </tr>
+            </table>
+        </ng-template>
+    </div>
+
+    <div class="section_divider" *ngIf="this._userServ.canCurrentUser('MD_AND_CEO')">
+        <h4 class="details-heading">MD & CEO Action</h4>
+        <div *ngIf="cso_action.prevAction == 'Approve' && ceo_action.prevAction == '' ;else other_ceo">
+            <div class="box-body">
+
+
+                <div class="form-group">
+                    <table class="table table-bordered">
+                        <tr>
+                            <td>Premises Name</td>
+                            <td>{{primisesName}}</td>
+                        </tr>
+                        <tr>
+                            <td>CSO Action</td>
+                            <td>{{cso_action.prevAction}}</td>
+                        </tr>
+                        <tr>
+                            <td>CSO Comments</td>
+                            <td>{{cso_action.comment}}</td>
+                        </tr>
+                    </table>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Comments</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" name="comment" [(ngModel)]="ceo_action.comment"></textarea>
+                    </div>
+                </div>
+
+            </div>
+            <div class="box-footer">
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary pull-right approve-button" (click)="saveUserAction('ceo_action','Approve')">Approve</button>
+                    <button type="submit" class="btn btn-primary pull-right reject-button" (click)="saveUserAction('ceo_action','Reject')">Reject</button>
+                    <button type="reset" class="btn btn-default pull-left" (click)="closeViewPremises()">Close</button>
+                </div>
+            </div>
+        </div>
+        <ng-template #other_ceo>
+            <table class="table table-bordered">
+                <tr>
+                    <td>Premises Name</td>
+                    <td>{{primisesName}}</td>
+                </tr>
+                <tr>
+                    <td>CSO Action</td>
+                    <td>{{cso_action.prevAction}}</td>
+                </tr>
+                <tr>
+                    <td>CSO Comments</td>
+                    <td>{{cso_action.comment}}</td>
+                </tr>
+                <tr>
+                    <td>CEO Action</td>
+                    <td>{{ceo_action.prevAction}}</td>
+                </tr>
+                <tr>
+                    <td>CEO Comments</td>
+                    <td>{{ceo_action.comment}}</td>
+                </tr>
+            </table>
+        </ng-template>
+    </div>
+
+</popup>
+
+<popup #updateNetworkPopUp>
+
+    <div class="section_divider">
+        <tabset *ngIf="!loading">
+            <tab *ngFor="let p_list of premisesList; let i = index;" [heading]="p_list.propertyName" (select)="resetTabData()">
+
+                <div class="box box-info">
+
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Is Network feasibility process Initiated?</label>
+                            <div class="col-sm-10">
+                                <div class="form-group">
+                                    <input type="radio" name="isNetworkProcessInitiated_{{i}}" value="YES" [(ngModel)]="p_list.networkFeasibilty.isNetworkProcessInitiated"
+                                        [disabled]="networkdisplayMode == 'VIEW'">
+                                    <label>YES &nbsp;&nbsp;&nbsp;</label>
+                                    <input type="radio" name="isNetworkProcessInitiated_{{i}}" value="NO" [(ngModel)]="p_list.networkFeasibilty.isNetworkProcessInitiated"
+                                        [disabled]="networkdisplayMode == 'VIEW'">
+                                    <label>NO</label>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Is Network Feasible</label>
+
+                            <div class="col-sm-10">
+                                <div class="form-group">
+                                    <input type="radio" name="isNetworkFeasible_{{i}}" value="YES" [(ngModel)]="p_list.networkFeasibilty.isNetworkFeasible" [disabled]="networkdisplayMode == 'VIEW'">
+                                    <label>YES &nbsp;&nbsp;&nbsp;</label>
+                                    <input type="radio" name="isNetworkFeasible_{{i}}" value="NO" [(ngModel)]="p_list.networkFeasibilty.isNetworkFeasible" [disabled]="networkdisplayMode == 'VIEW'">
+                                    <label>NO</label>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="box-footer" *ngIf="networkdisplayMode == 'EDIT'">
+                        <button type="reset" class="btn btn-default" (click)="cancelNetworkFeasibilityForm()">Close</button>
+                        <button type="submit" class="btn btn-submit pull-right" (click)="saveNetworkFeasibilityForm(p_list.premisesId,p_list.branchId,p_list.networkFeasibilty);">Submit</button>
+                    </div>
+                </div>
+
+            </tab>
+        </tabset>
+    </div>
+
+
+</popup>
+
+<div id="preview" class="col s12 m9 l12">
+    <p>
+        <button type="button" class="btn waves-effect waves-light blue" (click)="rerender()">
+            <i class="fa fa-refresh" aria-hidden="true"></i> Refresh
+        </button>
+    </p>
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover"></table>
+</div>

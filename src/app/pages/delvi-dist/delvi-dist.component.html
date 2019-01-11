@@ -1,0 +1,104 @@
+<div class="row">
+    <div class="col-lg-3">            
+        <div class="input-group">                
+            <select class="form-control" [(ngModel)]="deliverableType">
+                <option value="" [disabled]="true">Select Deliverable Type</option>
+                <option value="FDR">FDR</option>
+                <option value="WelcomeKit">Welcome Kit</option>
+                <option value="ChequeBook">Cheque Book</option>
+                <option value="DebitCard">Debit Card</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="col-lg-3">
+        <button type="button" class="btn waves-effect waves-light blue" (click)="getDestructionList()">
+            Search
+        </button>
+    </div>
+</div>
+<br>
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">   
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+                    <tbody><tr>
+                            <th>A/C No</th>                           
+                            <th>Recd - CPU</th>
+                            <th>Recd - Date</th>
+                            <th>Action</th>
+                            <th>Date</th>
+                            <th>FRFC destroyed</th>
+                            <th>FRFC Date</th>
+                        </tr>
+                        <tr *ngFor="let data of api_responce_api_data">
+                            <td>{{data.ac_no}}</td>
+                           
+                            <td>
+                                <div *ngIf="data.received_at_cpu ==''">
+                                    <select class="form-control" name="receivedAtCPU" id="receivedAtCPU_{{data.id}}">
+                                        <option value="" disabled>Select item</option>
+                                        <option value="Yes">Yes</option>
+                                    </select>
+                                </div>
+                                <div *ngIf="data.received_at_cpu !=''">
+                                {{data.received_at_cpu}}
+                                </div>
+                            </td>
+                            <td>
+                                <div *ngIf="data.received_at_cpu ==''">
+                                    <datetime [timepicker]="false" [datepicker]="datepickerOpts" id="receivedAtCPUDate_{{data.id}}" [(ngModel)]="qtd[data.id]" (ngModelChange)="setdate1($event)"></datetime>
+                                </div>
+                                <div *ngIf="data.received_at_cpu_date !='NA'">
+                                {{data.received_at_cpu_date}}
+                                </div>
+                            </td>
+                            <td>
+                               <div *ngIf="data.cpu_action == ''">
+                                    <select class="form-control" name="cpuAction" id="cpuAction_{{data.id}}">
+                                        <option value="" disabled>Select item</option>
+                                        <option value="Store in FRFC">Store in FRFC</option>
+                                        <option value="Destruction">Destruction</option>
+                                    </select>
+                                </div>
+                                <div *ngIf="data.cpu_action !=''">
+                                {{data.cpu_action}}
+                                </div>
+                            </td>
+                            <td>
+                                <div *ngIf="data.cpu_action == ''">
+                                <datetime disabled [timepicker]="false" [datepicker]="datepickerOpts" id="frcDate_{{data.id}}" [(ngModel)]="qtd[data.id]"  (ngModelChange)="setdate2($event,data.id)"></datetime>
+                                </div>
+                                <div *ngIf="data.cpu_action != ''">
+                                {{data.frc_date}}
+                                </div>
+                            </td>
+                            <td>
+                                <div *ngIf="data.cpu_action != 'Destruction' && data.cpu_action != ''">
+                                    <select class="form-control" name="cpuAction" id="cpuAction_{{data.id}}">
+                                        <option value="" disabled>Select item</option>
+                                        <option value="Destruction">Destruction</option>
+                                    </select>
+                                </div>
+                                <div *ngIf="data.descarded_date != 'NA'">
+                                {{data.cpu_action}}
+                                </div>
+                            </td>
+                            <td>
+                                <div *ngIf="data.cpu_action != 'Destruction' && data.cpu_action != ''">
+                                <datetime disabled [timepicker]="false" [datepicker]="datepickerOpts" id="discardedDate_{{data.id}}" [(ngModel)]="qtd[data.id]" (ngModelChange)="setdate3($event,data.id)"></datetime>
+                                </div>
+                                <div *ngIf="data.descarded_date != 'NA'">
+                                 {{data.descarded_date}}
+                                 </div>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

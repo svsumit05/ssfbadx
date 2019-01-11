@@ -1,0 +1,55 @@
+{
+  "preDeAppRoleMatId": "6",
+  "workLineBusinessUnit": {
+    "businessUnitId": "4",
+    "businessUnitName": "Retail Assets"
+  },
+  "worklineProduct": {
+    "productId": "3",
+    "productName": "HL & LAP"
+  },
+  "workLineFunction": {
+    "worklineFunctionId": "37",
+    "worklineFunctionName": "Sales"
+  },
+  "worklineSubFunction": {
+    "worklineSubFunctionId": "23",
+    "worklineSubFunctionName": "Sales"
+  },
+  "workLineRole": {
+    "worklineRoleId": "27",
+    "worklineRoleName": "Business Development Manager"
+  },
+  "predefineApplRoleMatrixChildList": [
+    {
+      "application": {
+        "applicationId": "1",
+        "applicationName": "Profile (CBS)"
+      },
+      "applicationRole": {
+        "applicationRoleId": "2",
+        "applicationRoleName": "CSO"
+      }
+    },
+    {
+      "application": {
+        "applicationId": "2",
+        "applicationName": "CRM"
+      },
+      "applicationRole": {
+        "applicationRoleId": "1",
+        "applicationRoleName": "Teller"
+      }
+    },
+    {
+      "application": {
+        "applicationId": "3",
+        "applicationName": "NewGen (A c Opening)"
+      },
+      "applicationRole": {
+        "applicationRoleId": "2",
+        "applicationRoleName": "CSO"
+      }
+    }
+  ]
+}

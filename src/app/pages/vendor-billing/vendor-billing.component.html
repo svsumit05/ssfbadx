@@ -1,0 +1,117 @@
+<div class="vendor-billing">
+<popup #createBillPopup >
+
+    <form class="form-horizontal" #vendorBilling="ngForm" (ngSubmit)="vendorBillConfirmEvent(vendorBilling.value); vendorBilling.reset();" >
+        
+        <div class="form-group">
+            <label for="type" class="col-sm-3 control-label">Inventory type</label>    
+            <div class="col-sm-7">
+                <input type="text" class="form-control" name="inventType" [value]="orderReceivedDetails.inventType" disabled/>
+            </div>
+        </div>
+          
+        <div class="form-group">
+            <label for="inputEmai3" class="col-sm-3 control-label">Quantity</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" [(ngModel)]="orderReceivedDetails.inventQuantity" name="inventQuantity" id="inventQuantity" disabled>
+            </div>
+        </div> 
+
+        <div class="form-group">
+            <label for="inputEmai3" class="col-sm-3 control-label">Upload Bill Details</label>
+            <div class="col-sm-7">
+                <input type="file" class="form-control" (change)="ordfileEvent($event)" />
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label class="col-sm-7"></label>
+            <div class="col-sm-4">                
+                <input class="btn btn-default reset-button" type="button" value="Cancle" (click)="vendorBillCancelEvent()">
+                <input class="btn btn-mbe-attack submit-button" type="submit" value="Submit">
+            </div>
+        </div>   
+    </form>
+
+</popup>
+</div>
+
+<div hidden>
+    <button type="button" id="generateBillButton" class="btn waves-effect waves-light blue" (click)="generateBill()" hidden></button>
+</div>
+
+<div>
+    <popup  #generateBillForm>
+    <form class="form-horizontal" name="generateBillForm" #generateBillForm="ngForm" (ngSubmit)="generateBillFormSubmit(generateBillForm.value); generateBillForm.reset();" >
+        
+        <div class="form-group">
+            <label for="inputEmai3" class="col-sm-3 control-label">Invoice No.</label> 
+            <div class="col-sm-7">
+                <input type="text" class="form-control" name="invoiceNo" id="invoiceNo" [(ngModel)]="genBill.invoiceNo" required>
+            </div>
+        </div>
+          
+        <div class="form-group">
+                <label for="inputEmai3" class="col-sm-3 control-label">Product Details</label>
+                <div class="col-sm-7">
+                    <table>
+                        <tr>
+                            <th>Inventory Type</th>
+                            <th>Quantity</th>                           
+                        </tr>
+                        <tr *ngFor="let types of genBill.productList">
+                            <td>{{types.inventoryType}}</td>
+                            <td>{{types.quantity}}</td>                            
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        
+        <div class="form-group">
+            <label class="col-sm-7"></label>
+            <div class="col-sm-4">                
+                <input class="btn btn-default reset-button" type="button" value="Cancle" (click)="generateBillFormCancel()">
+                <input class="btn btn-mbe-attack submit-button" type="submit" value="Submit" [disabled]="!generateBillForm.form.valid">
+            </div>
+        </div>     
+        
+    </form>
+        </popup>
+</div>
+
+
+
+<div style="clear: both"></div>
+<div class="row date-filer-box">
+    <div class="col-lg-3">
+        <div class="input-group">
+            <span class="input-group-addon">
+                From Date
+            </span>
+            <datetime [timepicker]="false" [datepicker]="datepickerOpts" [(ngModel)]="filter_from_date"></datetime>
+        </div><!-- /input-group -->
+    </div><!-- /.col-lg-6 -->
+    <div class="col-lg-3">
+        <div class="input-group">
+            <span class="input-group-addon">
+                To Date
+            </span>
+            <datetime [timepicker]="false" [datepicker]="datepickerOpts"  [(ngModel)]="filter_to_date"></datetime>
+        </div><!-- /input-group -->
+    </div><!-- /.col-lg-6 -->
+    <div class="col-lg-3">
+        <button type="button" class="btn waves-effect waves-light blue" (click)="rerender()">
+            Search
+        </button>
+    </div>
+</div><!-- /.row -->
+<div id="preview" class="col s12 m9 l12">
+<!--  <p>
+  
+    <button type="button" class="btn waves-effect waves-light blue" (click)="rerender()">
+      <i class="fa fa-refresh" aria-hidden="true"></i> Refresh
+    </button>
+
+  </p>-->
+  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover"></table>
+</div>

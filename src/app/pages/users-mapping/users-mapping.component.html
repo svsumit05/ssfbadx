@@ -1,0 +1,53 @@
+<popup #editUser>
+  <div class="box box-info">
+    <form class="form-horizontal" id="editUserMetaForm" name="editUserMetaForm" #editUserMetaForm="ngForm" (ngSubmit)="onSubmitEditUserMeta(editUserMetaForm.value); editUserMetaForm.reset()">
+      <div class="box-body">
+
+        <div class="form-group">
+          <label for="employeeId" class="col-sm-2 control-label">Employee ID</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="employeeId"  name="employeeId"  disabled [value]="userMappingData.employeeId">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="roleID" class="col-sm-2 control-label">Employee Role</label>
+          <div class="col-sm-10">
+            <select class="form-control" name="roleID" [(ngModel)]="userMappingData.role.roleID" required>
+              <option value="" selected disabled>Select Employee Role</option>
+              <option value="1">Admin</option>
+              <option value="2">Department</option>
+            </select>
+          </div>
+        </div>
+
+
+        <div class="form-group" *ngIf="userMappingData.role.roleID == 2">
+          <label for="departmentId" class="col-sm-2 control-label">Department </label>
+          <div class="col-sm-10">
+             <select class="form-control" name="departmentId" [(ngModel)]="userMappingData.department.departmentId" required>
+              <option value="" selected disabled>Select Employee Department</option>
+               <option *ngFor="let item of departmentList" [value]="item.departmentId">{{item.departmentName}}</option>
+             </select>
+          </div>
+        </div>
+
+       
+      </div>
+
+      <div class="box-footer">
+        <button type="reset" class="btn btn-default" (click)="closeEditMeta()">Cancel</button>
+        <button type="submit" class="btn btn-info pull-right" [disabled]="!editUserMetaForm.form.valid">Submit</button>
+      </div>
+    </form>
+  </div>
+</popup>
+
+<div id="preview" class="col s12 m9 l12">
+  <p>
+    <button type="button" class="btn waves-effect waves-light blue" (click)="rerender()">
+      <i class="fa fa-refresh" aria-hidden="true"></i> Refresh
+    </button>
+  </p>
+  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover"></table>
+</div>

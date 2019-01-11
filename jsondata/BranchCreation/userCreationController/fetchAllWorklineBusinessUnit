@@ -1,0 +1,108 @@
+[
+  {
+    "businessUnitId": "1",
+    "businessUnitName": "Business Unit",
+    "isActive": "1",
+    "worklineProductList": [
+      {
+        "productId": "1",
+        "productName": "Business Support",
+        "isActive": "1"
+      },
+      {
+        "productId": "2",
+        "productName": "Commercial Vehicle Loan",
+        "isActive": "1"
+      },
+      {
+        "productId": "3",
+        "productName": "HL & LAP",
+        "isActive": "1"
+      },
+      {
+        "productId": "4",
+        "productName": "IL / IBL",
+        "isActive": "1"
+      },
+      {
+        "productId": "5",
+        "productName": "JLG",
+        "isActive": "1"
+      },
+      {
+        "productId": "6",
+        "productName": "MF Assets",
+        "isActive": "1"
+      }
+    ]
+  },
+  {
+    "businessUnitId": "3",
+    "businessUnitName": "Inclusive Finance",
+    "isActive": "1",
+    "worklineProductList": [
+      {
+        "productId": "11",
+        "productName": "SME",
+        "isActive": "1"
+      },
+      {
+        "productId": "12",
+        "productName": "SME & FIG",
+        "isActive": "1"
+      },
+      {
+        "productId": "13",
+        "productName": "Support",
+        "isActive": "1"
+      },
+      {
+        "productId": "14",
+        "productName": "T-Nagar",
+        "isActive": "1"
+      },
+      {
+        "productId": "15",
+        "productName": "Vikas Loan",
+        "isActive": "1"
+      }
+    ]
+  },
+  {
+    "businessUnitId": "4",
+    "businessUnitName": "Retail Assets",
+    "isActive": "1"
+  },
+  {
+    "businessUnitId": "2",
+    "businessUnitName": "Corporate Services",
+    "isActive": "1",
+    "worklineProductList": [
+      {
+        "productId": "7",
+        "productName": "MSME",
+        "isActive": "1"
+      },
+      {
+        "productId": "8",
+        "productName": "Retail Assets",
+        "isActive": "1"
+      },
+      {
+        "productId": "9",
+        "productName": "Retail Liabilities",
+        "isActive": "1"
+      },
+      {
+        "productId": "10",
+        "productName": "Retail Liabilities - HNI",
+        "isActive": "1"
+      }
+    ]
+  },
+  {
+    "businessUnitId": "5",
+    "businessUnitName": "Retail Liabilities",
+    "isActive": "1"
+  }
+]

@@ -1,0 +1,45 @@
+.report-th-primary {
+    font-size: 16px;
+    background-color: #3c8dbc !important;
+    color: #ffffff;
+    padding: 1%;
+}
+.report-th-warning {
+    font-size: 16px;
+    background-color: #f39c12 !important;
+    color: #ffffff;
+    padding: 1%;
+}
+.report-th-success {
+    font-size: 16px;
+    background-color: #00a65a !important;
+    color: #ffffff;
+    padding: 1%;
+}
+.report-th-danger {
+    font-size: 16px;
+    background-color: #dd4b39 !important;
+    color: #ffffff;
+    padding: 1%;
+}
+.report-th-info {
+    font-size: 16px;
+    background-color: #00c0ef !important;
+    color: #ffffff;
+    padding: 1%;
+}
+.report-th-danger1 {
+    font-size: 16px;
+    background-color: #39cccc !important;
+    color: #ffffff;
+    padding: 1%;
+}
+.report-th-danger2 {
+    font-size: 16px;
+    background-color: #01ff70 !important;
+    color: #ffffff;
+    padding: 1%;
+}
+table.table.table-bordered.consolidated {
+    width: 95%;
+}

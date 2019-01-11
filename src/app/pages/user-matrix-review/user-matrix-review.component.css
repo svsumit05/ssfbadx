@@ -1,0 +1,30 @@
+:host>>>div#ng2-opd-popup-main {
+    top: -5% !important;
+}
+
+i.fa.fa-minus-circle.icon-large {
+    margin-top: 28px;
+    font-size: 25px;
+    color: red;
+    cursor: pointer;
+}
+
+i.fa.fa-minus-circle {
+    color: red;
+}
+
+.col-sm-3.add-link-button {
+    margin-left: 15.5%;
+}
+
+.clear {
+    clear: both;
+}
+
+input[type="radio"] {
+    -ms-transform: scale(1.5); /* IE 9 */
+    -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
+    transform: scale(1.5);
+    margin-bottom: 5%;
+    margin-right: 4px;
+}

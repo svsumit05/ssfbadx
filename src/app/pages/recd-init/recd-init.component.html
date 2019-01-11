@@ -1,0 +1,71 @@
+<div class="col-md-12">
+  <div class="box box-info">
+    <form class="form-horizontal" name="recdForm" #recdForm="ngForm">
+      <div class="box-body">
+        
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Record Type</label>
+          <div class="col-sm-5">
+            <select class="form-control" name="recordTypeId" [(ngModel)]="recordTypeId" required (change)="onChange()">
+              <option value="" selected>Select Record Type</option>
+              <option *ngFor="let RTD of recordTypeDropDown" [ngValue]="RTD.recordTypeId">{{RTD.recordType}}</option>
+            </select>
+          </div>
+          <div class="col-sm-3" *ngIf="recordTypeId != ''">
+            <a class="downloadButton" (click)="downloadSampleReport()">Download Sample Excel</a>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Action</label>
+          <div class="col-sm-5">
+            <select class="form-control" name="actionType" [(ngModel)]="actionType" required>
+              <option value="" selected>Select Action</option>
+              <option value="UPLOAD" [disabled]="actionUPLOAD"> New Records Upload</option>
+              <option value="UPDATE" [disabled]="actionUPDATE"> Update Existing Records </option>
+              <option value="DOWNLOAD" [disabled]="actionDOWNLOAD">Download</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group" *ngIf="actionType == 'DOWNLOAD'">
+          <label class="col-sm-2 control-label datelabel">From Date</label>
+          <div class="col-sm-8">
+            <datetime [timepicker]="false" [datepicker]="datepickerOpts" [(ngModel)]="fromDate" [ngModelOptions]="{standalone: true}"></datetime>
+          </div>
+        </div>
+        <div class="form-group" *ngIf="actionType == 'DOWNLOAD'">
+          <label class="col-sm-2 control-label datelabel">To Date</label>
+          <div class="col-sm-8">
+            <datetime [timepicker]="false" [datepicker]="datepickerOpts" [(ngModel)]="toDate" [ngModelOptions]="{standalone: true}"></datetime>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Branch</label>
+          <div class="col-sm-5">
+            <select class="form-control" name="branch" [(ngModel)]="branch" [disabled]="this.currentUser.user_extra_info.role.roleID == 3">
+              <option value="" selected disabled>Select Branch</option>
+              <option value="ALL">All</option>
+              <option *ngFor="let BDF of branchDropDown" [ngValue]="BDF.branchCode">{{BDF.branchName}}</option>
+            </select>
+          </div>
+        </div>
+
+
+        <div class="form-group" *ngIf="actionType == 'UPLOAD' || actionType == 'UPDATE'">
+          <label for="type" class="col-sm-2 control-label"> Upload File.</label>
+          <div class="col-sm-10">
+            <input type="file" id="FileInput" name="FileInput" (change)="ordfileEvent($event)" accept=".xlsx, .xls, .csv" required>
+          </div>
+        </div>
+
+      </div>
+      <div class="box-footer">
+        <!-- <button type="reset" class="btn btn-default">Cancel</button> -->
+        <p class="pull-left">Note: Kindly upload <b>.xlsx</b> or <b>.xls</b> file formate</p>
+        <button type="submit" class="btn btn-info pull-right" (click)="recdSubmit(this.actionType)">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,172 @@
+<div class="box">
+  <div class="box-body">
+    <form #recordForm="ngForm" (ngSubmit)="fatchRecords()">
+      <div class="row">
+
+        <div class="col-xs-2">
+          <label>Select Branch</label>
+          <select class="form-control" name="branchCode" [(ngModel)]="recordQuery.branchCode" required [disabled]="this.currentUser.user_extra_info.role.roleID == 3">
+            <option value="" selected disabled>Select Branch</option>
+            <option value="ALL">All</option>
+            <option *ngFor="let BDF of branchDropDown" [ngValue]="BDF.branchCode">{{BDF.branchName}}</option>
+          </select>
+        </div>
+
+
+        <div class="col-xs-2">
+          <label>Record Type</label>
+          <select class="form-control" name="recordTypeId" [(ngModel)]="recordTypeId" required (change)="showFeild()">
+            <option value="" selected>Select Record Type</option>
+            <option *ngFor="let RTD of recordTypeDropDown" [ngValue]="RTD.recordTypeId">{{RTD.recordType}}</option>
+          </select>
+        </div>
+
+        <div class="col-xs-2" *ngIf="showDatePicker">
+          <label>Date</label>
+          <datetime [timepicker]="false" [datepicker]="datepickerOpts" [(ngModel)]="fromDate" [ngModelOptions]="{standalone: true}"></datetime>
+        </div>
+
+        <div class="col-xs-2" *ngIf="!showDatePicker">
+          <label>Select Key Identifier</label>
+          <select class="form-control" name="referenceType" [(ngModel)]="recordQuery.referenceType" required>
+            <option value="" [disabled]="true">Select Identifier</option>
+            <option value="BARCODE">Bar Code</option>
+            <option value="CUSTOMERID">Customer Id</option>
+            <option value="ACCOUNTNO">Account / SR No</option>            
+          </select>
+        </div>
+
+        <div class="col-xs-3" *ngIf="!showDatePicker">
+          <label>Value</label>
+          <input type="text" class="form-control" name="referenceValue" [(ngModel)]="recordQuery.referenceValue" required>
+        </div>
+
+        <div class="track-record">
+          <button type="submit" [disabled]="!recordForm.form.valid" class="btn btn-primary">Search</button>
+        </div>
+
+      </div>
+    </form>
+
+    <div class="records-expanded">
+      <div class="box box-default">
+        <div class="box-body" *ngFor="let dData of api_responce_server">
+          <div class="row" *ngIf="!showDatePicker">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Account / SR No</label>
+                <p class="form-control remove-border">{{dData.acNo}}</p>
+              </div>
+              <div class="form-group">
+                <label>CIF Id</label>
+                <p class="form-control remove-border">{{dData.customerNo}}</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>A/C Open Date</label>
+                <p class="form-control remove-border">{{dData.acOpenDate}}</p>
+              </div>
+              <div class="form-group">
+                <label>A/C Title</label>
+                <p class="form-control remove-border">{{dData.acTitle}}</p>
+              </div>
+            </div>            
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Dispatch Date</label>
+                <p class="form-control remove-border">{{dData.dispatchDate}}</p>
+              </div>
+              <div class="form-group">
+                <label>Branch Code</label>
+                <p class="form-control remove-border">{{dData.branchCode}}</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Carton Barcode</label>
+                <p class="form-control remove-border">{{dData.cartonBarcode}}</p>
+              </div>
+              <div class="form-group">
+                <label>File Barcode</label>
+                <p class="form-control remove-border">{{dData.fileBarcode}}</p>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Upload document</label>
+                <input type="file" id="documentName" name="documentName" (change)="ordfileEvent($event)">
+              </div>
+            </div>
+            <div class="col-md-6">
+
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" [(ngModel)]="isPhysicalCopyRequired"> Is Physical Copy Required ?
+                </label>
+              </div>
+
+              <div class="form-group">
+                <button type="button" class="btn btn-primary" (click)="sendRetrivalRecordForCSUApproval()">Send to CPU for approval</button>
+              </div>
+            </div>
+
+          </div>
+          <div class="row" *ngIf="showDatePicker">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Report Date</label>
+                <p class="form-control remove-border">{{dData.reportDate}}</p>
+              </div>
+              <div class="form-group">
+                <label>No of books</label>
+                <p class="form-control remove-border">{{dData.noOfBook}}</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Branch Name</label>
+                <p class="form-control remove-border">{{dData.branchName}}</p>
+              </div>
+              <div class="form-group">
+                <label>Branch Code</label>
+                <p class="form-control remove-border">{{dData.branchCode}}</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Carton Barcode</label>
+                <p class="form-control remove-border">{{dData.cartonBarcode}}</p>
+              </div>
+              <div class="form-group">
+                <label>File Barcode</label>
+                <p class="form-control remove-border">{{dData.fileBarcode}}</p>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" [(ngModel)]="isPhysicalCopyRequired"> Is Physical Copy Required ?
+                  </label>
+                </div>
+
+                <label>Upload document</label>
+                <input type="file" id="documentName" name="documentName" (change)="ordfileEvent($event)">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <button type="button" class="btn btn-primary" (click)="sendRetrivalRecordForCSUApproval()">Send to CPU for approval</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>

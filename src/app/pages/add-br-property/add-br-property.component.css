@@ -1,0 +1,65 @@
+:host >>> div#ng2-opd-popup-main {
+    top: -5% !important;
+}
+.radio-right {
+    width: 90%;
+    float: right;
+}
+.radio-left {
+    width: 10%;
+    float: left;
+}
+.radio-container{
+    width: 100%;
+}
+.section_divider {
+    width: 100%;
+    border-bottom: 1px solid #d2d6de;
+    clear: both;
+}
+.form-group{
+    clear: both;    
+}
+.details-heading {
+    font-style: italic;
+    border-bottom: 1px solid;
+    padding-bottom: 1%;
+}
+.box-info {
+    border-top-color:#fff !important;
+}
+
+input[type="radio"] {
+    margin: 11px 0 0 !important;
+    -ms-transform: scale(1.5); /* IE 9 */
+    -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
+    transform: scale(1.5);
+}
+label {
+    padding-left: 1% !important;
+    padding-right: 1% !important;
+}
+.datepicker-input {
+    margin-left: 1.5% ;
+}
+:host >>> .form-inline.ng2-datetime {
+    margin-left: 1.5% !important;
+}
+
+:host >>> .nav-link.active > span {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+span.description {
+    margin-top: 1%;
+}
+
+button.btn.btn-primary.pull-right.reject-button {
+    margin-right: 6px;
+    background-color: red;
+}
+
+button.btn.btn-primary.pull-right.approve-button {
+     background-color: green;
+}
